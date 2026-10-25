@@ -1,0 +1,247 @@
+version: governance-recommendations-v2-dev1
+profile_id: core-14-v1
+sources_file: recommendation_sources.json
+topics:
+  collection:
+    title: Coleta e finalidades
+    references:
+      collection.data_types: [A.1.3.3]
+      collection.purposes: [A.1.2.2]
+    suggested_role: Encarregado e responsáveis pelos processos
+    pending_fields: [Classes de dados, Finalidades por processo, Responsável pela confirmação]
+    organizational_verification:
+      what_to_do: Conferir quais dados são coletados e para quais finalidades específicas.
+      how_to_do:
+        - Consulte os responsáveis pelos processos e confronte o inventário com formulários e sistemas utilizados.
+        - Registre a relação entre cada classe de dados e sua finalidade; esclareça usos não documentados antes de publicar a informação.
+      completion_evidence: [Inventário conferido com os responsáveis, Amostra de formulário ou fluxo que confirme a relação entre dados e finalidade]
+    policy_wording:
+      what_to_do: Explicitar a relação entre dados coletados e finalidades confirmadas.
+      how_to_do:
+        - Após a conferência operacional, descreva as classes de dados e associe cada uma aos usos efetivos.
+        - Substitua expressões genéricas por finalidades verificadas, mantendo exceções e condições relevantes.
+      completion_evidence: [Trecho revisado com dados e finalidades vinculados, Registro da aprovação do responsável pelo processo]
+  sharing:
+    title: Compartilhamento e destinatários
+    references:
+      sharing.recipients: [A.1.3.3, A.1.5.5]
+      sharing.conditions: [A.1.5.5, A.1.2.7]
+    suggested_role: Encarregado e gestão de fornecedores
+    pending_fields: [Destinatários e seus papéis, Dados compartilhados, Finalidades e condições]
+    organizational_verification:
+      what_to_do: Conferir destinatários, finalidades e condições dos compartilhamentos.
+      how_to_do:
+        - Compare o inventário de terceiros com registros de divulgação e responsáveis que autorizam o envio de dados.
+        - Distinga operador, controlador independente e outros destinatários; quando houver operador, confira o contrato e as instruções.
+        - Investigue divergências antes de concluir que o compartilhamento não ocorre; avalie transferências internacionais separadamente quando existirem.
+      completion_evidence: [Registro de destinatários e dados compartilhados validado, Amostra de divulgação autorizada ou contrato pertinente conferido]
+    policy_wording:
+      what_to_do: Descrever quem recebe os dados e em quais situações confirmadas.
+      how_to_do:
+        - Após validar o fluxo real, identifique destinatários ou categorias compreensíveis e relacione suas finalidades e condições.
+        - Explicite proibições e exceções reais sem transformar uma afirmação genérica em garantia absoluta.
+      completion_evidence: [Trecho revisado com destinatários e condições, Validação do texto contra o registro de compartilhamentos]
+  choice:
+    title: Escolhas e canais
+    references:
+      choice.mechanism: [A.1.3.5, A.1.3.6]
+      choice.channel: [A.1.3.4, A.1.3.10]
+    suggested_role: Encarregado e equipe responsável pelos canais
+    pending_fields: [Tratamento afetado, Mecanismo e canal, Efeitos e condições da escolha]
+    organizational_verification:
+      what_to_do: Testar os mecanismos de escolha no tratamento ao qual se referem.
+      how_to_do:
+        - Identifique o tratamento e confirme quais escolhas são cabíveis; não pressuponha que todo tratamento depende de consentimento.
+        - Quando houver consentimento, confira modificação e retirada; avalie oposição separadamente segundo o contexto aplicável.
+        - Execute uma solicitação de teste e confira recebimento, encaminhamento e reflexo da escolha no processo.
+      completion_evidence: [Registro do teste do canal e de seu encaminhamento, Procedimento com tratamento afetado e efeitos da escolha]
+    policy_wording:
+      what_to_do: Vincular cada escolha a um procedimento e canal utilizáveis.
+      how_to_do:
+        - Após testar o mecanismo, explique qual tratamento pode ser alterado, onde solicitar e quais efeitos foram confirmados.
+        - Inclua endereço ou caminho localizável e esclareça condições sem prometer opções que ainda não funcionam.
+      completion_evidence: [Trecho revisado com procedimento e canal, Conferência do endereço ou caminho publicado]
+  access:
+    title: Solicitações de direitos
+    references:
+      access.channel: [A.1.3.7, A.1.3.10]
+      access.response_time: [A.1.3.10]
+    suggested_role: Encarregado e equipe de atendimento
+    pending_fields: [Canal de entrada, Tipo de solicitação, Prazo e marco inicial validados]
+    organizational_verification:
+      what_to_do: Verificar recebimento, tratamento e acompanhamento de solicitações de direitos.
+      how_to_do:
+        - Teste o canal e confira responsável, identificação proporcional do solicitante, encaminhamento e registro da resposta.
+        - Defina prazo, marco inicial e escalonamento com os responsáveis, considerando as obrigações aplicáveis ao caso; não copie os prazos de exemplo de outra jurisdição.
+        - Confira uma solicitação de teste ou registro anonimizado até seu encerramento.
+      completion_evidence: [Procedimento aprovado com responsáveis e prazos, Registro de teste do canal e da resposta]
+    policy_wording:
+      what_to_do: Explicar como solicitar direitos e quando esperar retorno.
+      how_to_do:
+        - Após confirmar a operação, associe as solicitações a um canal localizável e descreva as etapas necessárias.
+        - Informe duração, unidade e marco inicial do prazo validado, com condições pertinentes; não invente prazo para preencher a lacuna.
+      completion_evidence: [Trecho com canal e prazo contextualizado, Aprovação do responsável pelo atendimento]
+  retention:
+    title: Retenção e destinação
+    references:
+      retention.duration: [A.1.4.8]
+      retention.disposal: [A.1.4.9]
+    suggested_role: Gestores dos dados, encarregado e TI
+    pending_fields: [Classe de dados, Critério e marco de retenção, Destinação e exceções]
+    organizational_verification:
+      what_to_do: Conferir critérios de retenção e a execução da destinação dos dados.
+      how_to_do:
+        - Revise a tabela de retenção por classe de dados com os responsáveis e registre os critérios, marcos e exceções justificados.
+        - Para retenção indefinida declarada, investigue a justificativa e a necessidade de revisão; não conclua irregularidade somente pelo texto.
+        - Confira em amostra autorizada como ocorre a destinação, considerando sistemas, cópias e meios de armazenamento; não execute exclusão sem autorização.
+      completion_evidence: [Tabela de retenção aprovada, Registro de destinação ou teste controlado conferido por TI]
+    policy_wording:
+      what_to_do: Relacionar os dados ao período ou evento de retenção e à destinação confirmados.
+      how_to_do:
+        - Após validar os critérios internos, informe a classe de dados, o período ou evento de término e o que ocorre depois.
+        - Explique exceções verificadas e evite inventar duração ou prometer exclusão que os processos não realizam.
+      completion_evidence: [Trecho revisado com retenção e destinação, Conferência do texto contra a tabela de retenção]
+  security:
+    title: Medidas de segurança e acesso
+    references:
+      security.technical_measures: [A.3.26]
+      security.access_controls: [A.3.8, A.3.9, A.3.23]
+    suggested_role: Segurança da informação e TI
+    pending_fields: [Medidas efetivas, Dados ou sistemas abrangidos, Papéis autorizados]
+    organizational_verification:
+      what_to_do: Verificar as medidas efetivas e os controles de acesso aos dados.
+      how_to_do:
+        - Solicite à equipe técnica confirmação das medidas e do contexto protegido; avalie criptografia e gestão de chaves conforme o risco e o caso, sem pressupor uma solução universal.
+        - Confira concessão, revisão e revogação de acessos, identidades e autenticação nos sistemas pertinentes.
+        - Se houver negação explícita de uma medida, esclareça seu escopo e eventuais controles alternativos antes de decidir uma ação técnica.
+      completion_evidence: [Registro técnico de configuração ou teste autorizado, Amostra revisada de permissões ou revisão de acesso]
+    policy_wording:
+      what_to_do: Descrever medidas confirmadas e seu contexto de proteção.
+      how_to_do:
+        - Após a conferência técnica, associe medidas ao contexto ou dados protegidos e explique a restrição de acesso por papéis.
+        - Use descrição compreensível sem divulgar segredos, configurações sensíveis ou garantias absolutas de segurança.
+      completion_evidence: [Trecho revisado aprovado pela equipe técnica, Correspondência registrada entre texto e medidas verificadas]
+  changes:
+    title: Comunicação de alterações
+    references:
+      changes.notice_channel: [A.1.3.4]
+      changes.notice_timing: [A.1.3.3]
+    suggested_role: Encarregado e comunicação
+    pending_fields: [Canal de aviso, Momento e evento do aviso, Responsável pela publicação]
+    organizational_verification:
+      what_to_do: Conferir o processo de comunicação de mudanças relevantes na política.
+      how_to_do:
+        - Verifique quem aprova as mudanças e como decide conteúdo, canal e momento da comunicação aos públicos afetados.
+        - Confira uma publicação anterior ou simule o fluxo de aviso; a associação aos guias de transparência não determina prazo obrigatório.
+      completion_evidence: [Procedimento de atualização aprovado, Exemplo de comunicação ou registro de teste do fluxo]
+    policy_wording:
+      what_to_do: Explicar onde e quando o titular será informado das alterações.
+      how_to_do:
+        - Após conferir o fluxo, identifique o canal e relacione o momento do aviso à alteração ou à sua entrada em vigor.
+        - Diferencie a data de atualização do documento do momento de comunicação ao titular.
+      completion_evidence: [Trecho revisado com canal e momento de referência, Aprovação do responsável pela publicação]
+# A pergunta delimita a orientação; a categoria sozinha não dispara sugestões.
+questions:
+  collection.data_types:
+    what_to_do: Especificar quais dados são coletados.
+    how_to_do:
+      - Confira os dados solicitados nos formulários e processos relacionados ao trecho.
+      - Descreva as classes de dados confirmadas, distinguindo as situações de coleta.
+    completion_evidence: [Lista de dados conferida e descrição correspondente na política]
+  collection.purposes:
+    what_to_do: Relacionar os dados às finalidades de uso.
+    how_to_do:
+      - Confirme com o responsável para que cada classe de dados é utilizada.
+      - Substitua finalidades genéricas por usos específicos confirmados, ligados aos dados envolvidos.
+    completion_evidence: [Relação entre dados e finalidades validada pelo responsável]
+  sharing.recipients:
+    what_to_do: Esclarecer quem recebe os dados compartilhados.
+    how_to_do:
+      - Confira os destinatários e seus papéis no registro de compartilhamentos.
+      - Identifique destinatários ou categorias compreensíveis e explique quais dados recebem.
+    completion_evidence: [Destinatários descritos de acordo com o registro de compartilhamentos]
+  sharing.conditions:
+    what_to_do: Explicar em quais situações os dados são compartilhados.
+    how_to_do:
+      - Confirme finalidades, condições e exceções do compartilhamento com os responsáveis.
+      - Quando houver operador, confira as instruções e o contrato; não presuma transferência internacional.
+      - Relacione o destinatário às situações confirmadas no texto da política.
+    completion_evidence: [Condições de compartilhamento conferidas e descritas na política]
+  choice.mechanism:
+    what_to_do: Explicar como o titular exerce suas escolhas.
+    how_to_do:
+      - Confirme quais escolhas se aplicam ao tratamento descrito; não presuma que todo tratamento depende de consentimento.
+      - Teste o mecanismo e descreva seus passos e efeitos, distinguindo retirada de consentimento e oposição.
+    completion_evidence: [Mecanismo testado e procedimento explicado ao titular]
+  choice.channel:
+    what_to_do: Informar um canal localizável para exercer escolhas.
+    how_to_do:
+      - Teste o endereço ou caminho de acesso ao mecanismo de escolha.
+      - Publique o canal e relacione-o à escolha que ele permite exercer.
+    completion_evidence: [Canal publicado e conferido em um teste de uso]
+  access.channel:
+    what_to_do: Indicar como solicitar acesso, correção ou exclusão.
+    how_to_do:
+      - Confira como o atendimento recebe e encaminha cada tipo de solicitação.
+      - Informe o canal e os passos necessários, sem exigir dados além dos necessários à identificação.
+    completion_evidence: [Canal de direitos testado e instruções conferidas]
+  access.response_time:
+    what_to_do: Esclarecer quando o titular receberá retorno.
+    how_to_do:
+      - Valide o prazo e seu marco inicial com os responsáveis, considerando as obrigações aplicáveis ao caso.
+      - Informe duração, unidade e condições de contagem; não copie prazos de exemplos de outra jurisdição.
+    completion_evidence: [Prazo e marco inicial aprovados e descritos na política]
+  retention.duration:
+    what_to_do: Especificar o prazo ou critério de retenção dos dados.
+    how_to_do:
+      - Confirme na tabela de retenção os critérios por classe de dados e as exceções justificadas.
+      - Informe o prazo ou evento de encerramento e, quando houver contagem, seu marco inicial.
+    completion_evidence: [Critérios de retenção aprovados e refletidos na política]
+  retention.disposal:
+    what_to_do: Explicar o destino dos dados após a retenção.
+    how_to_do:
+      - Confirme como ocorre a destinação nos sistemas e cópias, sem executar exclusões durante a revisão.
+      - Descreva a exclusão, anonimização ou outra destinação confirmada e suas exceções.
+    completion_evidence: [Procedimento de destinação conferido e descrito sem promessas não verificadas]
+  security.technical_measures:
+    what_to_do: Descrever medidas de proteção e seu contexto.
+    how_to_do:
+      - Confirme com a equipe técnica as medidas efetivas e os dados ou situações que protegem.
+      - Avalie a referência de criptografia somente quando pertinente; ela não exige uma solução única para toda situação.
+      - Descreva as medidas confirmadas sem expor segredos ou prometer segurança absoluta.
+    completion_evidence: [Descrição aprovada pela equipe técnica e vinculada às medidas verificadas]
+  security.access_controls:
+    what_to_do: Esclarecer como o acesso aos dados é restrito.
+    how_to_do:
+      - Confira quem pode acessar os dados e como permissões são concedidas, revisadas e removidas.
+      - Explique a restrição a papéis autorizados, sem divulgar configurações sensíveis.
+    completion_evidence: [Revisão de permissões e descrição aprovada das restrições de acesso]
+  changes.notice_channel:
+    what_to_do: Informar onde as alterações serão comunicadas.
+    how_to_do:
+      - Confira o canal efetivamente usado para avisar os titulares.
+      - Identifique esse canal na política e explique como localizar a comunicação.
+    completion_evidence: [Canal de aviso conferido e descrito na política]
+  changes.notice_timing:
+    what_to_do: Explicar quando as alterações serão comunicadas.
+    how_to_do:
+      - Confirme em que momento o aviso ocorre em relação à mudança ou à sua entrada em vigor.
+      - Descreva essa relação, distinguindo a data de atualização do documento do momento do aviso.
+    completion_evidence: [Momento de comunicação validado contra o processo de atualização]
+special:
+  clarify:
+    kinds: [ambiguity, contradiction]
+    what_to_do: Esclarecer a ambiguidade ou as declarações potencialmente incompatíveis.
+    how_to_do:
+      - Compare as passagens com o documento completo, identificando sujeitos, dados, condições e exceções.
+      - Consulte o responsável para confirmar a prática e registre a conclusão; corrija o texto somente depois dessa confirmação.
+    completion_evidence: [Registro de esclarecimento com responsável e evidências, Versão revisada ou justificativa para manter o texto]
+    pending_fields: [Escopo das passagens, Responsável pelo esclarecimento]
+  input:
+    kinds: [extraction_limitation]
+    what_to_do: Obter uma entrada adequada antes de concluir a revisão documental.
+    how_to_do:
+      - Confira os bloqueios e o escopo declarado; obtenha o documento completo e legível quando possível.
+      - Compare o texto extraído com o original e envie uma nova análise, preservando o resultado anterior.
+    completion_evidence: [Documento conferido e nova análise vinculada, Registro das limitações que permanecerem]
+    pending_fields: [Documento completo ou justificativa do recorte]

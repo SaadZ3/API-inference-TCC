@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "task": "multilabel",
+  "language": "pt",
+  "max_length": 384,
+  "long_text_strategy": "head_truncation_with_audit"
+}

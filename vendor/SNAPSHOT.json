@@ -1,0 +1,25 @@
+{
+  "source": "OPP-115 Treinamento/Tratamento e Treinamento",
+  "files_sha256": {
+    "Tratamento/tratamento/analysis.py": "652381ff80cbee653e7ae0f09ee9429e437ef35b4acd2b489d00ffce27a45716",
+    "Tratamento/tratamento/cli.py": "0481671dbb1b23c26917823df3f3ec92d633981643a287b090d1583e82126518",
+    "Tratamento/tratamento/data.py": "e76120281eafc1e9f1e159e11036dcb8a30281374b0dc7240b0662481a08a282",
+    "Tratamento/tratamento/freeze_translation.py": "39e764147a7a5be31fbbd9f5eb9e8a6d6cf6e6c6ae834775635be5036a523e03",
+    "Tratamento/tratamento/splitting.py": "2a69fdf0416c39f135880589246e643fa9dbaf67ca41870692a41bf12c4f1b41",
+    "Tratamento/tratamento/translation.py": "8452bd0796df7ea2971c00f30da8f133ebaf68107fd930bdcea770c8908453c0",
+    "Tratamento/tratamento/workbook.py": "970629f9471bae9b0d837b9e56316885966956e376e0231ee66dab61a2e86972",
+    "Tratamento/tratamento/__init__.py": "0040dd73570ed4d20c841c6c2edc98c0ef49dd3700fb549be6ca63a9142522df",
+    "Treinamento/privacy_pipeline/colab_bundle.py": "b0d8b9252bb608b7e1556f3cd0e0f9ef2c44d956fcb7a08d1f8fc9f7f674e6ee",
+    "Treinamento/privacy_pipeline/experiments.py": "7546e1af0fb7253b9338915beea9a460444ed5a6e6792b1ee922d4c34423d201",
+    "Treinamento/privacy_pipeline/export_model.py": "847f9d38ed8108106f4b8844788b83a517a30df03a20e544ae38990b80dde22e",
+    "Treinamento/privacy_pipeline/heuristics.py": "62104ca2b825485d41e6b85b7bb0220adee5390c31c2f14e0ff9dd90876f914a",
+    "Treinamento/privacy_pipeline/inference.py": "39285f8fc29c464470c4eb62497585e44271cdfc5626a2647d363ee35f4ce42a",
+    "Treinamento/privacy_pipeline/metrics.py": "56cd79da89e26752b4889cff2d1ca2e75989b14ecf414e4935dcdaf9f80666b1",
+    "Treinamento/privacy_pipeline/recommendations.py": "e26a6a67d1110f84c4cce3b05c45e2fd15d7e4e875e1718c87d018af3e8f219e",
+    "Treinamento/privacy_pipeline/score_cli.py": "b791686c64fcf396ed2636eb19af2eae62f165f753fe2aab3ca60c603b9660b8",
+    "Treinamento/privacy_pipeline/scoring.py": "29d6f31491055830e69accd955b6cb6c06eb827a7e889e34b988cf52b3233f59",
+    "Treinamento/privacy_pipeline/scoring_common.py": "a6d95f90d61588ac84a15540ab2ed9f761a9e5ce566fa219ef4c5048d2db694e",
+    "Treinamento/privacy_pipeline/training.py": "d196df1e5f13a27950e38aeb1a1e42c005489b22a65761b553772d0bb0229302",
+    "Treinamento/privacy_pipeline/__init__.py": "cb56cf2d80795d9d5aba2094bca3229d000177f7edcbc218756f68ef467f305e"
+  }
+}

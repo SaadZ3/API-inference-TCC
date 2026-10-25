@@ -1,0 +1,163 @@
+# Configuração experimental; exemplos de desenvolvimento não validam qualidade real.
+version: governance-rules-v2-dev2
+method_version: documentary-quality-v2-draft1
+language: pt
+profile_id: core-14-v1
+profile_defined_at: '2026-09-27T00:00:00Z'
+max_sentences: 2
+max_segments: 2
+max_evidence_occurrences: 2
+fallback: true
+features:
+  collect: '\b(?:coletamos|coletaremos|coletam|coleta|coletar|coletad[oa]s?|coletando|coletou|recolhemos|recolhid[oa]s?)\b'
+  data: '\b(?:dados?|informaç\w*|nome|e-?mail|localizaç\w*|registros?|cadastros?|cookies?|telefone|CPF|endereços?)\b'
+  data_type: '\b(?:nome|e-?mail|localizaç\w*|registros? de acesso|registros? de cadastro|cadastros?|cookies?|telefone|CPF|endereços?|dados de (?:compra|pagamento|saúde))\b'
+  purpose: '\bpara\s+(?:enviar|emitir|processar|fornecer|prestar|personalizar|realizar|prevenir|autenticar|identificar)\b[^.!?;\n]{2,120}'
+  share: '\b(?:compartilh\w*|divulgamos|divulgad\w*|vendemos|vender\w*|comercializamos|transferimos|transferid\w*)\b'
+  recipient: '\b(?:processador\w* de pagamento|prestador\w* de serviços|parceiros? comerciais|anunciantes?|autoridades|afiliad\w*)\b'
+  condition: '\b(?:se você autorizar|com (?:o )?(?:seu )?consentimento|mediante consentimento|por obrigação legal|ordem judicial)\b'
+  choice: '\b(?:cancelar|revogar|desativar|recusar|descadastr\w*)\b'
+  marketing: '\b(?:marketing|mensagens|consentimento|cookies|publicidade|rastreamento)\b'
+  channel: '[\w.+-]+@[\w.-]+\.[a-z]{2,}|https?://[^\s]+|\b(?:conta|perfil|configurações)\s*>[^.!?\n]+|\blink de (?:descadastro|cancelamento)[^.!?;\n]{0,60}\b(?:cada mensagem|cada e-mail|rodapé)\b'
+  procedure: '\b(?:clique|abra|acesse|escreva|envie|solicite|use)\b'
+  request: '\b(?:solicit\w*|pedid\w*|requer\w*)\b[^.!?;\n]{0,100}\b(?:exclusão|correção|acesso|eliminaç\w*)\b'
+  response: '\b(?:respond\w*|resposta|prazo máximo)\b'
+  duration: '\b\d+\s+(?:dias?|meses|anos?|horas?)\b'
+  start: '\b(?:após|depois d[eo]|a partir d[eo]|contad\w* d[eo])\b[^.!?;\n]{0,60}\b(?:receb\w*|pedido|solicitaç\w*|acesso|encerramento|cadastro|coleta)\b'
+  retain: '\b(?:guard\w*|armazen\w*|mantemos|manteremos|mantid\w*|retemos|reteremos|retenç\w*)\b'
+  indefinite: '\b(?:indefinidamente|por tempo indeterminado)\b'
+  end_event: '\b(?:enquanto[^.!?;\n]{0,50}\bativa|até[^.!?;\n]{0,50}\b(?:encerramento|cancelamento)|ao encerrar|após o encerramento|ao fim de|após esse prazo|após esse período)\b'
+  dispose: '\b(?:elimin\w*|exclu\w*|apaga\w*|anonimiz\w*|destru\w*)\b'
+  security_action: '\b(?:usamos|utilizamos|adotamos|proteg\w*|criptografamos|criptografad\w*)\b'
+  security_generic: '\b(?:proteç\w*|proteg\w*|segurança)\b'
+  measure: '\b(?:TLS|HTTPS|criptograf\w*|firewall\w*|pseudonimiz\w*)\b'
+  protection_context: '\b(?:dados pessoais|informaç\w* pessoais|transmissão|trânsito|armazenamento|em repouso|banco de dados)\b'
+  access_control: '\b(?:acess\w*|autenticaç\w*|autorizaç\w*)\b'
+  control: '\b(?:autenticação de múltiplos fatores|MFA|controle de acesso|somente funcionários autorizados|acesso restrito|sem restrição)\b'
+  control_generic: '\b(?:controlad\w*|restring\w*|restrit\w*|permiss\w*|autenticaç\w*|autorizaç\w*)\b'
+  actor: '\b(?:funcionári\w*|colaborador\w*|administrador\w*|qualquer pessoa|usuários? autorizad\w*)\b'
+  resource: '\b(?:dados|informações|registros|cadastros|banco de dados)\b'
+  change: '\b(?:alteraç\w*|mudanças?|atualizaç\w*)\b[^.!?;\n]{0,50}\bpolítica\b'
+  notice: '\b(?:avis\w*|notific\w*|informaremos|comunicaremos)\b'
+  notice_channel: '\b(?:e-?mail|aplicativo|notificação|nesta página|neste site)\b'
+  notice_timing: '\b(?:antes|depois|após|no momento)\b[^.!?;\n]{0,80}\b(?:vigor|vigência|vigorar|publicação)\b'
+  unresolved: '\b(?:descrit\w* abaixo|canal (?:mencionado anteriormente|acima)|primeiro destes canais|aquele dado|esse fim|exceção ali indicada|substituição não esclarecida)\b'
+  foreign_channel: '\bpara\s+(?:comprar|vender|receber ofertas|anunciar)\b'
+  continuation: '^\s*(?:após esse|esses?|essas?|os mesmos|as mesmas|o mesmo|a mesma|respondemos a (?:esse|essa)|ao final desse|ao fim desse|(?:usamos|utilizamos) (?:aquele|esse|essa)|o prazo (?:máximo )?desse)\b'
+  non_assertion: '\?\s*$|^\s*(?:tratamento|dados pessoais|coleta|compartilhamento|retenção|consentimento)\s*(?::\s*(?:toda|todo|qualquer|é|são)\b|(?:é|significa)\b)'
+objects:
+  name: '\bnome\b'
+  email: '\be-?mail\b'
+  location: '\blocalizaç\w*\b'
+  access_logs: '\bregistros? de acesso\b'
+  registration: '\b(?:registros? de cadastro|registros? de clientes|cadastros?)\b'
+  purchase: '\bdados de (?:compra|pagamento)\b'
+  marketing: '\b(?:marketing|mensagens|consentimento|cookies)\b'
+  rights: '\b(?:exclusão|correção|solicitações de acesso)\b'
+  policy_change: '\b(?:política|vigorar)\b'
+  personal: '\b(?:dados pessoais|dados em trânsito)\b'
+contexts:
+  transit: '\b(?:trânsito|transmissão)\b'
+  storage: '\b(?:em repouso|armazenamento)\b'
+  account_end: '\b(?:encerrar|encerramento)\b'
+  receipt: '\b(?:recebimento|recebê-lo|receber)\b'
+  customers: '\bclientes\b'
+  employees: '\b(?:funcionários|colaboradores)\b'
+recipients:
+  payment: '\bprocessador\w* de pagamento\b'
+  advertising: '\banunciantes?\b'
+  partners: '\bparceiros? comerciais\b'
+  authorities: '\bautoridades\b'
+dimensions:
+  - {id: collection, title: Coleta e uso, weight: 1, label: First Party Collection/Use}
+  - {id: sharing, title: Compartilhamento, weight: 1, label: Third Party Sharing/Collection}
+  - {id: choice, title: Escolhas e controle, weight: 1, label: User Choice/Control}
+  - {id: access, title: Direitos e solicitações, weight: 1, label: 'User Access, Edit and Deletion'}
+  - {id: retention, title: Retenção, weight: 1, label: Data Retention}
+  - {id: security, title: Segurança, weight: 1, label: Data Security}
+  - {id: changes, title: Alterações da política, weight: 1, label: Policy Change}
+questions:
+  - id: collection.data_types
+    title: Tipos de dados coletados
+    predicate: collect
+    candidate: {all: [collect, data]}
+    elements: {collection_practice: collect, identifiable_data_type: data_type}
+    conflict: polarity
+  - id: collection.purposes
+    title: Relação entre dado e finalidade
+    predicate: collect
+    candidate: {all: [collect, data]}
+    elements: {collected_data_type: data_type, specific_purpose: purpose}
+    conflict: polarity
+  - id: sharing.recipients
+    title: Destinatários do compartilhamento
+    predicate: share
+    candidate: {all: [share, data]}
+    elements: {sharing_practice: share, identifiable_recipient: recipient}
+    conflict: polarity
+  - id: sharing.conditions
+    title: Condições do compartilhamento
+    predicate: share
+    candidate: {all: [share, data]}
+    elements: {identifiable_recipient: recipient, purpose_condition_or_prohibition: {any: [purpose, condition, negated]}}
+    conflict: polarity
+  - id: choice.mechanism
+    title: Procedimento para exercer uma escolha
+    predicate: choice
+    candidate: {all: [choice, marketing]}
+    elements: {affected_processing: marketing, locatable_procedure: {all: [channel, procedure]}}
+    conflict: polarity
+  - id: choice.channel
+    title: Canal localizável para escolhas
+    predicate: choice
+    candidate: {all: [choice, marketing]}
+    elements: {choice: choice, locatable_channel: channel}
+    conflict: polarity
+  - id: access.channel
+    title: Canal de solicitação de direitos
+    predicate: request
+    candidate: request
+    elements: {identified_request: request, locatable_channel: {all: [channel, {not: foreign_channel}]}}
+    conflict: polarity
+  - id: access.response_time
+    title: Prazo de resposta e marco inicial
+    predicate: response
+    candidate: {all: [response, request]}
+    elements: {identified_request: request, response_duration_and_unit: duration, start_event: start}
+    conflict: duration
+  - id: retention.duration
+    title: Duração ou evento de retenção
+    predicate: retain
+    candidate: {all: [retain, data]}
+    elements: {data_class: data_type, duration_or_event: {any: [indefinite, end_event, {all: [duration, start]}]}}
+    conflict: duration
+  - id: retention.disposal
+    title: Destinação ao final da retenção
+    predicate: dispose
+    candidate: {all: [{any: [dispose, {all: [retain, end_event]}]}, data]}
+    elements: {data_class: data_type, end_event: end_event, disposition: {any: [dispose, retain]}}
+    conflict: disposal
+  - id: security.technical_measures
+    title: Medida técnica e contexto de proteção
+    predicate: security_action
+    candidate: {any: [{all: [security_action, measure]}, {all: [security_generic, data]}]}
+    elements: {specific_measure: measure, data_or_protection_context: protection_context}
+    conflict: polarity
+  - id: security.access_controls
+    title: Controle de acesso, ator e recurso
+    predicate: access_control
+    candidate: {all: [access_control, resource, {any: [control, control_generic, actor]}]}
+    elements: {specific_access_control: control, actor: actor, resource: resource}
+    conflict: polarity
+  - id: changes.notice_channel
+    title: Canal de aviso de mudanças
+    predicate: notice
+    candidate: {all: [notice, change]}
+    elements: {policy_change: change, identified_notice_channel: notice_channel}
+    conflict: polarity
+  - id: changes.notice_timing
+    title: Momento do aviso de mudanças
+    predicate: notice
+    candidate: {all: [notice, change]}
+    elements: {policy_change_notice: change, timing_and_event: notice_timing}
+    conflict: timing

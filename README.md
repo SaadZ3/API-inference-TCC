@@ -1,5 +1,7 @@
 # Serviço Python de análise
 
+Para publicar pelo site do Railway, siga [RAILWAY.md](RAILWAY.md). O repositório agora inclui o núcleo em `vendor/`, regras em `config/` e metadados em `model/`. Os pesos grandes são distribuídos como anexo de Release.
+
 O projeto usa um único método de avaliação da qualidade da informação documentada, com notas de **0 a 3**. Consulte [a atualização do método](../docs/AVALIACAO_UNIFICADA.md).
 
 P4 disponível: PDF digital/TXT UTF-8 → extração → BERTimbau → score com evidências. Serviço interno, independente do banco. O navegador será integrado pelo Node nas P5/P6.
@@ -16,7 +18,7 @@ python -m venv .venv
 .\.venv\Scripts\python.exe -m uvicorn privacy_service.main:app --host 127.0.0.1 --port 8000 --workers 1
 ```
 
-Se .venv já existe, comece pelo pip install. Dependências fixadas em requirements.lock.txt, incluindo PyTorch. Não há re-treinamento nem download de pesos: o pacote exportado deve existir na pasta irmã. Ambiente validado: Windows, Python 3.13.7 e CPU.
+Se .venv já existe, comece pelo pip install para apontar o núcleo para a cópia em `vendor/`. Dependências fixadas em requirements.lock.txt, incluindo PyTorch. Não há re-treinamento. Os pesos devem existir em `model/`; na hospedagem, `scripts/start_railway.py` baixa o anexo da Release antes de iniciar. Ambiente validado originalmente: Windows, Python 3.13.7 e CPU.
 
 O .env é opcional com a disposição atual de pastas. Consulte .env.example para MODEL_DIR, SCORING_RULES, DEVICE=cpu, BATCH_SIZE=4, CPU_THREADS=4, MAX_UPLOAD_BYTES=10485760, ANALYSIS_TIMEOUT_SECONDS=120 e UPLOAD_TIMEOUT_SECONDS=30. Caminhos relativos da API são resolvidos a partir de tcc-inference; variáveis do processo têm prioridade. Não sobrescreva seu .env para atualizar.
 
@@ -46,7 +48,7 @@ Limites: 10 MiB, 50 páginas, 100 mil caracteres, 30 s para upload e 120 s para 
 
 ```powershell
 New-Item -ItemType Directory -Force outputs | Out-Null
-.\.venv\Scripts\python.exe -m privacy_service.prepare --input examples/politica_sintetica.txt --output outputs/politica_preparada.json --model-dir "../OPP-115 Treinamento/Tratamento e Treinamento/Treinamento/modelo" --document-scope full_document
+.\.venv\Scripts\python.exe -m privacy_service.prepare --input examples/politica_sintetica.txt --output outputs/politica_preparada.json --model-dir "model" --document-scope full_document
 ```
 
 A CLI não carrega pesos e recusa sobrescrever arquivos. Seus caminhos relativos são interpretados a partir do terminal. PDF escaneado precisa de OCR, fora do protótipo. Ver [P3](../docs/P3.md).
@@ -63,7 +65,7 @@ Os testes usuais usam o tokenizer real, regras e substitutos controlados do clas
 Validação adicional com pesos reais, equivalência com a rodada anterior e medidas de memória/tempo:
 
 ```powershell
-.\.venv\Scripts\python.exe scripts/validate_real.py --model-dir "../OPP-115 Treinamento/Tratamento e Treinamento/Treinamento/modelo" --rules "../OPP-115 Treinamento/Tratamento e Treinamento/Treinamento/config/scoring.yaml" --pdf "C:/caminho/politica.pdf" --output-dir verification/p4_nova
+.\.venv\Scripts\python.exe scripts/validate_real.py --model-dir "model" --rules "config/scoring.yaml" --pdf "C:/caminho/politica.pdf" --output-dir verification/p4_nova
 ```
 
 Use uma pasta de saída nova. O script processa seu PDF inteiro e como trecho, testa TXT sintético de 100 mil caracteres, compara 32 trechos históricos e salva respostas/manifesto/medidas. A comparação pressupõe que os outputs históricos originais ainda existem.

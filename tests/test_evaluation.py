@@ -10,13 +10,13 @@ from privacy_service.pipeline import evaluate
 from privacy_service.main import create_app
 from privacy_service.settings import Settings
 
-ROOT = Path(__file__).resolve().parents[2]
-RULES = load_rules(ROOT / 'OPP-115 Treinamento/Tratamento e Treinamento/Treinamento/config/scoring.yaml')
+ROOT = Path(__file__).resolve().parents[1]
+RULES = load_rules(ROOT / 'config/scoring.yaml')
 
 
 @pytest.mark.parametrize('name', ['complete', 'partial', 'conflict', 'truncated', 'empty', 'unicode'])
 def test_service_matches_cli_calculation(name):
-    saved = json.loads((ROOT / f'tcc-back/tests/fixtures/e4/{name}.json').read_text(encoding='utf-8'))['result']
+    saved = json.loads((ROOT / f'tests/fixtures/e4/{name}.json').read_text(encoding='utf-8'))['result']
     before = copy.deepcopy(saved)
     actual = evaluate(saved, saved['segments'], RULES, None)
     assert actual == saved['evaluation']

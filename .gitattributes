@@ -1,0 +1,6 @@
+# Preserva os bytes usados nos hashes do modelo e da avaliação.
+model/** -text
+config/** -text
+vendor/** -text
+Dockerfile text eol=lf
+scripts/*.py text eol=lf

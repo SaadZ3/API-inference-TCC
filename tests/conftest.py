@@ -11,7 +11,7 @@ os.environ["TRANSFORMERS_OFFLINE"] = "1"
 @pytest.fixture(scope="session")
 def model_dir():
     return Path(os.environ.get("TCC_TEST_MODEL_DIR", str(
-        Path(__file__).resolve().parents[2] / "OPP-115 Treinamento/Tratamento e Treinamento/Treinamento/modelo"
+        Path(__file__).resolve().parents[1] / "model"
     )))
 
 

@@ -1,0 +1,40 @@
+{
+  "labels": [
+    "First Party Collection/Use",
+    "Third Party Sharing/Collection",
+    "User Choice/Control",
+    "User Access, Edit and Deletion",
+    "Data Retention",
+    "Data Security",
+    "Policy Change",
+    "Do Not Track",
+    "International and Specific Audiences",
+    "Other"
+  ],
+  "thresholds": [
+    0.5499999999999999,
+    0.6,
+    0.7,
+    0.9,
+    0.7999999999999999,
+    0.65,
+    0.6,
+    0.6,
+    0.65,
+    0.44999999999999996
+  ],
+  "statuses": [
+    "ajustado na validação",
+    "ajustado na validação",
+    "ajustado na validação",
+    "ajustado na validação",
+    "ajustado na validação",
+    "ajustado na validação",
+    "ajustado na validação",
+    "ajustado na validação",
+    "ajustado na validação",
+    "ajustado na validação"
+  ],
+  "score_kind": "probability",
+  "fitted_on": "validation"
+}

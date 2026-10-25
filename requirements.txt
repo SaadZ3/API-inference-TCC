@@ -1,3 +1,3 @@
 -r requirements.lock.txt
--e "../OPP-115 Treinamento/Tratamento e Treinamento"
+-e ./vendor/privacy-policy-core
 -e .

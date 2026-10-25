@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[2]
 class Settings:
     model_dir: Path
     scoring_rules: Path
-    recommendations_catalog: Path = ROOT.parent / 'OPP-115 Treinamento/Tratamento e Treinamento/Treinamento/config/recommendations.yaml'
+    recommendations_catalog: Path = ROOT / 'config/recommendations.yaml'
     batch_size: int = 4
     cpu_threads: int = 4
     analysis_timeout_seconds: float = 120
@@ -36,9 +36,9 @@ class Settings:
         def path(name, default):
             return (ROOT / os.getenv(name, default)).resolve()
         return cls(
-            model_dir=path("MODEL_DIR", "../OPP-115 Treinamento/Tratamento e Treinamento/Treinamento/modelo"),
-            scoring_rules=path("SCORING_RULES", "../OPP-115 Treinamento/Tratamento e Treinamento/Treinamento/config/scoring.yaml"),
-            recommendations_catalog=path('RECOMMENDATIONS_CATALOG', '../OPP-115 Treinamento/Tratamento e Treinamento/Treinamento/config/recommendations.yaml'),
+            model_dir=path("MODEL_DIR", "model"),
+            scoring_rules=path("SCORING_RULES", "config/scoring.yaml"),
+            recommendations_catalog=path('RECOMMENDATIONS_CATALOG', 'config/recommendations.yaml'),
             batch_size=int(os.getenv("BATCH_SIZE", "4")),
             cpu_threads=int(os.getenv("CPU_THREADS", "4")),
             analysis_timeout_seconds=float(os.getenv("ANALYSIS_TIMEOUT_SECONDS", "120")),

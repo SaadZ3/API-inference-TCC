@@ -6,6 +6,13 @@ build/
 dist/
 .env
 .pytest_cache/
+pytest-cache-files-*/
+.env.*
+!.env.example
+
+# Pesos são distribuídos como anexo da Release, fora do histórico Git.
+model/*.safetensors
+model/*.part
 
 # Documentos/JSONs locais de preparação e verificação
 outputs/
