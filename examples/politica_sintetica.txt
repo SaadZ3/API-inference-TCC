@@ -1,0 +1,9 @@
+POLÍTICA DE PRIVACIDADE — EXEMPLO SINTÉTICO PARA TESTE
+
+Coletamos nome e endereço de e-mail para criar sua conta e permitir o acesso ao serviço.
+
+Você pode solicitar acesso, correção ou exclusão dos seus dados pelo canal privacidade@example.test.
+
+Conservamos os dados enquanto sua conta estiver ativa. Após a exclusão, removemos os dados em até 30 dias, ressalvadas obrigações legais.
+
+Este texto foi criado apenas para testar a extração. Não representa uma política de uma empresa real.
