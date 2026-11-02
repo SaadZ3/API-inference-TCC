@@ -126,6 +126,41 @@ def test_pdf_multiple_pages_and_accents(segmenter):
     assert_preserved(result, segmenter)
 
 
+@pytest.mark.parametrize("unreadable", ["\x00", "\ufffd"])
+def test_pdf_unreadable_characters_preserve_positions_and_block_total(monkeypatch, segmenter, unreadable):
+    from hashlib import sha256
+    from privacy_pipeline.heuristics import load_rules
+    from privacy_pipeline.scoring_common import LABELS
+    from privacy_service.pipeline import evaluate
+    from privacy_service.settings import Settings
+
+    pages = ["Texto legível.\n", f"{unreadable}. Coletamos dados pessoais.\n{unreadable}. Seus direitos.\n"]
+    extracted_pages = iter(pages)
+    monkeypatch.setattr(PageObject, "extract_text", lambda *_args, **_kwargs: next(extracted_pages))
+    content = pdf_bytes(["Texto legível.", "1. Coletamos dados pessoais.\n2. Seus direitos."])
+    document = extract(content, "listas.pdf")
+    expected = "\n\n".join(pages).replace("\x00", "\ufffd")
+    assert document.sha256 == sha256(content).hexdigest()
+    assert document.text == expected
+    assert len(document.text) == len("\n\n".join(pages))
+    assert document.status == "partial"
+    assert [page.status for page in document.pages] == ["ok", "partial"]
+    assert any("SUSPICIOUS_CHARACTERS: página 2" in warning for warning in document.warnings)
+    notices = [warning for warning in document.warnings if warning.startswith("PDF_NULL_CHARACTERS_REPLACED:")]
+    assert len(notices) == (1 if unreadable == "\x00" else 0)
+    if notices:
+        assert "página 2: 2 caracteres" in notices[0]
+    prepared = segmenter.prepare(document)
+    assert_preserved(prepared, segmenter)
+    segments = [{**segment, "labels": [], "probabilities": {label: 0.0 for label in LABELS}}
+                for segment in prepared["segments"]]
+    evaluation = evaluate(prepared, segments, load_rules(Settings.from_env().scoring_rules), None)
+    assert evaluation["score"] is None
+    assert "extraction_partial" in evaluation["score_blockers"]
+    assert "\x00" not in json.dumps({"prepared": prepared, "evaluation": evaluation}, ensure_ascii=False)
+    assert "\\u0000" not in json.dumps({"prepared": prepared, "evaluation": evaluation})
+
+
 @pytest.mark.parametrize("image", [False, True])
 def test_pdf_missing_page_is_partial(image, segmenter):
     raw = pdf_bytes(["Dados da conta.", "", "Seus direitos."], image_pages=[2] if image else [])

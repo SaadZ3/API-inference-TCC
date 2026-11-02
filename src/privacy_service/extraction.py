@@ -1,4 +1,4 @@
-"""Extração local de PDF digital e TXT, sem OCR nem reescrita do documento."""
+"""Extração local de PDF digital e TXT, com perdas de leitura sinalizadas e sem OCR."""
 
 from __future__ import annotations
 
@@ -194,6 +194,15 @@ def extract_document(
                 warnings.append(f"PAGE_EXTRACTION_FAILED: não foi possível extrair a página {number}.")
                 failed = True
                 continue
+            null_count = text.count("\x00")
+            if null_count:
+                # JSONB não aceita NUL. O marcador mantém a posição e torna a perda
+                # visível, sem inventar qual caractere estava no PDF.
+                text = text.replace("\x00", "\ufffd")
+                warnings.append(
+                    f"PDF_NULL_CHARACTERS_REPLACED: página {number}: {null_count} caracteres "
+                    "não puderam ser lidos e foram marcados com �; confira o PDF original."
+                )
             characters += len(text)
             if characters > limits.max_characters:
                 raise IngestionError("FILE_TOO_LARGE", f"O texto excede {limits.max_characters} caracteres.")
