@@ -277,6 +277,25 @@ def test_pdf_parser_warning_marks_partial(monkeypatch, segmenter):
     assert not any(type(handler).__name__ == "_PdfWarnings" for handler in logging.getLogger("pypdf").handlers)
 
 
+@pytest.mark.parametrize('unknown_warning,empty_page', [(False, False), (True, False), (False, True)])
+def test_xref_correction_is_informational_without_hiding_incomplete_pages(monkeypatch, unknown_warning, empty_page):
+    import logging
+    import privacy_service.extraction as extraction
+    original = extraction.PdfReader
+    def with_notice(*args, **kwargs):
+        logging.getLogger('pypdf._reader').warning('Xref table not zero-indexed. ID numbers for objects will be corrected.')
+        if unknown_warning:
+            logging.getLogger('pypdf._reader').warning('Aviso desconhecido sobre a estrutura')
+        return original(*args, **kwargs)
+    monkeypatch.setattr(extraction, 'PdfReader', with_notice)
+    pages = ['Texto legível.', ''] if empty_page else ['Texto legível.']
+    result = extract(pdf_bytes(pages), 'p.pdf')
+    assert result.status == ('partial' if unknown_warning or empty_page else 'ok')
+    assert any(w.startswith('PDF_XREF_INDEX_CORRECTED:') for w in result.warnings)
+    assert any(w.startswith('PDF_PARSER_WARNING:') for w in result.warnings) == unknown_warning
+    assert any(w.startswith('PAGE_WITHOUT_TEXT:') for w in result.warnings) == empty_page
+
+
 def test_unusable_paragraph_does_not_hide_partial_status(segmenter):
     result = segmenter.prepare(extract("Texto válido.\n\n\u200b\u200b".encode()))
     assert result["extraction"]["status"] == "partial"

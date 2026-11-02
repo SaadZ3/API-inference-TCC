@@ -228,7 +228,11 @@ def polarity(text: str, predicate: re.Pattern) -> str:
     prefix = text[:match.start()] if match else ""
     if re.search(r"\bnão\s+(?:só|apenas|somente)\b", text, re.I):
         return "uncertain"
-    if (re.search(r"\b(?:não|nunca|jamais|nem)\s+(?:\w+\s+){0,3}$", prefix, re.I)
+    # A negação precisa alcançar a ação: "não controla o compartilhamento"
+    # nega o controle, não a prática de compartilhar.
+    if (re.search(r"\b(?:não|nunca|jamais|nem)\s+(?:(?:é|são|será|serão|foi|foram|"
+                  r"pode|podem|podemos|poderá|poderão|vamos|iremos|possível|"
+                  r"intencionalmente|conscientemente|automaticamente)\s+){0,3}$", prefix, re.I)
             or re.search(r"\bsem restrição\b", text, re.I)):
         return "negated"
     if re.search(r"(?:^|[,;])\s*(?:se|caso)\b|\b(?:se|caso)\s+(?:você|houver|for|necessário)\b|\b(?:poderemos|podemos|poderá)\b", text, re.I):
@@ -302,6 +306,10 @@ def conflicting(a: dict, b: dict, question: dict) -> bool:
     if kind == "polarity":
         return {a["polarity"], b["polarity"]} == {"affirmed", "negated"}
     if kind == "disposal":
+        # Direito de excluir a qualquer momento não contradiz retenção enquanto
+        # a conta está ativa; comparar destinações exige um evento em ambas.
+        if 'end_event' not in a['features'] or ('end_event' not in b['features'] and not explicit_same):
+            return False
         return ("dispose" in a["features"]) != ("dispose" in b["features"])
     if kind == "duration":
         def periods(value: dict) -> set[str]:

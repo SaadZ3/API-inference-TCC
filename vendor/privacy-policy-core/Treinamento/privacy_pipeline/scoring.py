@@ -16,7 +16,7 @@ def from_service_response(response: dict) -> dict:
     """Adapta uma resposta salva da P4, sem alterar suas previsões ou offsets."""
     result = response["result"]
     return {"schema_version": 1, "policy_id": result["source"]["sha256"], "language": "pt",
-            "complete": result["document_scope"] == "full_document" and result["extraction"]["status"] == "ok",
+            "complete": result["document_scope"] == "full_document",
             "document_scope": result["document_scope"], "extraction": result["extraction"],
             "model": result["evaluation"].get("model"), "applicability": {}, "segments": result["segments"]}
 

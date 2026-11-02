@@ -95,10 +95,17 @@ class _PdfWarnings(logging.Handler):
         super().__init__(logging.WARNING)
         self.thread_id = threading.get_ident()
         self.seen = False
+        self.xref_corrected = False
 
     def emit(self, record: logging.LogRecord) -> None:
         if record.thread == self.thread_id:
-            self.seen = True
+            # O pypdf corrige esta numeração ao ler PDFs válidos, inclusive
+            # arquivos otimizados. Outros avisos continuam impeditivos.
+            if (record.name == 'pypdf._reader' and record.levelno == logging.WARNING
+                    and record.getMessage() == 'Xref table not zero-indexed. ID numbers for objects will be corrected.'):
+                self.xref_corrected = True
+            else:
+                self.seen = True
 
     def __enter__(self):
         logging.getLogger("pypdf").addHandler(self)
@@ -134,6 +141,7 @@ def extract_document(
         raise IngestionError("UNREADABLE_FILE", "O arquivo está vazio.")
 
     warnings: list[str] = []
+    parser_incomplete = False
     extracted: list[tuple[int | None, str, str]] = []
     if kind == ".txt":
         try:
@@ -162,7 +170,10 @@ def extract_document(
             raise IngestionError("UNREADABLE_FILE", "Não foi possível abrir o PDF. Verifique se ele está íntegro.") from None
 
         if notices.seen:
+            parser_incomplete = True
             warnings.append("PDF_PARSER_WARNING: a biblioteca informou inconsistências ao abrir o PDF; revise a extração.")
+        if notices.xref_corrected:
+            warnings.append("PDF_XREF_INDEX_CORRECTED: a numeração interna do PDF foi ajustada automaticamente; o aviso isolado não indica perda de texto.")
         images_found = False
         failed = False
         characters = 0
@@ -190,6 +201,8 @@ def extract_document(
             if notices.seen:
                 status = "partial"
                 warnings.append(f"PDF_PARSER_WARNING: a biblioteca informou inconsistências na página {number}; revise a extração.")
+            if notices.xref_corrected:
+                warnings.append(f"PDF_XREF_INDEX_CORRECTED: a numeração interna foi ajustada na página {number}; o aviso isolado não indica perda de texto.")
             if not text.strip():
                 status = "empty"
                 warnings.append(f"PAGE_WITHOUT_TEXT: página {number} sem texto extraível; pode estar vazia ou exigir OCR.")
@@ -219,7 +232,7 @@ def extract_document(
         raise IngestionError("UNREADABLE_FILE", "O documento não contém texto utilizável.")
     return ExtractedDocument(
         filename, sha256(content).hexdigest(), kind[1:], len(content), document_scope,
-        text, spans, warnings, "partial" if warnings else "ok",
+        text, spans, warnings, "partial" if parser_incomplete or any(p.status != 'ok' for p in spans) else "ok",
     )
 
 

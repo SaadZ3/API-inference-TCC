@@ -70,6 +70,8 @@ Validação adicional com pesos reais, equivalência com a rodada anterior e med
 
 Use uma pasta de saída nova. O script processa seu PDF inteiro e como trecho, testa TXT sintético de 100 mil caracteres, compara 32 trechos históricos e salva respostas/manifesto/medidas. A comparação pressupõe que os outputs históricos originais ainda existem.
 
+Para conferir mudanças nas regras sem executar novamente o classificador, use `scripts/revalidate_exports.py --inputs <pasta> --output <nova-pasta>`. A entrada deve conter PDFs e exportações `resultado-*.json`; o script associa os arquivos por hash, reextrai o texto e recusa reutilizar classificações se o texto mudar. As saídas identificam a análise original e não são gravadas no banco. A R1 de 02/11/2026 usa regras `governance-rules-v2-dev3`; veja [o relatório](../docs/R1_REVISAO_NOTAS.md).
+
 ## Atualizar modelo
 
 Mantenha a pasta anterior, exporte/verifique o novo pacote com as mesmas categorias, ajuste MODEL_DIR e reinicie. Confira readiness e execute a validação antes de usar. Para voltar, restaure MODEL_DIR e reinicie. O formato de dados mantém `schema_version: 2`; versões mudam conforme artefatos, código e configuração. Alterações de categorias ou significado do resultado exigem rever o contrato.

@@ -1,5 +1,5 @@
 # Configuração experimental; exemplos de desenvolvimento não validam qualidade real.
-version: governance-rules-v2-dev2
+version: governance-rules-v2-dev3
 method_version: documentary-quality-v2-draft1
 language: pt
 profile_id: core-14-v1
@@ -52,7 +52,11 @@ objects:
   access_logs: '\bregistros? de acesso\b'
   registration: '\b(?:registros? de cadastro|registros? de clientes|cadastros?)\b'
   purchase: '\bdados de (?:compra|pagamento)\b'
-  marketing: '\b(?:marketing|mensagens|consentimento|cookies)\b'
+  marketing: '\bmarketing\b'
+  messages: '\bmensagens\b'
+  consent: '\bconsentimento\b'
+  cookies: '\bcookies?\b'
+  phone: '\btelefone\b'
   rights: '\b(?:exclusão|correção|solicitações de acesso)\b'
   policy_change: '\b(?:política|vigorar)\b'
   personal: '\b(?:dados pessoais|dados em trânsito)\b'
@@ -63,6 +67,9 @@ contexts:
   receipt: '\b(?:recebimento|recebê-lo|receber)\b'
   customers: '\bclientes\b'
   employees: '\b(?:funcionários|colaboradores)\b'
+  children: '\b(?:crianças?|menores? de (?:idade|\d+)|limite de idade|infantil)\b'
+  user_action: '\bvocê\s+(?:(?:também|nunca|não|jamais|pode|poderá|deve|optar|opta|por|acessar|e|ou)\s+){0,6}(?:compartilh\w*|exclu\w*|elimin\w*)\b'
+  account_active: '\benquanto\b[^.!?;\n]{0,60}\bconta\b[^.!?;\n]{0,30}\bativa\b'
 recipients:
   payment: '\bprocessador\w* de pagamento\b'
   advertising: '\banunciantes?\b'
