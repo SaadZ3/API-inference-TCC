@@ -17,6 +17,7 @@ LOGGER = logging.getLogger(__name__)
 
 
 def error(code, message, status):
+    """Converte código, mensagem e status na resposta JSON de erro usada pelo backend."""
     return JSONResponse({"error": {"code": code, "message": message}}, status_code=status)
 
 
@@ -49,7 +50,27 @@ class BodyLimit:
         await self.app(scope, bounded_receive, send)
 
 
+async def read_upload(request: Request, config: Settings):
+    """Lê um multipart limitado e retorna conteúdo, nome e escopo, ou a resposta de erro."""
+    async with asyncio.timeout(config.upload_timeout_seconds):
+        async with request.form(max_files=1, max_fields=2, max_part_size=1024) as form:
+            expected = ['document_scope', 'file', 'language']
+            if sorted(key for key, _ in form.multi_items()) != expected:
+                return error("INVALID_INPUT", "Campos de envio inválidos.", 400)
+            upload = form["file"]
+            if (not isinstance(upload, StarletteUploadFile) or not upload.filename
+                    or form["language"] != "pt"
+                    or form["document_scope"] not in ("full_document", "excerpt", "unknown")):
+                return error("INVALID_INPUT", "Arquivo, idioma ou escopo inválido.", 400)
+            content = await upload.read(config.limits.max_bytes + 1)
+            if len(content) > config.limits.max_bytes:
+                return error("FILE_TOO_LARGE", "Arquivo excede o limite permitido.", 413)
+            filename, document_scope = upload.filename, form["document_scope"]
+    return content, filename, document_scope
+
+
 def create_app(settings=None, pipeline_factory=None):
+    """Retorna a API usando a configuração e a fábrica de modelo recebidas, ou os padrões."""
     @asynccontextmanager
     async def lifespan(app):
         app.state.pipeline = None
@@ -92,16 +113,19 @@ def create_app(settings=None, pipeline_factory=None):
         return error("INVALID_INPUT", "Envie file, language=pt e document_scope válido.", 400)
 
     @app.get("/health/live")
+    # Informa que o processo responde, mesmo se o modelo não estiver disponível.
     async def live():
         return {"status": "ok", "phase": "P4"}
 
     @app.get("/health/ready")
+    # Retorna disponibilidade, ocupação e versões do modelo já carregado.
     async def ready():
         if app.state.pipeline is None:
             return JSONResponse({"status": "not_ready", "reason": "Modelo ou regras indisponíveis."}, status_code=503)
         return {"status": "ready", "busy": app.state.busy, "versions": app.state.pipeline.versions}
 
     @app.get("/manifest")
+    # Entrega a procedência da análise para o backend, sem caminhos locais.
     async def manifest():
         if app.state.pipeline is None:
             return error("INFERENCE_UNAVAILABLE", "Serviço de análise indisponível.", 503)
@@ -118,6 +142,7 @@ def create_app(settings=None, pipeline_factory=None):
             }}
         }}}
     })
+    # Recebe PDF/TXT e devolve a análise; o bloqueio dura até terminar a tarefa nativa.
     async def analyze(request: Request):
         if app.state.pipeline is None or app.state.busy:
             return error("INFERENCE_UNAVAILABLE", "Serviço indisponível ou ocupado. Tente novamente.", 503)
@@ -127,20 +152,10 @@ def create_app(settings=None, pipeline_factory=None):
             if request.headers.get("content-type", "").split(";")[0].lower() != "multipart/form-data":
                 return error("INVALID_INPUT", "Envie um arquivo em multipart/form-data.", 400)
             config = app.state.settings
-            async with asyncio.timeout(config.upload_timeout_seconds):
-                async with request.form(max_files=1, max_fields=2, max_part_size=1024) as form:
-                    expected = ['document_scope', 'file', 'language']
-                    if sorted(key for key, _ in form.multi_items()) != expected:
-                        return error("INVALID_INPUT", "Campos de envio inválidos.", 400)
-                    upload = form["file"]
-                    if (not isinstance(upload, StarletteUploadFile) or not upload.filename
-                            or form["language"] != "pt"
-                            or form["document_scope"] not in ("full_document", "excerpt", "unknown")):
-                        return error("INVALID_INPUT", "Arquivo, idioma ou escopo inválido.", 400)
-                    content = await upload.read(config.limits.max_bytes + 1)
-                    if len(content) > config.limits.max_bytes:
-                        return error("FILE_TOO_LARGE", "Arquivo excede o limite permitido.", 413)
-                    filename, document_scope = upload.filename, form["document_scope"]
+            upload = await read_upload(request, config)
+            if isinstance(upload, JSONResponse):
+                return upload
+            content, filename, document_scope = upload
             deadline = time.monotonic() + config.analysis_timeout_seconds
             task = asyncio.create_task(asyncio.to_thread(
                 app.state.pipeline.analyze, content, filename, document_scope, deadline))

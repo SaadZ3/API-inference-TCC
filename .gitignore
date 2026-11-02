@@ -17,3 +17,6 @@ model/*.part
 # Documentos/JSONs locais de preparação e verificação
 outputs/
 verification/
+
+# Logs locais do serviço
+*.log

@@ -1,3 +1,4 @@
+# Verifica carregamento e execução do fluxo de análise para proteger o comportamento do TCC.
 import time
 
 import pytest

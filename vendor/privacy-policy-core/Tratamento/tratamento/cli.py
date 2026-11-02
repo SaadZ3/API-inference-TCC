@@ -59,14 +59,20 @@ def prepare(config: dict, skip_tokens: bool, force: bool) -> None:
     LOGGER.info("tratamento preparada: %s trechos, %s multi-label. Planilha: %s", len(frame), report["multilabel_segments"], workbook_path)
 
 
-def validate(config: dict, path: Path, skip_tokens: bool) -> int:
-    """Confere tradução contra a origem e exporta amostra de revisão."""
-    output = ROOT / config["output_dir"]
+def read_reference(output: Path) -> tuple[dict, pd.DataFrame]:
+    """Recebe a pasta dos dados e retorna manifesto e segmentos após conferir a integridade."""
     manifest = json.loads((output / "manifest.json").read_text(encoding="utf-8"))
     source_path = output / "segments.jsonl"
     if hashlib.sha256(source_path.read_bytes()).hexdigest() != manifest["segments_sha256"]:
         raise ValueError("segments.jsonl diverge do manifesto original.")
     reference = pd.read_json(source_path, lines=True, dtype={"segment_id": str, "policy_id": str, "annotation_policy_id": str, "split_group": str})
+    return manifest, reference
+
+
+def validate(config: dict, path: Path, skip_tokens: bool) -> int:
+    """Confere tradução contra a origem e exporta amostra de revisão."""
+    output = ROOT / config["output_dir"]
+    manifest, reference = read_reference(output)
     frame, types = load_translation(path)
     labels = manifest["labels"]
     check_structure(frame, reference, labels)
@@ -97,7 +103,7 @@ def validate(config: dict, path: Path, skip_tokens: bool) -> int:
 
 
 def main() -> int:
-    """Ponto de entrada sem treino ou ações das treinamento."""
+    """Lê os argumentos do terminal e retorna o código de saída do tratamento, sem treinar."""
     parser = argparse.ArgumentParser(description="tratamento do OPP-115 / BERTimbau")
     parser.add_argument("command", choices=["prepare", "validate-translation"])
     parser.add_argument("--config", type=Path, default=ROOT / "Tratamento/config.yaml")

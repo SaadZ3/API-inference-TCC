@@ -1,3 +1,4 @@
+# Verifica limites, concorrência e respostas HTTP do serviço Python para proteger o comportamento do TCC.
 from dataclasses import replace
 from pathlib import Path
 import threading

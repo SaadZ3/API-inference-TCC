@@ -1,3 +1,4 @@
+# Empacota a API Python com o n?cleo local e as depend?ncias fixadas.
 FROM python:3.13-slim-bookworm
 WORKDIR /app
 ENV PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1 PIP_NO_CACHE_DIR=1

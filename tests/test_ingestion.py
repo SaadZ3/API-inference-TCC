@@ -1,3 +1,4 @@
+# Verifica extração de texto, segmentação e preparação pelo terminal para proteger o comportamento do TCC.
 from dataclasses import replace
 from io import BytesIO
 import json

@@ -20,23 +20,19 @@ from tratamento.translation import check_structure, load_translation, validate_t
 LOGGER = logging.getLogger(__name__)
 
 
-def load_experiment_data(config: dict, task: str) -> tuple[dict[str, pd.DataFrame], list[str], dict]:
-    """Revalida a planilha em cada execução e preserva os splits do tratamento."""
-    treatment = yaml.safe_load((ROOT / config["treatment_config"]).read_text(encoding="utf-8"))
-    source_dir = ROOT / treatment["output_dir"]
+def read_reference(source_dir: Path) -> tuple[Path, Path, dict, pd.DataFrame]:
+    """Recebe a pasta de origem e devolve caminhos, manifesto e dados com integridade conferida."""
     source = source_dir / "segments.jsonl"
     manifest_path = source_dir / "manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     if hashlib.sha256(source.read_bytes()).hexdigest() != manifest["segments_sha256"]:
         raise ValueError("Origem alterada em relação ao manifesto.")
     reference = pd.read_json(source, lines=True, dtype={"segment_id": str, "policy_id": str, "annotation_policy_id": str, "split_group": str})
-    path = ROOT / config["translated_file"]
-    frame, types = load_translation(path)
-    labels = manifest["labels"]
-    check_structure(frame, reference, labels)
-    frame, validation = validate_translation(frame, types, treatment["translation"])
-    if validation["rows_with_errors"]:
-        raise ValueError(f"Tradução tem {validation['rows_with_errors']} erros impeditivos. Execute validate-translation.")
+    return source, manifest_path, manifest, reference
+
+
+def validate_human_review(config: dict, path: Path, validation: dict) -> dict | None:
+    """Confere a revisão da tradução, completa o resumo recebido e retorna o registro ou None."""
     review = None
     if config.get("human_review_record"):
         review = json.loads((ROOT / config["human_review_record"]).read_text(encoding="utf-8"))
@@ -49,6 +45,22 @@ def load_experiment_data(config: dict, task: str) -> tuple[dict[str, pd.DataFram
             raise ValueError("Status da revisão divergente da configuração.")
         validation["human_review_status"] = review["status"]
         validation["reviewed_segments"] = review["reviewed_segments"]
+    return review
+
+
+def load_experiment_data(config: dict, task: str) -> tuple[dict[str, pd.DataFrame], list[str], dict]:
+    """Revalida a planilha em cada execução e preserva os splits do tratamento."""
+    treatment = yaml.safe_load((ROOT / config["treatment_config"]).read_text(encoding="utf-8"))
+    source_dir = ROOT / treatment["output_dir"]
+    source, manifest_path, manifest, reference = read_reference(source_dir)
+    path = ROOT / config["translated_file"]
+    frame, types = load_translation(path)
+    labels = manifest["labels"]
+    check_structure(frame, reference, labels)
+    frame, validation = validate_translation(frame, types, treatment["translation"])
+    if validation["rows_with_errors"]:
+        raise ValueError(f"Tradução tem {validation['rows_with_errors']} erros impeditivos. Execute validate-translation.")
+    review = validate_human_review(config, path, validation)
     if validation["rows_with_warnings"]:
         LOGGER.warning("%s traduções com avisos; revisão humana: %s.", validation["rows_with_warnings"], config["human_review_status"])
     before = len(frame)

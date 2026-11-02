@@ -1,3 +1,4 @@
+# Exclui ambientes e sa?das locais do contexto de build da infer?ncia.
 **
 !Dockerfile
 !requirements.txt

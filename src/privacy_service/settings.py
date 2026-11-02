@@ -12,6 +12,7 @@ ROOT = Path(__file__).resolve().parents[2]
 
 @dataclass(frozen=True)
 class Settings:
+    """Agrupa caminhos e limites da análise; rejeita lotes e tempos fora dos limites."""
     model_dir: Path
     scoring_rules: Path
     recommendations_catalog: Path = ROOT / 'config/recommendations.yaml'
@@ -30,6 +31,7 @@ class Settings:
 
     @classmethod
     def from_env(cls):
+        """Lê o ambiente e devolve a configuração, resolvendo caminhos a partir do serviço."""
         load_dotenv(ROOT / ".env", override=False)
         if os.getenv("DEVICE", "cpu") != "cpu":
             raise ValueError("Esta versão do serviço foi validada somente em CPU.")

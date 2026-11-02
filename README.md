@@ -4,7 +4,7 @@ Para publicar pelo site do Railway, siga [RAILWAY.md](RAILWAY.md). O repositóri
 
 O projeto usa um único método de avaliação da qualidade da informação documentada, com notas de **0 a 3**. Consulte [a atualização do método](../docs/AVALIACAO_UNIFICADA.md).
 
-P4 disponível: PDF digital/TXT UTF-8 → extração → BERTimbau → score com evidências. Serviço interno, independente do banco. O navegador será integrado pelo Node nas P5/P6.
+P4 disponível: PDF digital/TXT UTF-8 → extração → BERTimbau → score com evidências. Serviço interno, independente do banco. O navegador acessa o serviço por meio do backend Node, já integrado ao fluxo de análise.
 
 ## Instalar e iniciar
 
@@ -73,3 +73,29 @@ Use uma pasta de saída nova. O script processa seu PDF inteiro e como trecho, t
 ## Atualizar modelo
 
 Mantenha a pasta anterior, exporte/verifique o novo pacote com as mesmas categorias, ajuste MODEL_DIR e reinicie. Confira readiness e execute a validação antes de usar. Para voltar, restaure MODEL_DIR e reinicie. O formato de dados mantém `schema_version: 2`; versões mudam conforme artefatos, código e configuração. Alterações de categorias ou significado do resultado exigem rever o contrato.
+
+## Estrutura e núcleo preservado
+
+```text
+src/privacy_service/main.py          HTTP, upload e concorrência
+src/privacy_service/settings.py      Configuração e limites
+src/privacy_service/extraction.py    Extração de PDF/TXT
+src/privacy_service/segmentation.py  Trechos com posições e páginas
+src/privacy_service/pipeline.py      Modelo, avaliação e manifesto
+src/privacy_service/prepare.py       Preparação pelo terminal
+vendor/privacy-policy-core/          Núcleo local instalado pela API
+vendor/SNAPSHOT.json                 Origem e hashes da cópia local
+config/                             Regras, recomendações e referências
+model/                              Modelo exportado e integridade
+tests/ e scripts/                   Testes e verificações reproduzíveis
+```
+
+O backend envia arquivo, idioma e escopo. O serviço retorna `schema_version`, `versions` e `result`, sem acessar PostgreSQL. Os dados de treinamento ficam no módulo científico; não são carregados para analisar uma política.
+
+`pipeline.py` carrega os artefatos uma vez, confere sua integridade e aquece o modelo. `inference.py` classifica em lotes. `heuristics.py` procura evidências e conflitos; `scoring.py` resolve as perguntas e combina suas contribuições. `scoring_common.py` mantém validações e a escala. `recommendations.py` relaciona achados ao catálogo sem mudar a nota.
+
+Esses arquivos, junto de extração, segmentação, regras, catálogo e `score_cli.py`, participam das identidades calculadas pelo código. Até comentários podem mudar os hashes expostos na análise ou no manifesto da CLI. Nesta simplificação eles foram preservados; esta seção documenta seu papel sem alterar as respostas.
+
+O núcleo em `vendor/` é uma cópia necessária à publicação independente, não uma segunda implementação. Ao atualizar uma fonte autorizada, copie somente os arquivos alterados e atualize seus hashes em `SNAPSHOT.json`; confira a igualdade com a origem e rode os testes. Não regenere hashes do modelo para encobrir alterações nos artefatos.
+
+`requirements.txt` instala o serviço e o núcleo local; `requirements.lock.txt` fixa dependências diretas e indiretas; `requirements-dev.txt` acrescenta testes e medição. Não remover um pacote somente por não existir um import direto no serviço.

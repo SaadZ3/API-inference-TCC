@@ -1,3 +1,4 @@
+# Verifica integração das regras e recomendações na API para proteger o comportamento do TCC.
 import copy
 import json
 from pathlib import Path

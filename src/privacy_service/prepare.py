@@ -15,6 +15,7 @@ from .segmentation import PolicySegmenter
 
 
 def main() -> int:
+    """Lê argumentos, grava a preparação em arquivo novo e retorna 0 ou um código de erro."""
     # JSON de erro usa UTF-8 também quando redirecionado no Windows.
     for stream in (sys.stdout, sys.stderr):
         if hasattr(stream, "reconfigure"):

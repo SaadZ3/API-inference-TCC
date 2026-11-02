@@ -1,3 +1,4 @@
+# Compartilha tokenizer e configuração local entre os testes, sem baixar modelos.
 from pathlib import Path
 import os
 import pytest
