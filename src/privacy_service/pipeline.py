@@ -7,7 +7,7 @@ from pathlib import Path
 import time
 
 from privacy_pipeline import inference, scoring, scoring_common, heuristics, recommendations
-from . import extraction, segmentation
+from . import extraction, segmentation, pdf_reading_order
 from .settings import Settings
 
 ARTIFACTS = (
@@ -66,7 +66,7 @@ class AnalysisPipeline:
             "batch_size": settings.batch_size,
             "thresholds": json.loads((settings.model_dir / "thresholds.json").read_text(encoding="utf-8")),
         }
-        runtime = {name: version(name) for name in ("torch", "transformers", "tokenizers", "pypdf")}
+        runtime = {name: version(name) for name in ("torch", "transformers", "tokenizers", "pypdf", "pdfplumber", "pdfminer.six")}
         model_identity = {"files_sha256": hashes, "runtime": runtime,
                           "inference_code_sha256": file_hash(inference.__file__),
                           "batch_size": settings.batch_size, "cpu_threads": settings.cpu_threads}
@@ -74,8 +74,9 @@ class AnalysisPipeline:
             "version": segmentation.PREPROCESSING_VERSION,
             "tokenizer_sha256": self.segmenter.tokenizer_sha256,
             "files_sha256": {name: file_hash(module.__file__) for name, module in
-                            (("extraction.py", extraction), ("segmentation.py", segmentation))},
+                            (("extraction.py", extraction), ("segmentation.py", segmentation), ("pdf_reading_order.py", pdf_reading_order))},
             "limits": asdict(settings.limits), "pypdf": runtime["pypdf"],
+            "pdfplumber": runtime["pdfplumber"], "pdfminer.six": runtime["pdfminer.six"],
             "tokenizers": runtime["tokenizers"],
         }
         scoring_identity = {

@@ -6,6 +6,7 @@ from dataclasses import dataclass, replace
 import math
 from pathlib import Path
 import re
+import unicodedata
 from typing import Any
 
 import yaml
@@ -18,6 +19,10 @@ QUESTION_IDS = {"collection.data_types", "collection.purposes", "sharing.recipie
                 "retention.duration", "retention.disposal", "security.technical_measures",
                 "security.access_controls", "changes.notice_channel", "changes.notice_timing"}
 VIRTUAL_FEATURES = {"negated"}
+
+
+def search_text(text: str) -> str:
+    return re.sub(r"\s+", " ", unicodedata.normalize("NFKC", text))
 
 
 def expression(value: Any, facts: dict[str, bool]) -> bool:
@@ -182,7 +187,10 @@ def windows(policy: dict, rules: RuleSet) -> list[Window]:
         for paragraph in re.finditer(r"\S[\s\S]*?(?=\n\s*\n|\Z)", text):
             spans = []
             left = paragraph.start()
-            for boundary in re.finditer(r"[.!?;](?=\s|$)|,\s*(?=(?:mas|porém|contudo|enquanto|e\s+para)\b)", paragraph.group(), re.I):
+            # Novo sujeito com duração própria não fornece prazo à oração anterior.
+            boundary_pattern = (r"[.!?;](?=\s|$)|,\s*(?=(?:mas|porém|contudo|enquanto|e\s+para)\b)"
+                                r"|(?=\s+e\s+(?:o|a|os|as)\s+[^.!?;,\n]{1,60}\s+(?:dura(?:m|rá|rão)?|tem|têm)\b)")
+            for boundary in re.finditer(boundary_pattern, paragraph.group(), re.I):
                 right = paragraph.start() + boundary.end()
                 if text[left:right].strip():
                     spans.append((left, right))
@@ -195,7 +203,7 @@ def windows(policy: dict, rules: RuleSet) -> list[Window]:
                 for (a, b), (c, d) in zip(spans, spans[1:]):
                     following = text[c:d].strip()
                     # Duas frases não bastam: exigir ligação anafórica explícita.
-                    if rules.patterns["features"]["continuation"].search(following):
+                    if rules.patterns["features"]["continuation"].search(search_text(following)):
                         expanded.append((a, d, True, ''))
             for start, end, joined, previous_text in expanded:
                 while start < end and text[start].isspace():
@@ -241,7 +249,9 @@ def polarity(text: str, predicate: re.Pattern) -> str:
 
 
 def inspect(window: Window, question: dict, rules: RuleSet, cache: dict | None = None) -> dict | None:
-    text = window.text
+    # A busca aceita ligaturas tipográficas (ﬁ/fi) e quebras visuais de linha.
+    # As citações e seus intervalos continuam apontando para o texto original.
+    text = search_text(window.text)
     def hits(group, value):
         key = (group, value)
         if cache is None:
@@ -283,6 +293,20 @@ def inspect(window: Window, question: dict, rules: RuleSet, cache: dict | None =
 def conflicting(a: dict, b: dict, question: dict) -> bool:
     """Sinais conservadores de conflito; requerem objeto/contexto comparáveis."""
     wa, wb = a["window"], b["window"]
+    if question['id'].startswith('collection.'):
+        # Coletar e usar são declarações diferentes, mesmo sobre o mesmo dado.
+        if (a['features'] & {'collect', 'use_data'}) != (b['features'] & {'collect', 'use_data'}):
+            return False
+    if question['id'].startswith('sharing.'):
+        # Vender e compartilhar são práticas diferentes; negar uma não nega a outra.
+        def sharing_actions(text: str) -> set[str]:
+            return {name for name, pattern in {
+                'sale': r'\b(?:vendemos|vender\w*|comercializamos)\b',
+                'transfer': r'\b(?:transferimos|transferid\w*)\b',
+                'disclosure': r'\b(?:compartilh\w*|divulgamos|divulgad\w*)\b',
+            }.items() if re.search(pattern, text, re.I)}
+        if sharing_actions(wa.text) != sharing_actions(wb.text):
+            return False
     # Uma janela ampliada e sua própria frase não são duas declarações.
     if any(x["segment_id"] == y["segment_id"] and max(x["start"], y["start"]) < min(x["end"], y["end"])
            for x in wa.evidence for y in wb.evidence):

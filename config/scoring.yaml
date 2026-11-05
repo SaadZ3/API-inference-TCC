@@ -1,6 +1,6 @@
 # Configuração experimental; exemplos de desenvolvimento não validam qualidade real.
-version: governance-rules-v2-dev3
-method_version: documentary-quality-v2-draft1
+version: governance-rules-v3-dev2
+method_version: documentary-quality-v3-draft1
 language: pt
 profile_id: core-14-v1
 profile_defined_at: '2026-09-27T00:00:00Z'
@@ -9,18 +9,20 @@ max_segments: 2
 max_evidence_occurrences: 2
 fallback: true
 features:
+  use_data: '\b(?:usamos|utilizamos|usaremos|utilizaremos)\s+(?:(?:o|a|os|as|seu|sua|seus|suas)\s+){0,2}(?:dados?|informações|nome|e-?mail|localização|registros?|cookies?|telefone|CPF|endereços?)\b'
+  collect_or_use: '(?:\b(?:coletamos|coletaremos|coletam|coleta|coletar|coletad[oa]s?|coletando|coletou|recolhemos|recolhid[oa]s?)\b|\b(?:usamos|utilizamos|usaremos|utilizaremos)\s+(?:(?:o|a|os|as|seu|sua|seus|suas)\s+){0,2}(?:dados?|informações|nome|e-?mail|localização|registros?|cookies?|telefone|CPF|endereços?)\b)'
   collect: '\b(?:coletamos|coletaremos|coletam|coleta|coletar|coletad[oa]s?|coletando|coletou|recolhemos|recolhid[oa]s?)\b'
   data: '\b(?:dados?|informaç\w*|nome|e-?mail|localizaç\w*|registros?|cadastros?|cookies?|telefone|CPF|endereços?)\b'
   data_type: '\b(?:nome|e-?mail|localizaç\w*|registros? de acesso|registros? de cadastro|cadastros?|cookies?|telefone|CPF|endereços?|dados de (?:compra|pagamento|saúde))\b'
-  purpose: '\bpara\s+(?:enviar|emitir|processar|fornecer|prestar|personalizar|realizar|prevenir|autenticar|identificar)\b[^.!?;\n]{2,120}'
+  purpose: '\b(?:para|a fim de)\s+(?:(?:nos?\s+)?auxiliar|enviar|emitir|processar|fornecer|prestar|personalizar|realizar|prevenir|autenticar|identificar|desenvolver|proteger|gerenciar|que\s+(?:eles\s+)?possam\s+(?:reconhecer|fornecer))\b[^.!?;\n]{2,120}'
   share: '\b(?:compartilh\w*|divulgamos|divulgad\w*|vendemos|vender\w*|comercializamos|transferimos|transferid\w*)\b'
-  recipient: '\b(?:processador\w* de pagamento|prestador\w* de serviços|parceiros? comerciais|anunciantes?|autoridades|afiliad\w*)\b'
-  condition: '\b(?:se você autorizar|com (?:o )?(?:seu )?consentimento|mediante consentimento|por obrigação legal|ordem judicial)\b'
-  choice: '\b(?:cancelar|revogar|desativar|recusar|descadastr\w*)\b'
+  recipient: '\b(?:processador\w* de pagamento|prestador\w* de serviços|fornecedores?|provedores? de serviços|parceiros? (?:comerciais|de publicidade)|anunciantes?|autoridades|afiliad\w*)\b'
+  condition: '\b(?:se você autorizar|com (?:o )?(?:seu )?consentimento|mediante consentimento|por obrigação legal|cumprir (?:uma )?obrigação legal|ordem judicial)\b'
+  choice: '\b(?:cancelar|revogar|retirar|desativar|recusar|descadastr\w*)\b'
   marketing: '\b(?:marketing|mensagens|consentimento|cookies|publicidade|rastreamento)\b'
-  channel: '[\w.+-]+@[\w.-]+\.[a-z]{2,}|https?://[^\s]+|\b(?:conta|perfil|configurações)\s*>[^.!?\n]+|\blink de (?:descadastro|cancelamento)[^.!?;\n]{0,60}\b(?:cada mensagem|cada e-mail|rodapé)\b'
-  procedure: '\b(?:clique|abra|acesse|escreva|envie|solicite|use)\b'
-  request: '\b(?:solicit\w*|pedid\w*|requer\w*)\b[^.!?;\n]{0,100}\b(?:exclusão|correção|acesso|eliminaç\w*)\b'
+  channel: '[\w.+-]+@[\w.-]+\.[a-z]{2,}|https?://[^\s]+|\b(?:conta|perfil|configurações)\s*>[^.!?\n]+|\blink de (?:descadastro|cancelamento)[^.!?;\n]{0,60}\b(?:cada mensagem|cada e-mail|rodapé)\b|\bresponda à mensagem com as palavras?\s+["“](?:PARAR|FINALIZAR|SAIR|STOP)\b|\bformulário\s+(?:de\s+)?escritório de privacidade e (?:diretor de proteção de dados|encarregado pelo tratamento de dados pessoais)\b'
+  procedure: '\b(?:clique|clicando|abra|acesse|acessando|escreva|envie|solicite|use|selecione|responda)\b'
+  request: '\b(?:solicit\w*|pedid\w*|pedir|requer\w*)\b(?:(?!\b(?:fornecer|prestar|responder)\b)[^.!?;\n]){0,100}\b(?:exclusão|excluir|correção|corrigir|retificação|retificar|remoção|acesso|acessar|eliminaç\w*|eliminar)\b|\bexercer\s+(?:alguns\s+)?(?:os|seus|desses|esses)\s+direitos\b[^.!?;\n]{0,150}\bprivacidade\b'
   response: '\b(?:respond\w*|resposta|prazo máximo)\b'
   duration: '\b\d+\s+(?:dias?|meses|anos?|horas?)\b'
   start: '\b(?:após|depois d[eo]|a partir d[eo]|contad\w* d[eo])\b[^.!?;\n]{0,60}\b(?:receb\w*|pedido|solicitaç\w*|acesso|encerramento|cadastro|coleta)\b'
@@ -31,19 +33,19 @@ features:
   security_action: '\b(?:usamos|utilizamos|adotamos|proteg\w*|criptografamos|criptografad\w*)\b'
   security_generic: '\b(?:proteç\w*|proteg\w*|segurança)\b'
   measure: '\b(?:TLS|HTTPS|criptograf\w*|firewall\w*|pseudonimiz\w*)\b'
-  protection_context: '\b(?:dados pessoais|informaç\w* pessoais|transmissão|trânsito|armazenamento|em repouso|banco de dados)\b'
+  protection_context: '\b(?:dados pessoais|informaç\w* (?:pessoais|financeiras|(?:altamente )?confidenciais)|transmissão|transmitimos|trânsito|armazenamento|em repouso|banco de dados)\b'
   access_control: '\b(?:acess\w*|autenticaç\w*|autorizaç\w*)\b'
-  control: '\b(?:autenticação de múltiplos fatores|MFA|controle de acesso|somente funcionários autorizados|acesso restrito|sem restrição)\b'
+  control: '\b(?:autenticação de múltiplos fatores|MFA|controle de acesso|somente funcionários autorizados|acesso restrito|restrit[oa]s? a (?:funcionários|colaboradores|usuários) autorizados|sem restrição|exigir (?:uma )?senha|exigir que você verifique suas credenciais)\b'
   control_generic: '\b(?:controlad\w*|restring\w*|restrit\w*|permiss\w*|autenticaç\w*|autorizaç\w*)\b'
-  actor: '\b(?:funcionári\w*|colaborador\w*|administrador\w*|qualquer pessoa|usuários? autorizad\w*)\b'
+  actor: '\b(?:funcionári\w*|colaborador\w*|administrador\w*|qualquer pessoa|usuários? autorizad\w*|ID do usuário|você verifique suas credenciais)\b'
   resource: '\b(?:dados|informações|registros|cadastros|banco de dados)\b'
-  change: '\b(?:alteraç\w*|mudanças?|atualizaç\w*)\b[^.!?;\n]{0,50}\bpolítica\b'
-  notice: '\b(?:avis\w*|notific\w*|informaremos|comunicaremos)\b'
+  change: '\b(?:alteraç\w*|mudanças?|atualizaç\w*|atualizar|modificarmos)\b[^.!?;\n]{0,50}\b(?:política|declaração de privacidade)\b'
+  notice: '\b(?:avis\w*|notific\w*|informaremos|comunicaremos|publicaremos|postaremos)\b'
   notice_channel: '\b(?:e-?mail|aplicativo|notificação|nesta página|neste site)\b'
   notice_timing: '\b(?:antes|depois|após|no momento)\b[^.!?;\n]{0,80}\b(?:vigor|vigência|vigorar|publicação)\b'
   unresolved: '\b(?:descrit\w* abaixo|canal (?:mencionado anteriormente|acima)|primeiro destes canais|aquele dado|esse fim|exceção ali indicada|substituição não esclarecida)\b'
   foreign_channel: '\bpara\s+(?:comprar|vender|receber ofertas|anunciar)\b'
-  continuation: '^\s*(?:após esse|esses?|essas?|os mesmos|as mesmas|o mesmo|a mesma|respondemos a (?:esse|essa)|ao final desse|ao fim desse|(?:usamos|utilizamos) (?:aquele|esse|essa)|o prazo (?:máximo )?desse)\b'
+  continuation: '^\s*(?:após esse|esses?|essas?|os mesmos|as mesmas|o mesmo|a mesma|quando o fizermos|respondemos a (?:esse|essa)|ao final desse|ao fim desse|(?:usamos|utilizamos) (?:aquele|esse|essa)|o prazo (?:máximo )?desse)\b'
   non_assertion: '\?\s*$|^\s*(?:tratamento|dados pessoais|coleta|compartilhamento|retenção|consentimento)\s*(?::\s*(?:toda|todo|qualquer|é|são)\b|(?:é|significa)\b)'
 objects:
   name: '\bnome\b'
@@ -85,15 +87,15 @@ dimensions:
   - {id: changes, title: Alterações da política, weight: 1, label: Policy Change}
 questions:
   - id: collection.data_types
-    title: Tipos de dados coletados
-    predicate: collect
-    candidate: {all: [collect, data]}
-    elements: {collection_practice: collect, identifiable_data_type: data_type}
+    title: Tipos de dados coletados ou usados
+    predicate: collect_or_use
+    candidate: {all: [collect_or_use, data]}
+    elements: {collection_practice: collect_or_use, identifiable_data_type: data_type}
     conflict: polarity
   - id: collection.purposes
     title: Relação entre dado e finalidade
-    predicate: collect
-    candidate: {all: [collect, data]}
+    predicate: collect_or_use
+    candidate: {all: [collect_or_use, data]}
     elements: {collected_data_type: data_type, specific_purpose: purpose}
     conflict: polarity
   - id: sharing.recipients

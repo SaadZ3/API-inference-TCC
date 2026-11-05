@@ -126,6 +126,65 @@ def test_pdf_multiple_pages_and_accents(segmenter):
     assert_preserved(result, segmenter)
 
 
+def test_pdf_late_drawn_link_stays_in_its_visible_sentence(segmenter):
+    from pypdf import PdfReader
+    writer = PdfWriter()
+    page = writer.add_blank_page(width=595, height=842)
+    font = writer._add_object(DictionaryObject({
+        NameObject('/Type'): NameObject('/Font'), NameObject('/Subtype'): NameObject('/Type1'),
+        NameObject('/BaseFont'): NameObject('/Helvetica'),
+    }))
+    page[NameObject('/Resources')] = DictionaryObject({
+        NameObject('/Font'): DictionaryObject({NameObject('/F1'): font}),
+    })
+    stream = DecodedStreamObject()
+    stream.set_data(b'BT /F1 10 Tf 40 780 Td (Solicite exclusao por ) Tj ET '
+                    b'BT /F1 10 Tf 40 750 Td (Outra frase sobre vendas.) Tj ET '
+                    b'BT /F1 10 Tf 140 780 Td (privacidade@example.test.) Tj ET')
+    page[NameObject('/Contents')] = writer._add_object(stream)
+    output = BytesIO()
+    writer.write(output)
+    raw = output.getvalue()
+    previous = PdfReader(BytesIO(raw)).pages[0].extract_text()
+    assert previous.index('Outra frase') < previous.index('privacidade@')
+    document = extract(raw, 'link.pdf')
+    assert document.text.index('privacidade@') < document.text.index('Outra frase')
+    assert document.status == 'ok'
+    assert_preserved(segmenter.prepare(document), segmenter)
+
+
+def test_positioned_reading_keeps_table_cells_separate_and_deduplicates_drawings(segmenter):
+    from pypdf import PdfReader
+    writer = PdfWriter()
+    page = writer.add_page(PdfReader(BytesIO(pdf_bytes(['Base.']))).pages[0])
+    stream = DecodedStreamObject()
+    # Células com assuntos diferentes não devem formar uma única frase.
+    commands = b'40 600 500 160 re S 290 600 m 290 760 l S 40 720 m 540 720 l S '
+    for x, y, text in [(50, 740, 'Direitos'), (300, 740, 'Vendas'),
+                       (50, 700, 'Solicite correcao dos dados.'), (300, 700, 'vendas@example.test')]:
+        command = f'BT /F1 12 Tf {x} {y} Td ({text}) Tj ET '.encode()
+        commands += command + command
+    stream.set_data(commands)
+    page[NameObject('/Contents')] = writer._add_object(stream)
+    output = BytesIO()
+    writer.write(output)
+    document = extract(output.getvalue(), 'tabela.pdf')
+    assert not document.warnings
+    assert document.text.count('Solicite correcao dos dados.') == 1
+    assert document.text.count('vendas@example.test') == 1
+    assert '\n\n' in document.text.split('Solicite correcao dos dados.')[1].split('vendas@example.test')[0]
+    assert_preserved(segmenter.prepare(document), segmenter)
+
+
+def test_reading_order_failure_preserves_original_and_explains_fallback(monkeypatch):
+    def fail(*_args):
+        raise ValueError('Conteúdo divergente')
+    monkeypatch.setattr('privacy_service.extraction.read_positioned_page', fail)
+    document = extract(pdf_bytes(['Texto original.']), 'p.pdf')
+    assert document.text.strip() == 'Texto original.'
+    assert any(w.startswith('PDF_READING_ORDER_FALLBACK:') for w in document.warnings)
+
+
 @pytest.mark.parametrize("unreadable", ["\x00", "\ufffd"])
 def test_pdf_unreadable_characters_preserve_positions_and_block_total(monkeypatch, segmenter, unreadable):
     from hashlib import sha256
@@ -137,6 +196,8 @@ def test_pdf_unreadable_characters_preserve_positions_and_block_total(monkeypatc
     pages = ["Texto legível.\n", f"{unreadable}. Coletamos dados pessoais.\n{unreadable}. Seus direitos.\n"]
     extracted_pages = iter(pages)
     monkeypatch.setattr(PageObject, "extract_text", lambda *_args, **_kwargs: next(extracted_pages))
+    # Isola a sanitização de caracteres; a ordem espacial tem testes próprios.
+    monkeypatch.setattr('privacy_service.extraction.read_positioned_page', lambda _page, original: original)
     content = pdf_bytes(["Texto legível.", "1. Coletamos dados pessoais.\n2. Seus direitos."])
     document = extract(content, "listas.pdf")
     expected = "\n\n".join(pages).replace("\x00", "\ufffd")

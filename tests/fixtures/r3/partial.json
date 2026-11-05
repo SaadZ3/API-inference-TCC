@@ -1,0 +1,1630 @@
+{
+  "schema_version": 2,
+  "versions": {
+    "model": "synthetic-labels-not-model-inference",
+    "preprocessing": "synthetic-fixture",
+    "scoring": "governance-rules-v2-dev3:3461dad108fa9630400420e0c9d0fe1f127d6f135db89170f8af83f8a7bbfe13",
+    "recommendations": null
+  },
+  "result": {
+    "document_scope": "excerpt",
+    "source": {
+      "filename": "synthetic-e4.txt",
+      "format": "txt",
+      "byte_size": 1090,
+      "sha256": "802c4bc2f333bbda29920d65ff2dd4641ace2f7c2417f23068d3c0879b5ee909"
+    },
+    "preprocessing": {
+      "version": "synthetic-fixture-not-inference",
+      "max_length": 512,
+      "tokenizer_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "extraction": {
+      "status": "ok",
+      "warnings": [],
+      "text": "Coletamos nome e e-mail dos clientes.\n\nColetamos seu e-mail para enviar recibos de compra.\n\nCompartilhamos dados de compra com processadores de pagamento.\n\nCompartilhamos dados de compra com processadores de pagamento para processar pagamentos.\n\nPara cancelar mensagens de marketing, clique no link de descadastro ao final de cada mensagem.\n\nPara revogar o consentimento de marketing, abra Conta > Privacidade > Consentimentos no aplicativo.\n\nPara solicitar a exclusão dos seus dados, escreva para privacidade@exemplo.com.\n\nRespondemos às solicitações de exclusão em até 10 dias corridos após o recebimento do pedido.\n\nGuardamos registros de acesso por 180 dias após cada acesso.\n\nEliminamos os registros de acesso ao fim de 180 dias contados de cada acesso.\n\nUsamos TLS para proteger os dados pessoais durante a transmissão.\n\nFuncionários acessam os registros de clientes somente após autenticação de múltiplos fatores.\n\nAvisamos os titulares sobre alterações desta política por e-mail.\n\nAvisaremos sobre alterações desta política 30 dias antes de sua entrada em vigor.",
+      "page_count": null,
+      "pages": [
+        {
+          "page_number": null,
+          "char_start": 0,
+          "char_end": 1070,
+          "status": "ok"
+        }
+      ]
+    },
+    "segments": [
+      {
+        "segment_id": "s0",
+        "text": "Coletamos nome e e-mail dos clientes.",
+        "char_start": 0,
+        "char_end": 37,
+        "page_start": null,
+        "page_end": null,
+        "labels": [
+          "Other"
+        ],
+        "n_tokens": 20,
+        "probabilities": {
+          "First Party Collection/Use": 0.01,
+          "Third Party Sharing/Collection": 0.01,
+          "User Choice/Control": 0.01,
+          "User Access, Edit and Deletion": 0.01,
+          "Data Retention": 0.01,
+          "Data Security": 0.01,
+          "Policy Change": 0.01,
+          "Do Not Track": 0.01,
+          "International and Specific Audiences": 0.01,
+          "Other": 0.99
+        },
+        "truncated": false
+      },
+      {
+        "segment_id": "s1",
+        "text": "Coletamos seu e-mail para enviar recibos de compra.",
+        "char_start": 39,
+        "char_end": 90,
+        "page_start": null,
+        "page_end": null,
+        "labels": [
+          "Other"
+        ],
+        "n_tokens": 20,
+        "probabilities": {
+          "First Party Collection/Use": 0.01,
+          "Third Party Sharing/Collection": 0.01,
+          "User Choice/Control": 0.01,
+          "User Access, Edit and Deletion": 0.01,
+          "Data Retention": 0.01,
+          "Data Security": 0.01,
+          "Policy Change": 0.01,
+          "Do Not Track": 0.01,
+          "International and Specific Audiences": 0.01,
+          "Other": 0.99
+        },
+        "truncated": false
+      },
+      {
+        "segment_id": "s2",
+        "text": "Compartilhamos dados de compra com processadores de pagamento.",
+        "char_start": 92,
+        "char_end": 154,
+        "page_start": null,
+        "page_end": null,
+        "labels": [
+          "Other"
+        ],
+        "n_tokens": 20,
+        "probabilities": {
+          "First Party Collection/Use": 0.01,
+          "Third Party Sharing/Collection": 0.01,
+          "User Choice/Control": 0.01,
+          "User Access, Edit and Deletion": 0.01,
+          "Data Retention": 0.01,
+          "Data Security": 0.01,
+          "Policy Change": 0.01,
+          "Do Not Track": 0.01,
+          "International and Specific Audiences": 0.01,
+          "Other": 0.99
+        },
+        "truncated": false
+      },
+      {
+        "segment_id": "s3",
+        "text": "Compartilhamos dados de compra com processadores de pagamento para processar pagamentos.",
+        "char_start": 156,
+        "char_end": 244,
+        "page_start": null,
+        "page_end": null,
+        "labels": [
+          "Other"
+        ],
+        "n_tokens": 20,
+        "probabilities": {
+          "First Party Collection/Use": 0.01,
+          "Third Party Sharing/Collection": 0.01,
+          "User Choice/Control": 0.01,
+          "User Access, Edit and Deletion": 0.01,
+          "Data Retention": 0.01,
+          "Data Security": 0.01,
+          "Policy Change": 0.01,
+          "Do Not Track": 0.01,
+          "International and Specific Audiences": 0.01,
+          "Other": 0.99
+        },
+        "truncated": false
+      },
+      {
+        "segment_id": "s4",
+        "text": "Para cancelar mensagens de marketing, clique no link de descadastro ao final de cada mensagem.",
+        "char_start": 246,
+        "char_end": 340,
+        "page_start": null,
+        "page_end": null,
+        "labels": [
+          "Other"
+        ],
+        "n_tokens": 20,
+        "probabilities": {
+          "First Party Collection/Use": 0.01,
+          "Third Party Sharing/Collection": 0.01,
+          "User Choice/Control": 0.01,
+          "User Access, Edit and Deletion": 0.01,
+          "Data Retention": 0.01,
+          "Data Security": 0.01,
+          "Policy Change": 0.01,
+          "Do Not Track": 0.01,
+          "International and Specific Audiences": 0.01,
+          "Other": 0.99
+        },
+        "truncated": false
+      },
+      {
+        "segment_id": "s5",
+        "text": "Para revogar o consentimento de marketing, abra Conta > Privacidade > Consentimentos no aplicativo.",
+        "char_start": 342,
+        "char_end": 441,
+        "page_start": null,
+        "page_end": null,
+        "labels": [
+          "Other"
+        ],
+        "n_tokens": 20,
+        "probabilities": {
+          "First Party Collection/Use": 0.01,
+          "Third Party Sharing/Collection": 0.01,
+          "User Choice/Control": 0.01,
+          "User Access, Edit and Deletion": 0.01,
+          "Data Retention": 0.01,
+          "Data Security": 0.01,
+          "Policy Change": 0.01,
+          "Do Not Track": 0.01,
+          "International and Specific Audiences": 0.01,
+          "Other": 0.99
+        },
+        "truncated": false
+      },
+      {
+        "segment_id": "s6",
+        "text": "Para solicitar a exclusão dos seus dados, escreva para privacidade@exemplo.com.",
+        "char_start": 443,
+        "char_end": 522,
+        "page_start": null,
+        "page_end": null,
+        "labels": [
+          "Other"
+        ],
+        "n_tokens": 20,
+        "probabilities": {
+          "First Party Collection/Use": 0.01,
+          "Third Party Sharing/Collection": 0.01,
+          "User Choice/Control": 0.01,
+          "User Access, Edit and Deletion": 0.01,
+          "Data Retention": 0.01,
+          "Data Security": 0.01,
+          "Policy Change": 0.01,
+          "Do Not Track": 0.01,
+          "International and Specific Audiences": 0.01,
+          "Other": 0.99
+        },
+        "truncated": false
+      },
+      {
+        "segment_id": "s7",
+        "text": "Respondemos às solicitações de exclusão em até 10 dias corridos após o recebimento do pedido.",
+        "char_start": 524,
+        "char_end": 617,
+        "page_start": null,
+        "page_end": null,
+        "labels": [
+          "Other"
+        ],
+        "n_tokens": 20,
+        "probabilities": {
+          "First Party Collection/Use": 0.01,
+          "Third Party Sharing/Collection": 0.01,
+          "User Choice/Control": 0.01,
+          "User Access, Edit and Deletion": 0.01,
+          "Data Retention": 0.01,
+          "Data Security": 0.01,
+          "Policy Change": 0.01,
+          "Do Not Track": 0.01,
+          "International and Specific Audiences": 0.01,
+          "Other": 0.99
+        },
+        "truncated": false
+      },
+      {
+        "segment_id": "s8",
+        "text": "Guardamos registros de acesso por 180 dias após cada acesso.",
+        "char_start": 619,
+        "char_end": 679,
+        "page_start": null,
+        "page_end": null,
+        "labels": [
+          "Other"
+        ],
+        "n_tokens": 20,
+        "probabilities": {
+          "First Party Collection/Use": 0.01,
+          "Third Party Sharing/Collection": 0.01,
+          "User Choice/Control": 0.01,
+          "User Access, Edit and Deletion": 0.01,
+          "Data Retention": 0.01,
+          "Data Security": 0.01,
+          "Policy Change": 0.01,
+          "Do Not Track": 0.01,
+          "International and Specific Audiences": 0.01,
+          "Other": 0.99
+        },
+        "truncated": false
+      },
+      {
+        "segment_id": "s9",
+        "text": "Eliminamos os registros de acesso ao fim de 180 dias contados de cada acesso.",
+        "char_start": 681,
+        "char_end": 758,
+        "page_start": null,
+        "page_end": null,
+        "labels": [
+          "Other"
+        ],
+        "n_tokens": 20,
+        "probabilities": {
+          "First Party Collection/Use": 0.01,
+          "Third Party Sharing/Collection": 0.01,
+          "User Choice/Control": 0.01,
+          "User Access, Edit and Deletion": 0.01,
+          "Data Retention": 0.01,
+          "Data Security": 0.01,
+          "Policy Change": 0.01,
+          "Do Not Track": 0.01,
+          "International and Specific Audiences": 0.01,
+          "Other": 0.99
+        },
+        "truncated": false
+      },
+      {
+        "segment_id": "s10",
+        "text": "Usamos TLS para proteger os dados pessoais durante a transmissão.",
+        "char_start": 760,
+        "char_end": 825,
+        "page_start": null,
+        "page_end": null,
+        "labels": [
+          "Other"
+        ],
+        "n_tokens": 20,
+        "probabilities": {
+          "First Party Collection/Use": 0.01,
+          "Third Party Sharing/Collection": 0.01,
+          "User Choice/Control": 0.01,
+          "User Access, Edit and Deletion": 0.01,
+          "Data Retention": 0.01,
+          "Data Security": 0.01,
+          "Policy Change": 0.01,
+          "Do Not Track": 0.01,
+          "International and Specific Audiences": 0.01,
+          "Other": 0.99
+        },
+        "truncated": false
+      },
+      {
+        "segment_id": "s11",
+        "text": "Funcionários acessam os registros de clientes somente após autenticação de múltiplos fatores.",
+        "char_start": 827,
+        "char_end": 920,
+        "page_start": null,
+        "page_end": null,
+        "labels": [
+          "Other"
+        ],
+        "n_tokens": 20,
+        "probabilities": {
+          "First Party Collection/Use": 0.01,
+          "Third Party Sharing/Collection": 0.01,
+          "User Choice/Control": 0.01,
+          "User Access, Edit and Deletion": 0.01,
+          "Data Retention": 0.01,
+          "Data Security": 0.01,
+          "Policy Change": 0.01,
+          "Do Not Track": 0.01,
+          "International and Specific Audiences": 0.01,
+          "Other": 0.99
+        },
+        "truncated": false
+      },
+      {
+        "segment_id": "s12",
+        "text": "Avisamos os titulares sobre alterações desta política por e-mail.",
+        "char_start": 922,
+        "char_end": 987,
+        "page_start": null,
+        "page_end": null,
+        "labels": [
+          "Other"
+        ],
+        "n_tokens": 20,
+        "probabilities": {
+          "First Party Collection/Use": 0.01,
+          "Third Party Sharing/Collection": 0.01,
+          "User Choice/Control": 0.01,
+          "User Access, Edit and Deletion": 0.01,
+          "Data Retention": 0.01,
+          "Data Security": 0.01,
+          "Policy Change": 0.01,
+          "Do Not Track": 0.01,
+          "International and Specific Audiences": 0.01,
+          "Other": 0.99
+        },
+        "truncated": false
+      },
+      {
+        "segment_id": "s13",
+        "text": "Avisaremos sobre alterações desta política 30 dias antes de sua entrada em vigor.",
+        "char_start": 989,
+        "char_end": 1070,
+        "page_start": null,
+        "page_end": null,
+        "labels": [
+          "Other"
+        ],
+        "n_tokens": 20,
+        "probabilities": {
+          "First Party Collection/Use": 0.01,
+          "Third Party Sharing/Collection": 0.01,
+          "User Choice/Control": 0.01,
+          "User Access, Edit and Deletion": 0.01,
+          "Data Retention": 0.01,
+          "Data Security": 0.01,
+          "Policy Change": 0.01,
+          "Do Not Track": 0.01,
+          "International and Specific Audiences": 0.01,
+          "Other": 0.99
+        },
+        "truncated": false
+      }
+    ],
+    "evaluation": {
+      "schema_version": 2,
+      "policy_id": "802c4bc2f333bbda29920d65ff2dd4641ace2f7c2417f23068d3c0879b5ee909",
+      "language": "pt",
+      "index": "documentary_information_quality",
+      "method_version": "documentary-quality-v2-draft1",
+      "score_scale": "ordinal_0_3",
+      "profile_id": "core-14-v1",
+      "profile_sha256": "6ff4722b7a4efd6fd31c3a1ae629a3c25e49ffd0e990268b227cb6ae45ba8c2c",
+      "validation_status": "not_human_validated",
+      "input_status": "partial_input",
+      "score_status": "blocked",
+      "score": null,
+      "score_blockers": [
+        "document_scope_incomplete"
+      ],
+      "rules_version": "governance-rules-v2-dev4",
+      "rules_sha256": "d8d7e85b0bcb9b860562a6d0565ef29a8be468c27d8f85a73da3e28c4325ba3a",
+      "predictions_sha256": "12c36b3cd205e73aaf775015d2315c89df875ccf323f035cb363a1cb34af6aed",
+      "fallback_enabled": true,
+      "dimensions": [
+        {
+          "id": "collection",
+          "title": "Coleta e uso",
+          "weight": 1,
+          "normalized_weight": 0.14285714285714285,
+          "status": "resolved",
+          "score": 3,
+          "contribution": null,
+          "earned_points": 2.0,
+          "applicable_questions": 2,
+          "unknown_applicability_questions": 0,
+          "resolved_questions": 2,
+          "inconclusive_questions": 0,
+          "excluded_questions": 0,
+          "questions": [
+            {
+              "id": "collection.data_types",
+              "dimension_id": "collection",
+              "title": "Tipos de dados coletados",
+              "status": "supported",
+              "value": 1.0,
+              "applicability": {
+                "state": "applicable",
+                "source": "profile",
+                "source_id": "core-14-v1",
+                "reason": "Pergunta documental central do perfil.",
+                "declared_at": "2026-09-27T00:00:00Z"
+              },
+              "rule_id": "collection.data_types",
+              "rule_version": "governance-rules-v2-dev4",
+              "rationale": "Elementos exigidos encontrados em uma relação contextual.",
+              "found_elements": [
+                "collection_practice",
+                "identifiable_data_type"
+              ],
+              "missing_elements": [],
+              "supporting_groups": [
+                {
+                  "evidence": [
+                    {
+                      "segment_id": "s0",
+                      "start": 0,
+                      "end": 37,
+                      "quote": "Coletamos nome e e-mail dos clientes."
+                    }
+                  ],
+                  "polarity": "affirmed",
+                  "detection_source": "rule_only",
+                  "rule_id": "collection.data_types",
+                  "rule_version": "governance-rules-v2-dev4",
+                  "rationale": "Relação contextual detectada.",
+                  "id": "evidence:cb0e0aee9112f3f5b70510d458d4ccf941b9a201bd6d180cb95b0f4ec8cdfc74"
+                },
+                {
+                  "evidence": [
+                    {
+                      "segment_id": "s1",
+                      "start": 0,
+                      "end": 51,
+                      "quote": "Coletamos seu e-mail para enviar recibos de compra."
+                    }
+                  ],
+                  "polarity": "affirmed",
+                  "detection_source": "rule_only",
+                  "rule_id": "collection.data_types",
+                  "rule_version": "governance-rules-v2-dev4",
+                  "rationale": "Relação contextual detectada.",
+                  "id": "evidence:d9666e9407098accbede2bc11764e3fea47b6a4615b53c54bd1f863557e61830"
+                }
+              ],
+              "contextual_groups": [],
+              "duplicate_occurrences_omitted": 0,
+              "search_scope": {
+                "searched_segment_ids": [
+                  "s0",
+                  "s1",
+                  "s10",
+                  "s11",
+                  "s12",
+                  "s13",
+                  "s2",
+                  "s3",
+                  "s4",
+                  "s5",
+                  "s6",
+                  "s7",
+                  "s8",
+                  "s9"
+                ],
+                "excluded_segment_ids": [],
+                "category_pass": true,
+                "fallback_pass": true,
+                "fallback_reason": "Busca complementar em segmentos sem a categoria prevista."
+              },
+              "finding_ids": []
+            },
+            {
+              "id": "collection.purposes",
+              "dimension_id": "collection",
+              "title": "Relação entre dado e finalidade",
+              "status": "supported",
+              "value": 1.0,
+              "applicability": {
+                "state": "applicable",
+                "source": "profile",
+                "source_id": "core-14-v1",
+                "reason": "Pergunta documental central do perfil.",
+                "declared_at": "2026-09-27T00:00:00Z"
+              },
+              "rule_id": "collection.purposes",
+              "rule_version": "governance-rules-v2-dev4",
+              "rationale": "Elementos exigidos encontrados em uma relação contextual.",
+              "found_elements": [
+                "collected_data_type",
+                "specific_purpose"
+              ],
+              "missing_elements": [],
+              "supporting_groups": [
+                {
+                  "evidence": [
+                    {
+                      "segment_id": "s0",
+                      "start": 0,
+                      "end": 37,
+                      "quote": "Coletamos nome e e-mail dos clientes."
+                    }
+                  ],
+                  "polarity": "affirmed",
+                  "detection_source": "rule_only",
+                  "rule_id": "collection.purposes",
+                  "rule_version": "governance-rules-v2-dev4",
+                  "rationale": "Informação pertinente; faltam: specific_purpose",
+                  "id": "evidence:89eeb329b48c8e4cba909c63b9bc45ecca08649b41c4e7d9591c50f1d9d34c99"
+                },
+                {
+                  "evidence": [
+                    {
+                      "segment_id": "s1",
+                      "start": 0,
+                      "end": 51,
+                      "quote": "Coletamos seu e-mail para enviar recibos de compra."
+                    }
+                  ],
+                  "polarity": "affirmed",
+                  "detection_source": "rule_only",
+                  "rule_id": "collection.purposes",
+                  "rule_version": "governance-rules-v2-dev4",
+                  "rationale": "Relação contextual detectada.",
+                  "id": "evidence:3173b205f4ae82bff9de85c0ced52457617d8e3085cdcbdda8eb22574a46bc1c"
+                }
+              ],
+              "contextual_groups": [],
+              "duplicate_occurrences_omitted": 0,
+              "search_scope": {
+                "searched_segment_ids": [
+                  "s0",
+                  "s1",
+                  "s10",
+                  "s11",
+                  "s12",
+                  "s13",
+                  "s2",
+                  "s3",
+                  "s4",
+                  "s5",
+                  "s6",
+                  "s7",
+                  "s8",
+                  "s9"
+                ],
+                "excluded_segment_ids": [],
+                "category_pass": true,
+                "fallback_pass": true,
+                "fallback_reason": "Busca complementar em segmentos sem a categoria prevista."
+              },
+              "finding_ids": []
+            }
+          ]
+        },
+        {
+          "id": "sharing",
+          "title": "Compartilhamento",
+          "weight": 1,
+          "normalized_weight": 0.14285714285714285,
+          "status": "resolved",
+          "score": 3,
+          "contribution": null,
+          "earned_points": 2.0,
+          "applicable_questions": 2,
+          "unknown_applicability_questions": 0,
+          "resolved_questions": 2,
+          "inconclusive_questions": 0,
+          "excluded_questions": 0,
+          "questions": [
+            {
+              "id": "sharing.recipients",
+              "dimension_id": "sharing",
+              "title": "Destinatários do compartilhamento",
+              "status": "supported",
+              "value": 1.0,
+              "applicability": {
+                "state": "applicable",
+                "source": "profile",
+                "source_id": "core-14-v1",
+                "reason": "Pergunta documental central do perfil.",
+                "declared_at": "2026-09-27T00:00:00Z"
+              },
+              "rule_id": "sharing.recipients",
+              "rule_version": "governance-rules-v2-dev4",
+              "rationale": "Elementos exigidos encontrados em uma relação contextual.",
+              "found_elements": [
+                "identifiable_recipient",
+                "sharing_practice"
+              ],
+              "missing_elements": [],
+              "supporting_groups": [
+                {
+                  "evidence": [
+                    {
+                      "segment_id": "s2",
+                      "start": 0,
+                      "end": 62,
+                      "quote": "Compartilhamos dados de compra com processadores de pagamento."
+                    }
+                  ],
+                  "polarity": "affirmed",
+                  "detection_source": "rule_only",
+                  "rule_id": "sharing.recipients",
+                  "rule_version": "governance-rules-v2-dev4",
+                  "rationale": "Relação contextual detectada.",
+                  "id": "evidence:40bee2e2de1468806e8cdfd3709b86b1f1eff5080e3e07324a690a49367565d6"
+                },
+                {
+                  "evidence": [
+                    {
+                      "segment_id": "s3",
+                      "start": 0,
+                      "end": 88,
+                      "quote": "Compartilhamos dados de compra com processadores de pagamento para processar pagamentos."
+                    }
+                  ],
+                  "polarity": "affirmed",
+                  "detection_source": "rule_only",
+                  "rule_id": "sharing.recipients",
+                  "rule_version": "governance-rules-v2-dev4",
+                  "rationale": "Relação contextual detectada.",
+                  "id": "evidence:9dab995bb9e71fc1b3049b7459c94bca67fa4a5d7a91d0e7134f85c624ac2e4b"
+                }
+              ],
+              "contextual_groups": [],
+              "duplicate_occurrences_omitted": 0,
+              "search_scope": {
+                "searched_segment_ids": [
+                  "s0",
+                  "s1",
+                  "s10",
+                  "s11",
+                  "s12",
+                  "s13",
+                  "s2",
+                  "s3",
+                  "s4",
+                  "s5",
+                  "s6",
+                  "s7",
+                  "s8",
+                  "s9"
+                ],
+                "excluded_segment_ids": [],
+                "category_pass": true,
+                "fallback_pass": true,
+                "fallback_reason": "Busca complementar em segmentos sem a categoria prevista."
+              },
+              "finding_ids": []
+            },
+            {
+              "id": "sharing.conditions",
+              "dimension_id": "sharing",
+              "title": "Condições do compartilhamento",
+              "status": "supported",
+              "value": 1.0,
+              "applicability": {
+                "state": "applicable",
+                "source": "profile",
+                "source_id": "core-14-v1",
+                "reason": "Pergunta documental central do perfil.",
+                "declared_at": "2026-09-27T00:00:00Z"
+              },
+              "rule_id": "sharing.conditions",
+              "rule_version": "governance-rules-v2-dev4",
+              "rationale": "Elementos exigidos encontrados em uma relação contextual.",
+              "found_elements": [
+                "identifiable_recipient",
+                "purpose_condition_or_prohibition"
+              ],
+              "missing_elements": [],
+              "supporting_groups": [
+                {
+                  "evidence": [
+                    {
+                      "segment_id": "s2",
+                      "start": 0,
+                      "end": 62,
+                      "quote": "Compartilhamos dados de compra com processadores de pagamento."
+                    }
+                  ],
+                  "polarity": "affirmed",
+                  "detection_source": "rule_only",
+                  "rule_id": "sharing.conditions",
+                  "rule_version": "governance-rules-v2-dev4",
+                  "rationale": "Informação pertinente; faltam: purpose_condition_or_prohibition",
+                  "id": "evidence:e7e5dfa1785feec45c8bd319a4381ca7549e0cb909548177d130b23e05a4d019"
+                },
+                {
+                  "evidence": [
+                    {
+                      "segment_id": "s3",
+                      "start": 0,
+                      "end": 88,
+                      "quote": "Compartilhamos dados de compra com processadores de pagamento para processar pagamentos."
+                    }
+                  ],
+                  "polarity": "affirmed",
+                  "detection_source": "rule_only",
+                  "rule_id": "sharing.conditions",
+                  "rule_version": "governance-rules-v2-dev4",
+                  "rationale": "Relação contextual detectada.",
+                  "id": "evidence:5ddf62d9d0935ced65dcbf594af5914a87ebe70e245748ea52c76d620511c67e"
+                }
+              ],
+              "contextual_groups": [],
+              "duplicate_occurrences_omitted": 0,
+              "search_scope": {
+                "searched_segment_ids": [
+                  "s0",
+                  "s1",
+                  "s10",
+                  "s11",
+                  "s12",
+                  "s13",
+                  "s2",
+                  "s3",
+                  "s4",
+                  "s5",
+                  "s6",
+                  "s7",
+                  "s8",
+                  "s9"
+                ],
+                "excluded_segment_ids": [],
+                "category_pass": true,
+                "fallback_pass": true,
+                "fallback_reason": "Busca complementar em segmentos sem a categoria prevista."
+              },
+              "finding_ids": []
+            }
+          ]
+        },
+        {
+          "id": "choice",
+          "title": "Escolhas e controle",
+          "weight": 1,
+          "normalized_weight": 0.14285714285714285,
+          "status": "resolved",
+          "score": 3,
+          "contribution": null,
+          "earned_points": 2.0,
+          "applicable_questions": 2,
+          "unknown_applicability_questions": 0,
+          "resolved_questions": 2,
+          "inconclusive_questions": 0,
+          "excluded_questions": 0,
+          "questions": [
+            {
+              "id": "choice.mechanism",
+              "dimension_id": "choice",
+              "title": "Procedimento para exercer uma escolha",
+              "status": "supported",
+              "value": 1.0,
+              "applicability": {
+                "state": "applicable",
+                "source": "profile",
+                "source_id": "core-14-v1",
+                "reason": "Pergunta documental central do perfil.",
+                "declared_at": "2026-09-27T00:00:00Z"
+              },
+              "rule_id": "choice.mechanism",
+              "rule_version": "governance-rules-v2-dev4",
+              "rationale": "Elementos exigidos encontrados em uma relação contextual.",
+              "found_elements": [
+                "affected_processing",
+                "locatable_procedure"
+              ],
+              "missing_elements": [],
+              "supporting_groups": [
+                {
+                  "evidence": [
+                    {
+                      "segment_id": "s4",
+                      "start": 0,
+                      "end": 94,
+                      "quote": "Para cancelar mensagens de marketing, clique no link de descadastro ao final de cada mensagem."
+                    }
+                  ],
+                  "polarity": "affirmed",
+                  "detection_source": "rule_only",
+                  "rule_id": "choice.mechanism",
+                  "rule_version": "governance-rules-v2-dev4",
+                  "rationale": "Relação contextual detectada.",
+                  "id": "evidence:aee16d8c5e2bb44eb2cee245c371c66bb4cc759cfa0829da7dc6e73385d09c13"
+                },
+                {
+                  "evidence": [
+                    {
+                      "segment_id": "s5",
+                      "start": 0,
+                      "end": 99,
+                      "quote": "Para revogar o consentimento de marketing, abra Conta > Privacidade > Consentimentos no aplicativo."
+                    }
+                  ],
+                  "polarity": "affirmed",
+                  "detection_source": "rule_only",
+                  "rule_id": "choice.mechanism",
+                  "rule_version": "governance-rules-v2-dev4",
+                  "rationale": "Relação contextual detectada.",
+                  "id": "evidence:eab160428bcfc7fb7862f75c74699643a5d5b63d81c9db9a73803f74a71f6171"
+                }
+              ],
+              "contextual_groups": [],
+              "duplicate_occurrences_omitted": 0,
+              "search_scope": {
+                "searched_segment_ids": [
+                  "s0",
+                  "s1",
+                  "s10",
+                  "s11",
+                  "s12",
+                  "s13",
+                  "s2",
+                  "s3",
+                  "s4",
+                  "s5",
+                  "s6",
+                  "s7",
+                  "s8",
+                  "s9"
+                ],
+                "excluded_segment_ids": [],
+                "category_pass": true,
+                "fallback_pass": true,
+                "fallback_reason": "Busca complementar em segmentos sem a categoria prevista."
+              },
+              "finding_ids": []
+            },
+            {
+              "id": "choice.channel",
+              "dimension_id": "choice",
+              "title": "Canal localizável para escolhas",
+              "status": "supported",
+              "value": 1.0,
+              "applicability": {
+                "state": "applicable",
+                "source": "profile",
+                "source_id": "core-14-v1",
+                "reason": "Pergunta documental central do perfil.",
+                "declared_at": "2026-09-27T00:00:00Z"
+              },
+              "rule_id": "choice.channel",
+              "rule_version": "governance-rules-v2-dev4",
+              "rationale": "Elementos exigidos encontrados em uma relação contextual.",
+              "found_elements": [
+                "choice",
+                "locatable_channel"
+              ],
+              "missing_elements": [],
+              "supporting_groups": [
+                {
+                  "evidence": [
+                    {
+                      "segment_id": "s4",
+                      "start": 0,
+                      "end": 94,
+                      "quote": "Para cancelar mensagens de marketing, clique no link de descadastro ao final de cada mensagem."
+                    }
+                  ],
+                  "polarity": "affirmed",
+                  "detection_source": "rule_only",
+                  "rule_id": "choice.channel",
+                  "rule_version": "governance-rules-v2-dev4",
+                  "rationale": "Relação contextual detectada.",
+                  "id": "evidence:224d7710acd72168dd53e13475457f44a411315d41ac8acc6e583efb24844c39"
+                },
+                {
+                  "evidence": [
+                    {
+                      "segment_id": "s5",
+                      "start": 0,
+                      "end": 99,
+                      "quote": "Para revogar o consentimento de marketing, abra Conta > Privacidade > Consentimentos no aplicativo."
+                    }
+                  ],
+                  "polarity": "affirmed",
+                  "detection_source": "rule_only",
+                  "rule_id": "choice.channel",
+                  "rule_version": "governance-rules-v2-dev4",
+                  "rationale": "Relação contextual detectada.",
+                  "id": "evidence:f7c3394702627ff46ccc55474cb25d1aa1b79e1bdbbc51d161296f3e3bc4e9f7"
+                }
+              ],
+              "contextual_groups": [],
+              "duplicate_occurrences_omitted": 0,
+              "search_scope": {
+                "searched_segment_ids": [
+                  "s0",
+                  "s1",
+                  "s10",
+                  "s11",
+                  "s12",
+                  "s13",
+                  "s2",
+                  "s3",
+                  "s4",
+                  "s5",
+                  "s6",
+                  "s7",
+                  "s8",
+                  "s9"
+                ],
+                "excluded_segment_ids": [],
+                "category_pass": true,
+                "fallback_pass": true,
+                "fallback_reason": "Busca complementar em segmentos sem a categoria prevista."
+              },
+              "finding_ids": []
+            }
+          ]
+        },
+        {
+          "id": "access",
+          "title": "Direitos e solicitações",
+          "weight": 1,
+          "normalized_weight": 0.14285714285714285,
+          "status": "resolved",
+          "score": 3,
+          "contribution": null,
+          "earned_points": 2.0,
+          "applicable_questions": 2,
+          "unknown_applicability_questions": 0,
+          "resolved_questions": 2,
+          "inconclusive_questions": 0,
+          "excluded_questions": 0,
+          "questions": [
+            {
+              "id": "access.channel",
+              "dimension_id": "access",
+              "title": "Canal de solicitação de direitos",
+              "status": "supported",
+              "value": 1.0,
+              "applicability": {
+                "state": "applicable",
+                "source": "profile",
+                "source_id": "core-14-v1",
+                "reason": "Pergunta documental central do perfil.",
+                "declared_at": "2026-09-27T00:00:00Z"
+              },
+              "rule_id": "access.channel",
+              "rule_version": "governance-rules-v2-dev4",
+              "rationale": "Elementos exigidos encontrados em uma relação contextual.",
+              "found_elements": [
+                "identified_request",
+                "locatable_channel"
+              ],
+              "missing_elements": [],
+              "supporting_groups": [
+                {
+                  "evidence": [
+                    {
+                      "segment_id": "s6",
+                      "start": 0,
+                      "end": 79,
+                      "quote": "Para solicitar a exclusão dos seus dados, escreva para privacidade@exemplo.com."
+                    }
+                  ],
+                  "polarity": "affirmed",
+                  "detection_source": "rule_only",
+                  "rule_id": "access.channel",
+                  "rule_version": "governance-rules-v2-dev4",
+                  "rationale": "Relação contextual detectada.",
+                  "id": "evidence:d422690289e0bb8a00fd4dcddb53fa43be602a38566579b13c220cc9fa3b3bec"
+                },
+                {
+                  "evidence": [
+                    {
+                      "segment_id": "s7",
+                      "start": 0,
+                      "end": 93,
+                      "quote": "Respondemos às solicitações de exclusão em até 10 dias corridos após o recebimento do pedido."
+                    }
+                  ],
+                  "polarity": "affirmed",
+                  "detection_source": "rule_only",
+                  "rule_id": "access.channel",
+                  "rule_version": "governance-rules-v2-dev4",
+                  "rationale": "Informação pertinente; faltam: locatable_channel",
+                  "id": "evidence:26def50eb7eb8a061b34e656f993391f15d9f598ec89633f3c293512bb5daf92"
+                }
+              ],
+              "contextual_groups": [],
+              "duplicate_occurrences_omitted": 0,
+              "search_scope": {
+                "searched_segment_ids": [
+                  "s0",
+                  "s1",
+                  "s10",
+                  "s11",
+                  "s12",
+                  "s13",
+                  "s2",
+                  "s3",
+                  "s4",
+                  "s5",
+                  "s6",
+                  "s7",
+                  "s8",
+                  "s9"
+                ],
+                "excluded_segment_ids": [],
+                "category_pass": true,
+                "fallback_pass": true,
+                "fallback_reason": "Busca complementar em segmentos sem a categoria prevista."
+              },
+              "finding_ids": []
+            },
+            {
+              "id": "access.response_time",
+              "dimension_id": "access",
+              "title": "Prazo de resposta e marco inicial",
+              "status": "supported",
+              "value": 1.0,
+              "applicability": {
+                "state": "applicable",
+                "source": "profile",
+                "source_id": "core-14-v1",
+                "reason": "Pergunta documental central do perfil.",
+                "declared_at": "2026-09-27T00:00:00Z"
+              },
+              "rule_id": "access.response_time",
+              "rule_version": "governance-rules-v2-dev4",
+              "rationale": "Elementos exigidos encontrados em uma relação contextual.",
+              "found_elements": [
+                "identified_request",
+                "response_duration_and_unit",
+                "start_event"
+              ],
+              "missing_elements": [],
+              "supporting_groups": [
+                {
+                  "evidence": [
+                    {
+                      "segment_id": "s7",
+                      "start": 0,
+                      "end": 93,
+                      "quote": "Respondemos às solicitações de exclusão em até 10 dias corridos após o recebimento do pedido."
+                    }
+                  ],
+                  "polarity": "affirmed",
+                  "detection_source": "rule_only",
+                  "rule_id": "access.response_time",
+                  "rule_version": "governance-rules-v2-dev4",
+                  "rationale": "Relação contextual detectada.",
+                  "id": "evidence:11cfbe29669c5ddf7e35e4b2e1601bc0cdc2aa34181d674f475fdce3b3dbaef9"
+                }
+              ],
+              "contextual_groups": [],
+              "duplicate_occurrences_omitted": 0,
+              "search_scope": {
+                "searched_segment_ids": [
+                  "s0",
+                  "s1",
+                  "s10",
+                  "s11",
+                  "s12",
+                  "s13",
+                  "s2",
+                  "s3",
+                  "s4",
+                  "s5",
+                  "s6",
+                  "s7",
+                  "s8",
+                  "s9"
+                ],
+                "excluded_segment_ids": [],
+                "category_pass": true,
+                "fallback_pass": true,
+                "fallback_reason": "Busca complementar em segmentos sem a categoria prevista."
+              },
+              "finding_ids": []
+            }
+          ]
+        },
+        {
+          "id": "retention",
+          "title": "Retenção",
+          "weight": 1,
+          "normalized_weight": 0.14285714285714285,
+          "status": "resolved",
+          "score": 3,
+          "contribution": null,
+          "earned_points": 2.0,
+          "applicable_questions": 2,
+          "unknown_applicability_questions": 0,
+          "resolved_questions": 2,
+          "inconclusive_questions": 0,
+          "excluded_questions": 0,
+          "questions": [
+            {
+              "id": "retention.duration",
+              "dimension_id": "retention",
+              "title": "Duração ou evento de retenção",
+              "status": "supported",
+              "value": 1.0,
+              "applicability": {
+                "state": "applicable",
+                "source": "profile",
+                "source_id": "core-14-v1",
+                "reason": "Pergunta documental central do perfil.",
+                "declared_at": "2026-09-27T00:00:00Z"
+              },
+              "rule_id": "retention.duration",
+              "rule_version": "governance-rules-v2-dev4",
+              "rationale": "Elementos exigidos encontrados em uma relação contextual.",
+              "found_elements": [
+                "data_class",
+                "duration_or_event"
+              ],
+              "missing_elements": [],
+              "supporting_groups": [
+                {
+                  "evidence": [
+                    {
+                      "segment_id": "s8",
+                      "start": 0,
+                      "end": 60,
+                      "quote": "Guardamos registros de acesso por 180 dias após cada acesso."
+                    }
+                  ],
+                  "polarity": "affirmed",
+                  "detection_source": "rule_only",
+                  "rule_id": "retention.duration",
+                  "rule_version": "governance-rules-v2-dev4",
+                  "rationale": "Relação contextual detectada.",
+                  "id": "evidence:38fb7def95be9ddad3a8028c094a292cc0c546ff2b05fd6766f9c9bbb20ea637"
+                }
+              ],
+              "contextual_groups": [],
+              "duplicate_occurrences_omitted": 0,
+              "search_scope": {
+                "searched_segment_ids": [
+                  "s0",
+                  "s1",
+                  "s10",
+                  "s11",
+                  "s12",
+                  "s13",
+                  "s2",
+                  "s3",
+                  "s4",
+                  "s5",
+                  "s6",
+                  "s7",
+                  "s8",
+                  "s9"
+                ],
+                "excluded_segment_ids": [],
+                "category_pass": true,
+                "fallback_pass": true,
+                "fallback_reason": "Busca complementar em segmentos sem a categoria prevista."
+              },
+              "finding_ids": []
+            },
+            {
+              "id": "retention.disposal",
+              "dimension_id": "retention",
+              "title": "Destinação ao final da retenção",
+              "status": "supported",
+              "value": 1.0,
+              "applicability": {
+                "state": "applicable",
+                "source": "profile",
+                "source_id": "core-14-v1",
+                "reason": "Pergunta documental central do perfil.",
+                "declared_at": "2026-09-27T00:00:00Z"
+              },
+              "rule_id": "retention.disposal",
+              "rule_version": "governance-rules-v2-dev4",
+              "rationale": "Elementos exigidos encontrados em uma relação contextual.",
+              "found_elements": [
+                "data_class",
+                "disposition",
+                "end_event"
+              ],
+              "missing_elements": [],
+              "supporting_groups": [
+                {
+                  "evidence": [
+                    {
+                      "segment_id": "s6",
+                      "start": 0,
+                      "end": 79,
+                      "quote": "Para solicitar a exclusão dos seus dados, escreva para privacidade@exemplo.com."
+                    }
+                  ],
+                  "polarity": "affirmed",
+                  "detection_source": "rule_only",
+                  "rule_id": "retention.disposal",
+                  "rule_version": "governance-rules-v2-dev4",
+                  "rationale": "Informação pertinente; faltam: data_class, end_event",
+                  "id": "evidence:d2c63d26184cb741eb29813b9eeddd774b22f04700f20cf19c730a64a14468e3"
+                },
+                {
+                  "evidence": [
+                    {
+                      "segment_id": "s9",
+                      "start": 0,
+                      "end": 77,
+                      "quote": "Eliminamos os registros de acesso ao fim de 180 dias contados de cada acesso."
+                    }
+                  ],
+                  "polarity": "affirmed",
+                  "detection_source": "rule_only",
+                  "rule_id": "retention.disposal",
+                  "rule_version": "governance-rules-v2-dev4",
+                  "rationale": "Relação contextual detectada.",
+                  "id": "evidence:74666c44f97cab84dee435ce6acbf40aabec66dcfcd3fa3242ffc55d8ab3fbdf"
+                }
+              ],
+              "contextual_groups": [],
+              "duplicate_occurrences_omitted": 0,
+              "search_scope": {
+                "searched_segment_ids": [
+                  "s0",
+                  "s1",
+                  "s10",
+                  "s11",
+                  "s12",
+                  "s13",
+                  "s2",
+                  "s3",
+                  "s4",
+                  "s5",
+                  "s6",
+                  "s7",
+                  "s8",
+                  "s9"
+                ],
+                "excluded_segment_ids": [],
+                "category_pass": true,
+                "fallback_pass": true,
+                "fallback_reason": "Busca complementar em segmentos sem a categoria prevista."
+              },
+              "finding_ids": []
+            }
+          ]
+        },
+        {
+          "id": "security",
+          "title": "Segurança",
+          "weight": 1,
+          "normalized_weight": 0.14285714285714285,
+          "status": "resolved",
+          "score": 3,
+          "contribution": null,
+          "earned_points": 2.0,
+          "applicable_questions": 2,
+          "unknown_applicability_questions": 0,
+          "resolved_questions": 2,
+          "inconclusive_questions": 0,
+          "excluded_questions": 0,
+          "questions": [
+            {
+              "id": "security.technical_measures",
+              "dimension_id": "security",
+              "title": "Medida técnica e contexto de proteção",
+              "status": "supported",
+              "value": 1.0,
+              "applicability": {
+                "state": "applicable",
+                "source": "profile",
+                "source_id": "core-14-v1",
+                "reason": "Pergunta documental central do perfil.",
+                "declared_at": "2026-09-27T00:00:00Z"
+              },
+              "rule_id": "security.technical_measures",
+              "rule_version": "governance-rules-v2-dev4",
+              "rationale": "Elementos exigidos encontrados em uma relação contextual.",
+              "found_elements": [
+                "data_or_protection_context",
+                "specific_measure"
+              ],
+              "missing_elements": [],
+              "supporting_groups": [
+                {
+                  "evidence": [
+                    {
+                      "segment_id": "s10",
+                      "start": 0,
+                      "end": 65,
+                      "quote": "Usamos TLS para proteger os dados pessoais durante a transmissão."
+                    }
+                  ],
+                  "polarity": "affirmed",
+                  "detection_source": "rule_only",
+                  "rule_id": "security.technical_measures",
+                  "rule_version": "governance-rules-v2-dev4",
+                  "rationale": "Relação contextual detectada.",
+                  "id": "evidence:76cb7de819674d76bc4d2933a9b83e25396217670bef7f64848d8922ed5a1a91"
+                }
+              ],
+              "contextual_groups": [],
+              "duplicate_occurrences_omitted": 0,
+              "search_scope": {
+                "searched_segment_ids": [
+                  "s0",
+                  "s1",
+                  "s10",
+                  "s11",
+                  "s12",
+                  "s13",
+                  "s2",
+                  "s3",
+                  "s4",
+                  "s5",
+                  "s6",
+                  "s7",
+                  "s8",
+                  "s9"
+                ],
+                "excluded_segment_ids": [],
+                "category_pass": true,
+                "fallback_pass": true,
+                "fallback_reason": "Busca complementar em segmentos sem a categoria prevista."
+              },
+              "finding_ids": []
+            },
+            {
+              "id": "security.access_controls",
+              "dimension_id": "security",
+              "title": "Controle de acesso, ator e recurso",
+              "status": "supported",
+              "value": 1.0,
+              "applicability": {
+                "state": "applicable",
+                "source": "profile",
+                "source_id": "core-14-v1",
+                "reason": "Pergunta documental central do perfil.",
+                "declared_at": "2026-09-27T00:00:00Z"
+              },
+              "rule_id": "security.access_controls",
+              "rule_version": "governance-rules-v2-dev4",
+              "rationale": "Elementos exigidos encontrados em uma relação contextual.",
+              "found_elements": [
+                "actor",
+                "resource",
+                "specific_access_control"
+              ],
+              "missing_elements": [],
+              "supporting_groups": [
+                {
+                  "evidence": [
+                    {
+                      "segment_id": "s11",
+                      "start": 0,
+                      "end": 93,
+                      "quote": "Funcionários acessam os registros de clientes somente após autenticação de múltiplos fatores."
+                    }
+                  ],
+                  "polarity": "affirmed",
+                  "detection_source": "rule_only",
+                  "rule_id": "security.access_controls",
+                  "rule_version": "governance-rules-v2-dev4",
+                  "rationale": "Relação contextual detectada.",
+                  "id": "evidence:04871b476f34bfc3793d84b886d6825414cc4ed26ec965758fe843d5f1c058ed"
+                }
+              ],
+              "contextual_groups": [],
+              "duplicate_occurrences_omitted": 0,
+              "search_scope": {
+                "searched_segment_ids": [
+                  "s0",
+                  "s1",
+                  "s10",
+                  "s11",
+                  "s12",
+                  "s13",
+                  "s2",
+                  "s3",
+                  "s4",
+                  "s5",
+                  "s6",
+                  "s7",
+                  "s8",
+                  "s9"
+                ],
+                "excluded_segment_ids": [],
+                "category_pass": true,
+                "fallback_pass": true,
+                "fallback_reason": "Busca complementar em segmentos sem a categoria prevista."
+              },
+              "finding_ids": []
+            }
+          ]
+        },
+        {
+          "id": "changes",
+          "title": "Alterações da política",
+          "weight": 1,
+          "normalized_weight": 0.14285714285714285,
+          "status": "resolved",
+          "score": 3,
+          "contribution": null,
+          "earned_points": 2.0,
+          "applicable_questions": 2,
+          "unknown_applicability_questions": 0,
+          "resolved_questions": 2,
+          "inconclusive_questions": 0,
+          "excluded_questions": 0,
+          "questions": [
+            {
+              "id": "changes.notice_channel",
+              "dimension_id": "changes",
+              "title": "Canal de aviso de mudanças",
+              "status": "supported",
+              "value": 1.0,
+              "applicability": {
+                "state": "applicable",
+                "source": "profile",
+                "source_id": "core-14-v1",
+                "reason": "Pergunta documental central do perfil.",
+                "declared_at": "2026-09-27T00:00:00Z"
+              },
+              "rule_id": "changes.notice_channel",
+              "rule_version": "governance-rules-v2-dev4",
+              "rationale": "Elementos exigidos encontrados em uma relação contextual.",
+              "found_elements": [
+                "identified_notice_channel",
+                "policy_change"
+              ],
+              "missing_elements": [],
+              "supporting_groups": [
+                {
+                  "evidence": [
+                    {
+                      "segment_id": "s12",
+                      "start": 0,
+                      "end": 65,
+                      "quote": "Avisamos os titulares sobre alterações desta política por e-mail."
+                    }
+                  ],
+                  "polarity": "affirmed",
+                  "detection_source": "rule_only",
+                  "rule_id": "changes.notice_channel",
+                  "rule_version": "governance-rules-v2-dev4",
+                  "rationale": "Relação contextual detectada.",
+                  "id": "evidence:1ac4e7adbe40898b43f0c1628a64f19e64e4c9554be0aad7432a37d84f1acb5c"
+                },
+                {
+                  "evidence": [
+                    {
+                      "segment_id": "s13",
+                      "start": 0,
+                      "end": 81,
+                      "quote": "Avisaremos sobre alterações desta política 30 dias antes de sua entrada em vigor."
+                    }
+                  ],
+                  "polarity": "affirmed",
+                  "detection_source": "rule_only",
+                  "rule_id": "changes.notice_channel",
+                  "rule_version": "governance-rules-v2-dev4",
+                  "rationale": "Informação pertinente; faltam: identified_notice_channel",
+                  "id": "evidence:1f5f3a4c9a784654af4d419ac8ef28c13b6a06eacf7da351e267aeb9071c56f0"
+                }
+              ],
+              "contextual_groups": [],
+              "duplicate_occurrences_omitted": 0,
+              "search_scope": {
+                "searched_segment_ids": [
+                  "s0",
+                  "s1",
+                  "s10",
+                  "s11",
+                  "s12",
+                  "s13",
+                  "s2",
+                  "s3",
+                  "s4",
+                  "s5",
+                  "s6",
+                  "s7",
+                  "s8",
+                  "s9"
+                ],
+                "excluded_segment_ids": [],
+                "category_pass": true,
+                "fallback_pass": true,
+                "fallback_reason": "Busca complementar em segmentos sem a categoria prevista."
+              },
+              "finding_ids": []
+            },
+            {
+              "id": "changes.notice_timing",
+              "dimension_id": "changes",
+              "title": "Momento do aviso de mudanças",
+              "status": "supported",
+              "value": 1.0,
+              "applicability": {
+                "state": "applicable",
+                "source": "profile",
+                "source_id": "core-14-v1",
+                "reason": "Pergunta documental central do perfil.",
+                "declared_at": "2026-09-27T00:00:00Z"
+              },
+              "rule_id": "changes.notice_timing",
+              "rule_version": "governance-rules-v2-dev4",
+              "rationale": "Elementos exigidos encontrados em uma relação contextual.",
+              "found_elements": [
+                "policy_change_notice",
+                "timing_and_event"
+              ],
+              "missing_elements": [],
+              "supporting_groups": [
+                {
+                  "evidence": [
+                    {
+                      "segment_id": "s12",
+                      "start": 0,
+                      "end": 65,
+                      "quote": "Avisamos os titulares sobre alterações desta política por e-mail."
+                    }
+                  ],
+                  "polarity": "affirmed",
+                  "detection_source": "rule_only",
+                  "rule_id": "changes.notice_timing",
+                  "rule_version": "governance-rules-v2-dev4",
+                  "rationale": "Informação pertinente; faltam: timing_and_event",
+                  "id": "evidence:deacb4cdf1eab843a0efe2913014c70affe5434cc6c5fdc1643a0c84c90d7167"
+                },
+                {
+                  "evidence": [
+                    {
+                      "segment_id": "s13",
+                      "start": 0,
+                      "end": 81,
+                      "quote": "Avisaremos sobre alterações desta política 30 dias antes de sua entrada em vigor."
+                    }
+                  ],
+                  "polarity": "affirmed",
+                  "detection_source": "rule_only",
+                  "rule_id": "changes.notice_timing",
+                  "rule_version": "governance-rules-v2-dev4",
+                  "rationale": "Relação contextual detectada.",
+                  "id": "evidence:ef712fff5dc3b798cc9f646ae25599a3316ef0409525e0ecbf8857c73eef3ea2"
+                }
+              ],
+              "contextual_groups": [],
+              "duplicate_occurrences_omitted": 0,
+              "search_scope": {
+                "searched_segment_ids": [
+                  "s0",
+                  "s1",
+                  "s10",
+                  "s11",
+                  "s12",
+                  "s13",
+                  "s2",
+                  "s3",
+                  "s4",
+                  "s5",
+                  "s6",
+                  "s7",
+                  "s8",
+                  "s9"
+                ],
+                "excluded_segment_ids": [],
+                "category_pass": true,
+                "fallback_pass": true,
+                "fallback_reason": "Busca complementar em segmentos sem a categoria prevista."
+              },
+              "finding_ids": []
+            }
+          ]
+        }
+      ],
+      "findings": [
+        {
+          "id": "finding:128f8be2d79427f1804d9c80dc215371936b96a2480290e23b0e0c6874506d0d",
+          "dimension_id": null,
+          "question_id": null,
+          "rule_id": "input",
+          "rule_version": "governance-rules-v2-dev4",
+          "kind": "extraction_limitation",
+          "title": "Limites da entrada",
+          "rationale": "Nota global bloqueada pelas condições de entrada: document_scope_incomplete",
+          "priority": "high",
+          "priority_reason": "Esclarecer declaração ou entrada impeditiva.",
+          "evidence_groups": [],
+          "search_scope": null,
+          "recommendation_ids": []
+        }
+      ],
+      "recommendations": [],
+      "limitations": [
+        "Avaliação documental experimental; não mede conformidade, proteção efetiva ou maturidade.",
+        "Heurísticas lexicais contextuais, sem compreensão semântica geral; revisão humana necessária.",
+        "Satisfação de uma pergunta indica ao menos uma relação encontrada, não um inventário exaustivo.",
+        "Conflitos reconhecidos são candidatos; variações de sujeito, escopo e exceções podem escapar.",
+        "Sem texto extraído e offsets, relações entre segmentos não são reconstruídas.",
+        "Catálogo de recomendações ainda não aplicado; nenhuma referência ISO foi inferida."
+      ]
+    }
+  }
+}

@@ -15,7 +15,7 @@ LABELS = (
     "Do Not Track", "International and Specific Audiences", "Other",
 )
 
-SCORE_SCALE = "ordinal_0_3"
+SCORE_SCALE = "continuous_0_3"
 # Mesma tolerância do backend para resíduos de cálculo nas fronteiras das faixas.
 BOUNDARY_TOLERANCE = 1e-12
 
@@ -25,6 +25,13 @@ def classify_percentage(value: float) -> int:
     if not math.isfinite(value) or not 0 <= value <= 100:
         raise ValueError("O percentual deve ser finito e estar entre 0 e 100.")
     return sum(value > limit + BOUNDARY_TOLERANCE for limit in (25, 50, 75))
+
+
+def continuous_score(value: float) -> float:
+    """Preserva o crédito parcial, sem aplicar as faixas do histórico."""
+    if not math.isfinite(value) or not 0 <= value <= 100:
+        raise ValueError("O percentual deve ser finito e estar entre 0 e 100.")
+    return value * 3 / 100
 
 
 def content_hash(value: Any) -> str:

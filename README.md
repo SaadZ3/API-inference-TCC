@@ -1,5 +1,9 @@
 # Serviço Python de análise
 
+**R7/R8:** regras locais `governance-rules-v3-dev2`, congeladas para avaliação. Publicação suspensa por falhas de reconhecimento documentadas na [R7](../docs/R7_REVALIDACAO_NOTAS.md). Persistência e entrega local conferidas na [R8](../docs/R8_CONSOLIDACAO_ENTREGA.md). Não interpretar as instruções de publicação abaixo como aceite desta versão.
+
+R6: novas avaliações usam `continuous_0_3` e método `documentary-quality-v3-draft1`. Backend e frontend precisam aceitar a escala contínua antes da publicação. O perfil mantém 14 perguntas, os bloqueios de entrada e as recomendações. Ver [relatório](../docs/R6_IMPLEMENTACAO_NOTAS.md).
+
 Para publicar pelo site do Railway, siga [RAILWAY.md](RAILWAY.md). O repositório agora inclui o núcleo em `vendor/`, regras em `config/` e metadados em `model/`. Os pesos grandes são distribuídos como anexo de Release.
 
 O projeto usa um único método de avaliação da qualidade da informação documentada, com notas de **0 a 3**. Consulte [a atualização do método](../docs/AVALIACAO_UNIFICADA.md).
@@ -71,6 +75,8 @@ Validação adicional com pesos reais, equivalência com a rodada anterior e med
 Use uma pasta de saída nova. O script processa seu PDF inteiro e como trecho, testa TXT sintético de 100 mil caracteres, compara 32 trechos históricos e salva respostas/manifesto/medidas. A comparação pressupõe que os outputs históricos originais ainda existem.
 
 Para conferir mudanças nas regras sem executar novamente o classificador, use `scripts/revalidate_exports.py --inputs <pasta> --output <nova-pasta>`. A entrada deve conter PDFs e exportações `resultado-*.json`; o script associa os arquivos por hash, reextrai o texto e recusa reutilizar classificações se o texto mudar. As saídas identificam a análise original e não são gravadas no banco. A R1 de 02/11/2026 usa regras `governance-rules-v2-dev3`; veja [o relatório](../docs/R1_REVISAO_NOTAS.md).
+
+A R3 usa regras `governance-rules-v2-dev4`, preparação `p3-v3` e pdfplumber 0.11.9. Atualize as dependências com `requirements.txt`. Como a ordem do texto pode mudar, reexecute a análise completa: `../docs/evidencias/R3/reanalisar.py <nova-pasta>`. O nome identifica uma pasta nova dentro das evidências R3; o comando não altera o banco nem os resultados antigos. Veja [o relatório da R3](../docs/R3_REVISAO_CONTEXTO_NOTAS.md).
 
 ## Atualizar modelo
 

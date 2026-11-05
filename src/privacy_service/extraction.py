@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
+from contextlib import ExitStack
 from hashlib import sha256
 from io import BytesIO
 from pathlib import Path
@@ -12,6 +13,9 @@ from typing import Any
 import unicodedata
 
 from pypdf import PdfReader
+import pdfplumber
+
+from .pdf_reading_order import read_positioned_page
 
 SCOPES = {"full_document", "excerpt", "unknown"}
 
@@ -177,48 +181,57 @@ def extract_document(
         images_found = False
         failed = False
         characters = 0
-        for index in range(count):
-            number = index + 1
-            try:
-                with _PdfWarnings() as notices:
-                    page = reader.pages[index]
-                    images_found = _has_image(page.get("/Resources")) or images_found
-                    stream = page.get_contents()
-                    if stream is not None and len(stream.get_data()) > limits.max_page_stream_bytes:
-                        raise IngestionError("FILE_TOO_LARGE", f"A página {number} excede o limite de conteúdo PDF descompactado.")
-                    text = _normalize(page.extract_text() or "")
-            except IngestionError:
-                raise
-            except Exception:
-                extracted.append((number, "", "failed"))
-                warnings.append(f"PAGE_EXTRACTION_FAILED: não foi possível extrair a página {number}.")
-                failed = True
-                continue
-            null_count = text.count("\x00")
-            if null_count:
-                # JSONB não aceita NUL. O marcador mantém a posição e torna a perda
-                # visível, sem inventar qual caractere estava no PDF.
-                text = text.replace("\x00", "\ufffd")
-                warnings.append(
-                    f"PDF_NULL_CHARACTERS_REPLACED: página {number}: {null_count} caracteres "
-                    "não puderam ser lidos e foram marcados com �; confira o PDF original."
-                )
-            characters += len(text)
-            if characters > limits.max_characters:
-                raise IngestionError("FILE_TOO_LARGE", f"O texto excede {limits.max_characters} caracteres.")
-            status = "ok"
-            if notices.seen:
-                status = "partial"
-                warnings.append(f"PDF_PARSER_WARNING: a biblioteca informou inconsistências na página {number}; revise a extração.")
-            if notices.xref_corrected:
-                warnings.append(f"PDF_XREF_INDEX_CORRECTED: a numeração interna foi ajustada na página {number}; o aviso isolado não indica perda de texto.")
-            if not text.strip():
-                status = "empty"
-                warnings.append(f"PAGE_WITHOUT_TEXT: página {number} sem texto extraível; pode estar vazia ou exigir OCR.")
-            elif _suspicious_characters(text):
-                status = "partial"
-                warnings.append(f"SUSPICIOUS_CHARACTERS: página {number} contém caracteres que exigem revisão.")
-            extracted.append((number, text, status))
+        with ExitStack() as resources:
+            positioned_pdf = None
+            for index in range(count):
+                number = index + 1
+                try:
+                    with _PdfWarnings() as notices:
+                        page = reader.pages[index]
+                        images_found = _has_image(page.get("/Resources")) or images_found
+                        stream = page.get_contents()
+                        if stream is not None and len(stream.get_data()) > limits.max_page_stream_bytes:
+                            raise IngestionError("FILE_TOO_LARGE", f"A página {number} excede o limite de conteúdo PDF descompactado.")
+                        text = _normalize(page.extract_text() or "")
+                        if text.strip() and not _suspicious_characters(text):
+                            try:
+                                if positioned_pdf is None:
+                                    positioned_pdf = resources.enter_context(pdfplumber.open(BytesIO(content)))
+                                text = read_positioned_page(positioned_pdf.pages[index], text)
+                            except Exception:
+                                warnings.append(f"PDF_READING_ORDER_FALLBACK: página {number}: mantida a leitura original; confira a posição de links e tabelas.")
+                except IngestionError:
+                    raise
+                except Exception:
+                    extracted.append((number, "", "failed"))
+                    warnings.append(f"PAGE_EXTRACTION_FAILED: não foi possível extrair a página {number}.")
+                    failed = True
+                    continue
+                null_count = text.count("\x00")
+                if null_count:
+                    # JSONB não aceita NUL. O marcador mantém a posição e torna a perda
+                    # visível, sem inventar qual caractere estava no PDF.
+                    text = text.replace("\x00", "\ufffd")
+                    warnings.append(
+                        f"PDF_NULL_CHARACTERS_REPLACED: página {number}: {null_count} caracteres "
+                        "não puderam ser lidos e foram marcados com �; confira o PDF original."
+                    )
+                characters += len(text)
+                if characters > limits.max_characters:
+                    raise IngestionError("FILE_TOO_LARGE", f"O texto excede {limits.max_characters} caracteres.")
+                status = "ok"
+                if notices.seen:
+                    status = "partial"
+                    warnings.append(f"PDF_PARSER_WARNING: a biblioteca informou inconsistências na página {number}; revise a extração.")
+                if notices.xref_corrected:
+                    warnings.append(f"PDF_XREF_INDEX_CORRECTED: a numeração interna foi ajustada na página {number}; o aviso isolado não indica perda de texto.")
+                if not text.strip():
+                    status = "empty"
+                    warnings.append(f"PAGE_WITHOUT_TEXT: página {number} sem texto extraível; pode estar vazia ou exigir OCR.")
+                elif _suspicious_characters(text):
+                    status = "partial"
+                    warnings.append(f"SUSPICIOUS_CHARACTERS: página {number} contém caracteres que exigem revisão.")
+                extracted.append((number, text, status))
         if not any(text.strip() for _, text, _ in extracted):
             if images_found and not failed:
                 raise IngestionError("OCR_REQUIRED", "O PDF contém imagens, mas nenhum texto extraível. É necessário OCR, fora do protótipo.")

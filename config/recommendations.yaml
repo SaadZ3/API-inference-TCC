@@ -1,4 +1,4 @@
-version: governance-recommendations-v2-dev1
+version: governance-recommendations-v3-dev1
 profile_id: core-14-v1
 sources_file: recommendation_sources.json
 topics:
@@ -143,10 +143,10 @@ topics:
 # A pergunta delimita a orientação; a categoria sozinha não dispara sugestões.
 questions:
   collection.data_types:
-    what_to_do: Especificar quais dados são coletados.
+    what_to_do: Especificar quais dados são coletados ou usados.
     how_to_do:
       - Confira os dados solicitados nos formulários e processos relacionados ao trecho.
-      - Descreva as classes de dados confirmadas, distinguindo as situações de coleta.
+      - Descreva as classes de dados confirmadas, distinguindo as situações de coleta ou uso.
     completion_evidence: [Lista de dados conferida e descrição correspondente na política]
   collection.purposes:
     what_to_do: Relacionar os dados às finalidades de uso.

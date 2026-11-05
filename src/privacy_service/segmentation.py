@@ -11,7 +11,7 @@ import re
 
 from .extraction import ExtractedDocument, IngestionError
 
-PREPROCESSING_VERSION = "p3-v2"
+PREPROCESSING_VERSION = "p3-v3"
 
 
 class PolicySegmenter:

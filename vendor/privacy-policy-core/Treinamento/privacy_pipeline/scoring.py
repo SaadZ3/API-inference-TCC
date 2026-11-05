@@ -7,7 +7,7 @@ from pathlib import Path
 import re
 
 from . import heuristics
-from .scoring_common import SCORE_SCALE, classify_percentage, content_hash, validate_policy
+from .scoring_common import SCORE_SCALE, continuous_score, content_hash, validate_policy
 
 VALUES = {"supported": 1.0, "partial": 0.5, "not_detected": 0.0, "inconclusive": None}
 
@@ -205,7 +205,7 @@ def evaluate_policy(policy: dict, rules: heuristics.RuleSet, *, fallback: bool |
         points = sum(q["value"] or 0 for q in items)
         resolved = sum(q["value"] is not None for q in items)
         percentage = 100 * points / len(items) if resolved == len(items) and usable else None
-        score = classify_percentage(percentage) if percentage is not None else None
+        score = continuous_score(percentage) if percentage is not None else None
         weight = dimension["weight"] / total_weight
         dimensions.append({"id": dimension["id"], "title": dimension["title"], "weight": dimension["weight"],
                            "normalized_weight": weight, "status": "resolved" if score is not None else "unresolved",
@@ -220,7 +220,7 @@ def evaluate_policy(policy: dict, rules: heuristics.RuleSet, *, fallback: bool |
             "profile_id": rules.data["profile_id"], "profile_sha256": content_hash({"profile": rules.data["profile_id"], "dimensions": rules.data["dimensions"], "questions": rules.data["questions"]}),
             "validation_status": "not_human_validated", "input_status": "no_usable_segments" if not usable else "partial_input" if input_partial else "complete_input",
             "score_status": "blocked" if blockers else "available",
-            "score": None if blockers else classify_percentage(min(100, sum(
+            "score": None if blockers else continuous_score(min(100, sum(
                 100 * d["earned_points"] / d["applicable_questions"] * d["normalized_weight"] for d in dimensions))),
             "score_blockers": blockers, "rules_version": rules.data["version"], "rules_sha256": content_hash(rules.data),
             "predictions_sha256": content_hash(policy), "fallback_enabled": fallback,
