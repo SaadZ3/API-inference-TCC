@@ -259,17 +259,17 @@
     {
       "id": "project-review",
       "source_type": "project_rubric",
-      "title": "Rubrica documental do projeto",
-      "edition": "documentary-quality-v3-draft1",
-      "section": "2, 6 e 7 — estados, entrada e revisão",
+      "title": "Critérios documentais e agregação com exclusão de dúvidas — R9",
+      "edition": "documentary-quality-v4-draft1",
+      "section": "Regra solicitada; identificação e histórico; limites acadêmicos",
       "pdf_page": null,
       "url": null,
       "verified_by": "Codex — conferência da rubrica local",
       "verified_at": "2026-11-05",
       "verification_scope": "project_document",
-      "source_file": "docs/METODO_AVALIACAO.md",
-      "source_sha256": "0c26235027f1f080db400f96d28528891017662ada231efbea8af80a4837bb0c",
-      "source_locator": "Seções 2, 6 e 7",
+      "source_file": "docs/R9_CALCULO_SEM_BLOQUEIO_POR_DUVIDAS.md",
+      "source_sha256": "55b3892a71285620f906946b56e74b4e500a5e780cf94328b73aca9a034bfad2",
+      "source_locator": "Regra solicitada; identificação e histórico; limites acadêmicos",
       "control_role": "project",
       "summary": "Revisar ambiguidades e limitações da entrada antes de concluir sobre o conteúdo da política."
     }

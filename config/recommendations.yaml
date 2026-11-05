@@ -1,4 +1,4 @@
-version: governance-recommendations-v3-dev1
+version: governance-recommendations-v4-dev1
 profile_id: core-14-v1
 sources_file: recommendation_sources.json
 topics:

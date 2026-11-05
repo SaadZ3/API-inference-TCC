@@ -17,11 +17,17 @@ RULES = load_rules(ROOT / 'config/scoring.yaml')
 
 @pytest.mark.parametrize('name', ['complete', 'partial', 'conflict', 'truncated', 'empty', 'unicode'])
 def test_service_matches_cli_calculation(name):
-    saved = json.loads((ROOT / f'tests/fixtures/r7/{name}.json').read_text(encoding='utf-8'))['result']
+    saved = json.loads((ROOT / f'tests/fixtures/r9/{name}.json').read_text(encoding='utf-8'))['result']
     before = copy.deepcopy(saved)
     actual = evaluate(saved, saved['segments'], RULES, None)
     assert actual == saved['evaluation']
     assert saved == before
+    assert actual['uncertainty_policy'] == 'exclude_inconclusive_evidence_v1'
+    if name == 'conflict':
+        assert actual['score'] == 0
+        assert actual['score_blockers'] == []
+        assert next(d for d in actual['dimensions'] if d['id']=='collection')['normalized_weight'] == 0
+        return
     # As notas novas são contínuas; os estados desses exemplos permanecem iguais.
     historical = json.loads((ROOT / f'tests/fixtures/e4/{name}.json').read_text(encoding='utf-8'))['result']['evaluation']
     assert actual['score_scale'] == 'continuous_0_3'

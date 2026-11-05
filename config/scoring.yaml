@@ -1,6 +1,6 @@
 # Configuração experimental; exemplos de desenvolvimento não validam qualidade real.
-version: governance-rules-v3-dev2
-method_version: documentary-quality-v3-draft1
+version: governance-rules-v4-dev1
+method_version: documentary-quality-v4-draft1
 language: pt
 profile_id: core-14-v1
 profile_defined_at: '2026-09-27T00:00:00Z'

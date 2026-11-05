@@ -90,6 +90,7 @@ def _finding(question: dict | None, rules: heuristics.RuleSet, kind: str, ration
 
 def evaluate_policy(policy: dict, rules: heuristics.RuleSet, *, fallback: bool | None = None) -> dict:
     validate_input(policy)
+    exclude_uncertain = rules.data['method_version'] == 'documentary-quality-v4-draft1'
     fallback = rules.data["fallback"] if fallback is None else fallback
     if type(fallback) is not bool:
         raise ValueError("fallback deve ser booleano.")
@@ -140,13 +141,23 @@ def evaluate_policy(policy: dict, rules: heuristics.RuleSet, *, fallback: bool |
         conflicts = [(a, b) for a, b in combinations(unique_statements, 2) if heuristics.conflicting(a, b, question)]
         supporting = [c for c in candidates if c["state"] in {"supported", "partial"}]
         ambiguous = [c for c in candidates if c["state"] == "inconclusive"]
-        if conflicts:
+        context_candidates = ambiguous + [c for pair in conflicts for c in pair]
+        if exclude_uncertain:
+            # Também retirar janelas sobrepostas evita reintroduzir a mesma passagem duvidosa.
+            uncertain_refs = [e for c in context_candidates for e in c['window'].evidence]
+            uncertain_statements = {re.sub(r'\s+', ' ', c['window'].text).strip().casefold() for c in context_candidates}
+            rejected = [c for c in supporting if re.sub(r'\s+', ' ', c['window'].text).strip().casefold() in uncertain_statements or any(
+                e['segment_id'] == ref['segment_id'] and e['start'] < ref['end'] and ref['start'] < e['end']
+                for e in c['window'].evidence for ref in uncertain_refs)]
+            supporting = [c for c in supporting if c not in rejected]
+            context_candidates += rejected
+        if conflicts and not exclude_uncertain:
             state = "inconclusive"
         elif any(c["state"] == "supported" for c in supporting):
             state = "supported"
         elif supporting:
             state = "partial"
-        elif ambiguous:
+        elif context_candidates:
             state = "inconclusive"
         else:
             state = "not_detected"
@@ -157,8 +168,7 @@ def evaluate_policy(policy: dict, rules: heuristics.RuleSet, *, fallback: bool |
                      "partial": "Informação pertinente, mas incompleta: " + ", ".join(missing) + ".",
                      "not_detected": "Nenhum suporte localizado nos segmentos examinados; ausência não comprovada.",
                      "inconclusive": "Contexto ou declarações potencialmente incompatíveis impedem decidir."}[state]
-        support_groups = [_group(c, question, rules, label) for c in supporting if not conflicts]
-        context_candidates = ambiguous + [c for pair in conflicts for c in pair]
+        support_groups = [_group(c, question, rules, label) for c in supporting if exclude_uncertain or not conflicts]
         context_groups = list({g["id"]: g for g in (_group(c, question, rules, label) for c in context_candidates)}.values())
         local = []
         if state in {"partial", "not_detected"} and usable:
@@ -195,33 +205,38 @@ def evaluate_policy(policy: dict, rules: heuristics.RuleSet, *, fallback: bool |
         blockers.append("truncated_segments")
     if not usable:
         blockers.append("no_usable_segments")
-    if any(q["status"] == "inconclusive" for q in questions):
+    input_partial = bool(blockers)
+    if not exclude_uncertain and any(q["status"] == "inconclusive" for q in questions):
         blockers.append("inconclusive_questions")
-    input_partial = bool(set(blockers) - {"inconclusive_questions"})
-    total_weight = sum(d["weight"] for d in dims.values())
+    if exclude_uncertain and usable and all(q['value'] is None for q in questions):
+        blockers.append('no_evaluable_questions')
+    active = {q['dimension_id'] for q in questions if q['value'] is not None} if usable else set()
+    total_weight = sum(d['weight'] for d in dims.values() if not exclude_uncertain or d['id'] in active)
     dimensions = []
     for dimension in dims.values():
         items = [q for q in questions if q["dimension_id"] == dimension["id"]]
         points = sum(q["value"] or 0 for q in items)
         resolved = sum(q["value"] is not None for q in items)
-        percentage = 100 * points / len(items) if resolved == len(items) and usable else None
+        denominator = resolved if exclude_uncertain else len(items)
+        percentage = 100 * points / denominator if denominator and usable and (exclude_uncertain or resolved == len(items)) else None
         score = continuous_score(percentage) if percentage is not None else None
-        weight = dimension["weight"] / total_weight
+        weight = dimension['weight'] / total_weight if total_weight and (not exclude_uncertain or dimension['id'] in active) else 0.0
         dimensions.append({"id": dimension["id"], "title": dimension["title"], "weight": dimension["weight"],
                            "normalized_weight": weight, "status": "resolved" if score is not None else "unresolved",
-                           "score": score, "contribution": weight * 3 * points / len(items) if not blockers else None,
+                           "score": score, "contribution": (weight * score if exclude_uncertain else weight * 3 * points / len(items)) if not blockers and score is not None else None,
                            "earned_points": points, "applicable_questions": len(items), "unknown_applicability_questions": 0,
                            "resolved_questions": resolved, "inconclusive_questions": len(items) - resolved,
-                           "excluded_questions": 0, "questions": items})
+                           "excluded_questions": len(items) - resolved if exclude_uncertain else 0, "questions": items})
     if input_partial:
         findings.append(_finding(None, rules, "extraction_limitation", "Nota global bloqueada pelas condições de entrada: " + ", ".join(b for b in blockers if b != "inconclusive_questions"), [], None, "high"))
     return {"schema_version": 2, "policy_id": policy["policy_id"], "language": "pt",
+            **({'uncertainty_policy': 'exclude_inconclusive_evidence_v1'} if exclude_uncertain else {}),
             "index": "documentary_information_quality", "method_version": rules.data["method_version"], "score_scale": SCORE_SCALE,
             "profile_id": rules.data["profile_id"], "profile_sha256": content_hash({"profile": rules.data["profile_id"], "dimensions": rules.data["dimensions"], "questions": rules.data["questions"]}),
             "validation_status": "not_human_validated", "input_status": "no_usable_segments" if not usable else "partial_input" if input_partial else "complete_input",
             "score_status": "blocked" if blockers else "available",
-            "score": None if blockers else continuous_score(min(100, sum(
-                100 * d["earned_points"] / d["applicable_questions"] * d["normalized_weight"] for d in dimensions))),
+            "score": None if blockers else (min(3.0, sum(d['contribution'] or 0 for d in dimensions)) if exclude_uncertain else continuous_score(min(100, sum(
+                100 * d['earned_points'] / d['applicable_questions'] * d['normalized_weight'] for d in dimensions)))),
             "score_blockers": blockers, "rules_version": rules.data["version"], "rules_sha256": content_hash(rules.data),
             "predictions_sha256": content_hash(policy), "fallback_enabled": fallback,
             "dimensions": dimensions, "findings": findings, "recommendations": [],

@@ -1,0 +1,1191 @@
+{
+  "schema_version": 2,
+  "versions": {
+    "model": "synthetic-labels-not-model-inference",
+    "preprocessing": "synthetic-fixture",
+    "scoring": "governance-rules-v4-dev1:0303b692e943ad8f835244e4a3f7d0e3502af35cd003c969c1b2a2697aed0b75",
+    "recommendations": null
+  },
+  "result": {
+    "document_scope": "full_document",
+    "source": {
+      "filename": "synthetic-e4.txt",
+      "format": "txt",
+      "byte_size": 36,
+      "sha256": "fe151cf4908969125100753a064cad13dc0b8eaca7815d6b8b5f1961ecf78a2e"
+    },
+    "preprocessing": {
+      "version": "synthetic-fixture-not-inference",
+      "max_length": 512,
+      "tokenizer_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "extraction": {
+      "status": "ok",
+      "warnings": [],
+      "text": "Coletamos nome. Não coletamos nome.",
+      "page_count": null,
+      "pages": [
+        {
+          "page_number": null,
+          "char_start": 0,
+          "char_end": 35,
+          "status": "ok"
+        }
+      ]
+    },
+    "segments": [
+      {
+        "segment_id": "s0",
+        "text": "Coletamos nome. Não coletamos nome.",
+        "char_start": 0,
+        "char_end": 35,
+        "page_start": null,
+        "page_end": null,
+        "labels": [
+          "Other"
+        ],
+        "n_tokens": 20,
+        "probabilities": {
+          "First Party Collection/Use": 0.01,
+          "Third Party Sharing/Collection": 0.01,
+          "User Choice/Control": 0.01,
+          "User Access, Edit and Deletion": 0.01,
+          "Data Retention": 0.01,
+          "Data Security": 0.01,
+          "Policy Change": 0.01,
+          "Do Not Track": 0.01,
+          "International and Specific Audiences": 0.01,
+          "Other": 0.99
+        },
+        "truncated": false
+      }
+    ],
+    "evaluation": {
+      "schema_version": 2,
+      "policy_id": "fe151cf4908969125100753a064cad13dc0b8eaca7815d6b8b5f1961ecf78a2e",
+      "language": "pt",
+      "uncertainty_policy": "exclude_inconclusive_evidence_v1",
+      "index": "documentary_information_quality",
+      "method_version": "documentary-quality-v4-draft1",
+      "score_scale": "continuous_0_3",
+      "profile_id": "core-14-v1",
+      "profile_sha256": "4ae42318d5cb9125026fb964d7dd2be262ecc6e470d5961c2ecd733cf231adc6",
+      "validation_status": "not_human_validated",
+      "input_status": "complete_input",
+      "score_status": "available",
+      "score": 0,
+      "score_blockers": [],
+      "rules_version": "governance-rules-v4-dev1",
+      "rules_sha256": "0303b692e943ad8f835244e4a3f7d0e3502af35cd003c969c1b2a2697aed0b75",
+      "predictions_sha256": "42414ff85689377ae0cf86a53cce39af9521c1b6c2c1abf07c06120591fa3751",
+      "fallback_enabled": true,
+      "dimensions": [
+        {
+          "id": "collection",
+          "title": "Coleta e uso",
+          "weight": 1,
+          "normalized_weight": 0.0,
+          "status": "unresolved",
+          "score": null,
+          "contribution": null,
+          "earned_points": 0,
+          "applicable_questions": 2,
+          "unknown_applicability_questions": 0,
+          "resolved_questions": 0,
+          "inconclusive_questions": 2,
+          "excluded_questions": 2,
+          "questions": [
+            {
+              "id": "collection.data_types",
+              "dimension_id": "collection",
+              "title": "Tipos de dados coletados ou usados",
+              "status": "inconclusive",
+              "value": null,
+              "applicability": {
+                "state": "applicable",
+                "source": "profile",
+                "source_id": "core-14-v1",
+                "reason": "Pergunta documental central do perfil.",
+                "declared_at": "2026-09-27T00:00:00Z"
+              },
+              "rule_id": "collection.data_types",
+              "rule_version": "governance-rules-v4-dev1",
+              "rationale": "Contexto ou declarações potencialmente incompatíveis impedem decidir.",
+              "found_elements": [],
+              "missing_elements": [
+                "collection_practice",
+                "identifiable_data_type"
+              ],
+              "supporting_groups": [],
+              "contextual_groups": [
+                {
+                  "evidence": [
+                    {
+                      "segment_id": "s0",
+                      "start": 0,
+                      "end": 15,
+                      "quote": "Coletamos nome."
+                    }
+                  ],
+                  "polarity": "affirmed",
+                  "detection_source": "rule_only",
+                  "rule_id": "collection.data_types",
+                  "rule_version": "governance-rules-v4-dev1",
+                  "rationale": "Relação contextual detectada.",
+                  "id": "evidence:29589178c72fbd99609154a89ba88de44d8ee5e551cdb4e13dbd9363e4ed6e10"
+                },
+                {
+                  "evidence": [
+                    {
+                      "segment_id": "s0",
+                      "start": 16,
+                      "end": 35,
+                      "quote": "Não coletamos nome."
+                    }
+                  ],
+                  "polarity": "negated",
+                  "detection_source": "rule_only",
+                  "rule_id": "collection.data_types",
+                  "rule_version": "governance-rules-v4-dev1",
+                  "rationale": "Relação contextual detectada.",
+                  "id": "evidence:d3faf358f2f8b3e20da8e8f602dfd0f2418a75273923465ebfe0cdc25edfe944"
+                }
+              ],
+              "duplicate_occurrences_omitted": 0,
+              "search_scope": {
+                "searched_segment_ids": [
+                  "s0"
+                ],
+                "excluded_segment_ids": [],
+                "category_pass": true,
+                "fallback_pass": true,
+                "fallback_reason": "Busca complementar em segmentos sem a categoria prevista."
+              },
+              "finding_ids": [
+                "finding:c4be166e087533db02035cc13b72149ba90099827a73394d7768585fa0de92b5"
+              ]
+            },
+            {
+              "id": "collection.purposes",
+              "dimension_id": "collection",
+              "title": "Relação entre dado e finalidade",
+              "status": "inconclusive",
+              "value": null,
+              "applicability": {
+                "state": "applicable",
+                "source": "profile",
+                "source_id": "core-14-v1",
+                "reason": "Pergunta documental central do perfil.",
+                "declared_at": "2026-09-27T00:00:00Z"
+              },
+              "rule_id": "collection.purposes",
+              "rule_version": "governance-rules-v4-dev1",
+              "rationale": "Contexto ou declarações potencialmente incompatíveis impedem decidir.",
+              "found_elements": [],
+              "missing_elements": [
+                "collected_data_type",
+                "specific_purpose"
+              ],
+              "supporting_groups": [],
+              "contextual_groups": [
+                {
+                  "evidence": [
+                    {
+                      "segment_id": "s0",
+                      "start": 0,
+                      "end": 15,
+                      "quote": "Coletamos nome."
+                    }
+                  ],
+                  "polarity": "affirmed",
+                  "detection_source": "rule_only",
+                  "rule_id": "collection.purposes",
+                  "rule_version": "governance-rules-v4-dev1",
+                  "rationale": "Informação pertinente; faltam: specific_purpose",
+                  "id": "evidence:98be73539f196c6af689aa21463d681ed0053d6d64f2b9cd5b80f15ed83870d3"
+                },
+                {
+                  "evidence": [
+                    {
+                      "segment_id": "s0",
+                      "start": 16,
+                      "end": 35,
+                      "quote": "Não coletamos nome."
+                    }
+                  ],
+                  "polarity": "negated",
+                  "detection_source": "rule_only",
+                  "rule_id": "collection.purposes",
+                  "rule_version": "governance-rules-v4-dev1",
+                  "rationale": "Informação pertinente; faltam: specific_purpose",
+                  "id": "evidence:72cd3841da066808632d85ff24bb0b71f0d1bb2de58b0110e9683af5a9db3f6f"
+                }
+              ],
+              "duplicate_occurrences_omitted": 0,
+              "search_scope": {
+                "searched_segment_ids": [
+                  "s0"
+                ],
+                "excluded_segment_ids": [],
+                "category_pass": true,
+                "fallback_pass": true,
+                "fallback_reason": "Busca complementar em segmentos sem a categoria prevista."
+              },
+              "finding_ids": [
+                "finding:a9266c53f6532225a172125cf964bf91cbb090d84d321eb45401e4dda3a75c1f"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sharing",
+          "title": "Compartilhamento",
+          "weight": 1,
+          "normalized_weight": 0.16666666666666666,
+          "status": "resolved",
+          "score": 0.0,
+          "contribution": 0.0,
+          "earned_points": 0,
+          "applicable_questions": 2,
+          "unknown_applicability_questions": 0,
+          "resolved_questions": 2,
+          "inconclusive_questions": 0,
+          "excluded_questions": 0,
+          "questions": [
+            {
+              "id": "sharing.recipients",
+              "dimension_id": "sharing",
+              "title": "Destinatários do compartilhamento",
+              "status": "not_detected",
+              "value": 0.0,
+              "applicability": {
+                "state": "applicable",
+                "source": "profile",
+                "source_id": "core-14-v1",
+                "reason": "Pergunta documental central do perfil.",
+                "declared_at": "2026-09-27T00:00:00Z"
+              },
+              "rule_id": "sharing.recipients",
+              "rule_version": "governance-rules-v4-dev1",
+              "rationale": "Nenhum suporte localizado nos segmentos examinados; ausência não comprovada.",
+              "found_elements": [],
+              "missing_elements": [
+                "sharing_practice",
+                "identifiable_recipient"
+              ],
+              "supporting_groups": [],
+              "contextual_groups": [],
+              "duplicate_occurrences_omitted": 0,
+              "search_scope": {
+                "searched_segment_ids": [
+                  "s0"
+                ],
+                "excluded_segment_ids": [],
+                "category_pass": true,
+                "fallback_pass": true,
+                "fallback_reason": "Busca complementar em segmentos sem a categoria prevista."
+              },
+              "finding_ids": [
+                "finding:0306b77abd1198cb9cdc3840cafcea4de1515058b1b2140f2303d9f5e0cef9e7"
+              ]
+            },
+            {
+              "id": "sharing.conditions",
+              "dimension_id": "sharing",
+              "title": "Condições do compartilhamento",
+              "status": "not_detected",
+              "value": 0.0,
+              "applicability": {
+                "state": "applicable",
+                "source": "profile",
+                "source_id": "core-14-v1",
+                "reason": "Pergunta documental central do perfil.",
+                "declared_at": "2026-09-27T00:00:00Z"
+              },
+              "rule_id": "sharing.conditions",
+              "rule_version": "governance-rules-v4-dev1",
+              "rationale": "Nenhum suporte localizado nos segmentos examinados; ausência não comprovada.",
+              "found_elements": [],
+              "missing_elements": [
+                "identifiable_recipient",
+                "purpose_condition_or_prohibition"
+              ],
+              "supporting_groups": [],
+              "contextual_groups": [],
+              "duplicate_occurrences_omitted": 0,
+              "search_scope": {
+                "searched_segment_ids": [
+                  "s0"
+                ],
+                "excluded_segment_ids": [],
+                "category_pass": true,
+                "fallback_pass": true,
+                "fallback_reason": "Busca complementar em segmentos sem a categoria prevista."
+              },
+              "finding_ids": [
+                "finding:5545c07a74ce7f7674ae572b53570566ff34b73db3e3f1448fa6f0516e3ce307"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "choice",
+          "title": "Escolhas e controle",
+          "weight": 1,
+          "normalized_weight": 0.16666666666666666,
+          "status": "resolved",
+          "score": 0.0,
+          "contribution": 0.0,
+          "earned_points": 0,
+          "applicable_questions": 2,
+          "unknown_applicability_questions": 0,
+          "resolved_questions": 2,
+          "inconclusive_questions": 0,
+          "excluded_questions": 0,
+          "questions": [
+            {
+              "id": "choice.mechanism",
+              "dimension_id": "choice",
+              "title": "Procedimento para exercer uma escolha",
+              "status": "not_detected",
+              "value": 0.0,
+              "applicability": {
+                "state": "applicable",
+                "source": "profile",
+                "source_id": "core-14-v1",
+                "reason": "Pergunta documental central do perfil.",
+                "declared_at": "2026-09-27T00:00:00Z"
+              },
+              "rule_id": "choice.mechanism",
+              "rule_version": "governance-rules-v4-dev1",
+              "rationale": "Nenhum suporte localizado nos segmentos examinados; ausência não comprovada.",
+              "found_elements": [],
+              "missing_elements": [
+                "affected_processing",
+                "locatable_procedure"
+              ],
+              "supporting_groups": [],
+              "contextual_groups": [],
+              "duplicate_occurrences_omitted": 0,
+              "search_scope": {
+                "searched_segment_ids": [
+                  "s0"
+                ],
+                "excluded_segment_ids": [],
+                "category_pass": true,
+                "fallback_pass": true,
+                "fallback_reason": "Busca complementar em segmentos sem a categoria prevista."
+              },
+              "finding_ids": [
+                "finding:c53c65ae774cb441078d34033d104ed879f21e527b8539bdfe64b6e1142c94fd"
+              ]
+            },
+            {
+              "id": "choice.channel",
+              "dimension_id": "choice",
+              "title": "Canal localizável para escolhas",
+              "status": "not_detected",
+              "value": 0.0,
+              "applicability": {
+                "state": "applicable",
+                "source": "profile",
+                "source_id": "core-14-v1",
+                "reason": "Pergunta documental central do perfil.",
+                "declared_at": "2026-09-27T00:00:00Z"
+              },
+              "rule_id": "choice.channel",
+              "rule_version": "governance-rules-v4-dev1",
+              "rationale": "Nenhum suporte localizado nos segmentos examinados; ausência não comprovada.",
+              "found_elements": [],
+              "missing_elements": [
+                "choice",
+                "locatable_channel"
+              ],
+              "supporting_groups": [],
+              "contextual_groups": [],
+              "duplicate_occurrences_omitted": 0,
+              "search_scope": {
+                "searched_segment_ids": [
+                  "s0"
+                ],
+                "excluded_segment_ids": [],
+                "category_pass": true,
+                "fallback_pass": true,
+                "fallback_reason": "Busca complementar em segmentos sem a categoria prevista."
+              },
+              "finding_ids": [
+                "finding:ebc6b23db8c469c96d9c70d671a5769ab78f048c44671b9f4af8ed03db04df39"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "access",
+          "title": "Direitos e solicitações",
+          "weight": 1,
+          "normalized_weight": 0.16666666666666666,
+          "status": "resolved",
+          "score": 0.0,
+          "contribution": 0.0,
+          "earned_points": 0,
+          "applicable_questions": 2,
+          "unknown_applicability_questions": 0,
+          "resolved_questions": 2,
+          "inconclusive_questions": 0,
+          "excluded_questions": 0,
+          "questions": [
+            {
+              "id": "access.channel",
+              "dimension_id": "access",
+              "title": "Canal de solicitação de direitos",
+              "status": "not_detected",
+              "value": 0.0,
+              "applicability": {
+                "state": "applicable",
+                "source": "profile",
+                "source_id": "core-14-v1",
+                "reason": "Pergunta documental central do perfil.",
+                "declared_at": "2026-09-27T00:00:00Z"
+              },
+              "rule_id": "access.channel",
+              "rule_version": "governance-rules-v4-dev1",
+              "rationale": "Nenhum suporte localizado nos segmentos examinados; ausência não comprovada.",
+              "found_elements": [],
+              "missing_elements": [
+                "identified_request",
+                "locatable_channel"
+              ],
+              "supporting_groups": [],
+              "contextual_groups": [],
+              "duplicate_occurrences_omitted": 0,
+              "search_scope": {
+                "searched_segment_ids": [
+                  "s0"
+                ],
+                "excluded_segment_ids": [],
+                "category_pass": true,
+                "fallback_pass": true,
+                "fallback_reason": "Busca complementar em segmentos sem a categoria prevista."
+              },
+              "finding_ids": [
+                "finding:5e32f23292118ae365c630b69462242561d4ec3ea9b6a9bc3723f49c67d72b80"
+              ]
+            },
+            {
+              "id": "access.response_time",
+              "dimension_id": "access",
+              "title": "Prazo de resposta e marco inicial",
+              "status": "not_detected",
+              "value": 0.0,
+              "applicability": {
+                "state": "applicable",
+                "source": "profile",
+                "source_id": "core-14-v1",
+                "reason": "Pergunta documental central do perfil.",
+                "declared_at": "2026-09-27T00:00:00Z"
+              },
+              "rule_id": "access.response_time",
+              "rule_version": "governance-rules-v4-dev1",
+              "rationale": "Nenhum suporte localizado nos segmentos examinados; ausência não comprovada.",
+              "found_elements": [],
+              "missing_elements": [
+                "identified_request",
+                "response_duration_and_unit",
+                "start_event"
+              ],
+              "supporting_groups": [],
+              "contextual_groups": [],
+              "duplicate_occurrences_omitted": 0,
+              "search_scope": {
+                "searched_segment_ids": [
+                  "s0"
+                ],
+                "excluded_segment_ids": [],
+                "category_pass": true,
+                "fallback_pass": true,
+                "fallback_reason": "Busca complementar em segmentos sem a categoria prevista."
+              },
+              "finding_ids": [
+                "finding:2253b9b6ca13ace9a992972d5e7c8e82a682210974718177e68d7d14b224d661"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "retention",
+          "title": "Retenção",
+          "weight": 1,
+          "normalized_weight": 0.16666666666666666,
+          "status": "resolved",
+          "score": 0.0,
+          "contribution": 0.0,
+          "earned_points": 0,
+          "applicable_questions": 2,
+          "unknown_applicability_questions": 0,
+          "resolved_questions": 2,
+          "inconclusive_questions": 0,
+          "excluded_questions": 0,
+          "questions": [
+            {
+              "id": "retention.duration",
+              "dimension_id": "retention",
+              "title": "Duração ou evento de retenção",
+              "status": "not_detected",
+              "value": 0.0,
+              "applicability": {
+                "state": "applicable",
+                "source": "profile",
+                "source_id": "core-14-v1",
+                "reason": "Pergunta documental central do perfil.",
+                "declared_at": "2026-09-27T00:00:00Z"
+              },
+              "rule_id": "retention.duration",
+              "rule_version": "governance-rules-v4-dev1",
+              "rationale": "Nenhum suporte localizado nos segmentos examinados; ausência não comprovada.",
+              "found_elements": [],
+              "missing_elements": [
+                "data_class",
+                "duration_or_event"
+              ],
+              "supporting_groups": [],
+              "contextual_groups": [],
+              "duplicate_occurrences_omitted": 0,
+              "search_scope": {
+                "searched_segment_ids": [
+                  "s0"
+                ],
+                "excluded_segment_ids": [],
+                "category_pass": true,
+                "fallback_pass": true,
+                "fallback_reason": "Busca complementar em segmentos sem a categoria prevista."
+              },
+              "finding_ids": [
+                "finding:72a124d91aefc4599659afec64acbdb5a68e50102d4f79fc4fabaac8530cfb3e"
+              ]
+            },
+            {
+              "id": "retention.disposal",
+              "dimension_id": "retention",
+              "title": "Destinação ao final da retenção",
+              "status": "not_detected",
+              "value": 0.0,
+              "applicability": {
+                "state": "applicable",
+                "source": "profile",
+                "source_id": "core-14-v1",
+                "reason": "Pergunta documental central do perfil.",
+                "declared_at": "2026-09-27T00:00:00Z"
+              },
+              "rule_id": "retention.disposal",
+              "rule_version": "governance-rules-v4-dev1",
+              "rationale": "Nenhum suporte localizado nos segmentos examinados; ausência não comprovada.",
+              "found_elements": [],
+              "missing_elements": [
+                "data_class",
+                "end_event",
+                "disposition"
+              ],
+              "supporting_groups": [],
+              "contextual_groups": [],
+              "duplicate_occurrences_omitted": 0,
+              "search_scope": {
+                "searched_segment_ids": [
+                  "s0"
+                ],
+                "excluded_segment_ids": [],
+                "category_pass": true,
+                "fallback_pass": true,
+                "fallback_reason": "Busca complementar em segmentos sem a categoria prevista."
+              },
+              "finding_ids": [
+                "finding:7eaab0c8873d38184349b97ce83496f586681952067815345f37c692aa75e25f"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "security",
+          "title": "Segurança",
+          "weight": 1,
+          "normalized_weight": 0.16666666666666666,
+          "status": "resolved",
+          "score": 0.0,
+          "contribution": 0.0,
+          "earned_points": 0,
+          "applicable_questions": 2,
+          "unknown_applicability_questions": 0,
+          "resolved_questions": 2,
+          "inconclusive_questions": 0,
+          "excluded_questions": 0,
+          "questions": [
+            {
+              "id": "security.technical_measures",
+              "dimension_id": "security",
+              "title": "Medida técnica e contexto de proteção",
+              "status": "not_detected",
+              "value": 0.0,
+              "applicability": {
+                "state": "applicable",
+                "source": "profile",
+                "source_id": "core-14-v1",
+                "reason": "Pergunta documental central do perfil.",
+                "declared_at": "2026-09-27T00:00:00Z"
+              },
+              "rule_id": "security.technical_measures",
+              "rule_version": "governance-rules-v4-dev1",
+              "rationale": "Nenhum suporte localizado nos segmentos examinados; ausência não comprovada.",
+              "found_elements": [],
+              "missing_elements": [
+                "specific_measure",
+                "data_or_protection_context"
+              ],
+              "supporting_groups": [],
+              "contextual_groups": [],
+              "duplicate_occurrences_omitted": 0,
+              "search_scope": {
+                "searched_segment_ids": [
+                  "s0"
+                ],
+                "excluded_segment_ids": [],
+                "category_pass": true,
+                "fallback_pass": true,
+                "fallback_reason": "Busca complementar em segmentos sem a categoria prevista."
+              },
+              "finding_ids": [
+                "finding:136d9690ecf199a071e271a1866f3e6f4cac26a231ebf0c267cd9b2defff6dcc"
+              ]
+            },
+            {
+              "id": "security.access_controls",
+              "dimension_id": "security",
+              "title": "Controle de acesso, ator e recurso",
+              "status": "not_detected",
+              "value": 0.0,
+              "applicability": {
+                "state": "applicable",
+                "source": "profile",
+                "source_id": "core-14-v1",
+                "reason": "Pergunta documental central do perfil.",
+                "declared_at": "2026-09-27T00:00:00Z"
+              },
+              "rule_id": "security.access_controls",
+              "rule_version": "governance-rules-v4-dev1",
+              "rationale": "Nenhum suporte localizado nos segmentos examinados; ausência não comprovada.",
+              "found_elements": [],
+              "missing_elements": [
+                "specific_access_control",
+                "actor",
+                "resource"
+              ],
+              "supporting_groups": [],
+              "contextual_groups": [],
+              "duplicate_occurrences_omitted": 0,
+              "search_scope": {
+                "searched_segment_ids": [
+                  "s0"
+                ],
+                "excluded_segment_ids": [],
+                "category_pass": true,
+                "fallback_pass": true,
+                "fallback_reason": "Busca complementar em segmentos sem a categoria prevista."
+              },
+              "finding_ids": [
+                "finding:cd97703bfaefe400469d4239f3ac25c1f4225531f45777270f1532cec2ea94d4"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "changes",
+          "title": "Alterações da política",
+          "weight": 1,
+          "normalized_weight": 0.16666666666666666,
+          "status": "resolved",
+          "score": 0.0,
+          "contribution": 0.0,
+          "earned_points": 0,
+          "applicable_questions": 2,
+          "unknown_applicability_questions": 0,
+          "resolved_questions": 2,
+          "inconclusive_questions": 0,
+          "excluded_questions": 0,
+          "questions": [
+            {
+              "id": "changes.notice_channel",
+              "dimension_id": "changes",
+              "title": "Canal de aviso de mudanças",
+              "status": "not_detected",
+              "value": 0.0,
+              "applicability": {
+                "state": "applicable",
+                "source": "profile",
+                "source_id": "core-14-v1",
+                "reason": "Pergunta documental central do perfil.",
+                "declared_at": "2026-09-27T00:00:00Z"
+              },
+              "rule_id": "changes.notice_channel",
+              "rule_version": "governance-rules-v4-dev1",
+              "rationale": "Nenhum suporte localizado nos segmentos examinados; ausência não comprovada.",
+              "found_elements": [],
+              "missing_elements": [
+                "policy_change",
+                "identified_notice_channel"
+              ],
+              "supporting_groups": [],
+              "contextual_groups": [],
+              "duplicate_occurrences_omitted": 0,
+              "search_scope": {
+                "searched_segment_ids": [
+                  "s0"
+                ],
+                "excluded_segment_ids": [],
+                "category_pass": true,
+                "fallback_pass": true,
+                "fallback_reason": "Busca complementar em segmentos sem a categoria prevista."
+              },
+              "finding_ids": [
+                "finding:a692102cf89ee4bbda2b0241abc91703e326a726b5abe7f60f0d007122519231"
+              ]
+            },
+            {
+              "id": "changes.notice_timing",
+              "dimension_id": "changes",
+              "title": "Momento do aviso de mudanças",
+              "status": "not_detected",
+              "value": 0.0,
+              "applicability": {
+                "state": "applicable",
+                "source": "profile",
+                "source_id": "core-14-v1",
+                "reason": "Pergunta documental central do perfil.",
+                "declared_at": "2026-09-27T00:00:00Z"
+              },
+              "rule_id": "changes.notice_timing",
+              "rule_version": "governance-rules-v4-dev1",
+              "rationale": "Nenhum suporte localizado nos segmentos examinados; ausência não comprovada.",
+              "found_elements": [],
+              "missing_elements": [
+                "policy_change_notice",
+                "timing_and_event"
+              ],
+              "supporting_groups": [],
+              "contextual_groups": [],
+              "duplicate_occurrences_omitted": 0,
+              "search_scope": {
+                "searched_segment_ids": [
+                  "s0"
+                ],
+                "excluded_segment_ids": [],
+                "category_pass": true,
+                "fallback_pass": true,
+                "fallback_reason": "Busca complementar em segmentos sem a categoria prevista."
+              },
+              "finding_ids": [
+                "finding:bc07361a0c80451d1db4bcd423013ee582997e1a990c8f2f9503bcad30b35924"
+              ]
+            }
+          ]
+        }
+      ],
+      "findings": [
+        {
+          "id": "finding:c4be166e087533db02035cc13b72149ba90099827a73394d7768585fa0de92b5",
+          "dimension_id": "collection",
+          "question_id": "collection.data_types",
+          "rule_id": "collection.data_types",
+          "rule_version": "governance-rules-v4-dev1",
+          "kind": "contradiction",
+          "title": "Tipos de dados coletados ou usados",
+          "rationale": "Declarações potencialmente incompatíveis sobre objeto/contexto comparáveis.",
+          "priority": "high",
+          "priority_reason": "Esclarecer declaração ou entrada impeditiva.",
+          "evidence_groups": [
+            {
+              "evidence": [
+                {
+                  "segment_id": "s0",
+                  "start": 0,
+                  "end": 15,
+                  "quote": "Coletamos nome."
+                }
+              ],
+              "polarity": "affirmed",
+              "detection_source": "rule_only",
+              "rule_id": "collection.data_types",
+              "rule_version": "governance-rules-v4-dev1",
+              "rationale": "Relação contextual detectada.",
+              "id": "evidence:29589178c72fbd99609154a89ba88de44d8ee5e551cdb4e13dbd9363e4ed6e10"
+            },
+            {
+              "evidence": [
+                {
+                  "segment_id": "s0",
+                  "start": 16,
+                  "end": 35,
+                  "quote": "Não coletamos nome."
+                }
+              ],
+              "polarity": "negated",
+              "detection_source": "rule_only",
+              "rule_id": "collection.data_types",
+              "rule_version": "governance-rules-v4-dev1",
+              "rationale": "Relação contextual detectada.",
+              "id": "evidence:d3faf358f2f8b3e20da8e8f602dfd0f2418a75273923465ebfe0cdc25edfe944"
+            }
+          ],
+          "search_scope": {
+            "searched_segment_ids": [
+              "s0"
+            ],
+            "excluded_segment_ids": [],
+            "category_pass": true,
+            "fallback_pass": true,
+            "fallback_reason": "Busca complementar em segmentos sem a categoria prevista."
+          },
+          "recommendation_ids": []
+        },
+        {
+          "id": "finding:a9266c53f6532225a172125cf964bf91cbb090d84d321eb45401e4dda3a75c1f",
+          "dimension_id": "collection",
+          "question_id": "collection.purposes",
+          "rule_id": "collection.purposes",
+          "rule_version": "governance-rules-v4-dev1",
+          "kind": "contradiction",
+          "title": "Relação entre dado e finalidade",
+          "rationale": "Declarações potencialmente incompatíveis sobre objeto/contexto comparáveis.",
+          "priority": "high",
+          "priority_reason": "Esclarecer declaração ou entrada impeditiva.",
+          "evidence_groups": [
+            {
+              "evidence": [
+                {
+                  "segment_id": "s0",
+                  "start": 0,
+                  "end": 15,
+                  "quote": "Coletamos nome."
+                }
+              ],
+              "polarity": "affirmed",
+              "detection_source": "rule_only",
+              "rule_id": "collection.purposes",
+              "rule_version": "governance-rules-v4-dev1",
+              "rationale": "Informação pertinente; faltam: specific_purpose",
+              "id": "evidence:98be73539f196c6af689aa21463d681ed0053d6d64f2b9cd5b80f15ed83870d3"
+            },
+            {
+              "evidence": [
+                {
+                  "segment_id": "s0",
+                  "start": 16,
+                  "end": 35,
+                  "quote": "Não coletamos nome."
+                }
+              ],
+              "polarity": "negated",
+              "detection_source": "rule_only",
+              "rule_id": "collection.purposes",
+              "rule_version": "governance-rules-v4-dev1",
+              "rationale": "Informação pertinente; faltam: specific_purpose",
+              "id": "evidence:72cd3841da066808632d85ff24bb0b71f0d1bb2de58b0110e9683af5a9db3f6f"
+            }
+          ],
+          "search_scope": {
+            "searched_segment_ids": [
+              "s0"
+            ],
+            "excluded_segment_ids": [],
+            "category_pass": true,
+            "fallback_pass": true,
+            "fallback_reason": "Busca complementar em segmentos sem a categoria prevista."
+          },
+          "recommendation_ids": []
+        },
+        {
+          "id": "finding:0306b77abd1198cb9cdc3840cafcea4de1515058b1b2140f2303d9f5e0cef9e7",
+          "dimension_id": "sharing",
+          "question_id": "sharing.recipients",
+          "rule_id": "sharing.recipients",
+          "rule_version": "governance-rules-v4-dev1",
+          "kind": "information_gap",
+          "title": "Destinatários do compartilhamento",
+          "rationale": "Nenhum suporte localizado nos segmentos examinados; ausência não comprovada.",
+          "priority": "medium",
+          "priority_reason": "Conferir informação documental insuficiente ou ambígua.",
+          "evidence_groups": [],
+          "search_scope": {
+            "searched_segment_ids": [
+              "s0"
+            ],
+            "excluded_segment_ids": [],
+            "category_pass": true,
+            "fallback_pass": true,
+            "fallback_reason": "Busca complementar em segmentos sem a categoria prevista."
+          },
+          "recommendation_ids": []
+        },
+        {
+          "id": "finding:5545c07a74ce7f7674ae572b53570566ff34b73db3e3f1448fa6f0516e3ce307",
+          "dimension_id": "sharing",
+          "question_id": "sharing.conditions",
+          "rule_id": "sharing.conditions",
+          "rule_version": "governance-rules-v4-dev1",
+          "kind": "information_gap",
+          "title": "Condições do compartilhamento",
+          "rationale": "Nenhum suporte localizado nos segmentos examinados; ausência não comprovada.",
+          "priority": "medium",
+          "priority_reason": "Conferir informação documental insuficiente ou ambígua.",
+          "evidence_groups": [],
+          "search_scope": {
+            "searched_segment_ids": [
+              "s0"
+            ],
+            "excluded_segment_ids": [],
+            "category_pass": true,
+            "fallback_pass": true,
+            "fallback_reason": "Busca complementar em segmentos sem a categoria prevista."
+          },
+          "recommendation_ids": []
+        },
+        {
+          "id": "finding:c53c65ae774cb441078d34033d104ed879f21e527b8539bdfe64b6e1142c94fd",
+          "dimension_id": "choice",
+          "question_id": "choice.mechanism",
+          "rule_id": "choice.mechanism",
+          "rule_version": "governance-rules-v4-dev1",
+          "kind": "information_gap",
+          "title": "Procedimento para exercer uma escolha",
+          "rationale": "Nenhum suporte localizado nos segmentos examinados; ausência não comprovada.",
+          "priority": "medium",
+          "priority_reason": "Conferir informação documental insuficiente ou ambígua.",
+          "evidence_groups": [],
+          "search_scope": {
+            "searched_segment_ids": [
+              "s0"
+            ],
+            "excluded_segment_ids": [],
+            "category_pass": true,
+            "fallback_pass": true,
+            "fallback_reason": "Busca complementar em segmentos sem a categoria prevista."
+          },
+          "recommendation_ids": []
+        },
+        {
+          "id": "finding:ebc6b23db8c469c96d9c70d671a5769ab78f048c44671b9f4af8ed03db04df39",
+          "dimension_id": "choice",
+          "question_id": "choice.channel",
+          "rule_id": "choice.channel",
+          "rule_version": "governance-rules-v4-dev1",
+          "kind": "information_gap",
+          "title": "Canal localizável para escolhas",
+          "rationale": "Nenhum suporte localizado nos segmentos examinados; ausência não comprovada.",
+          "priority": "medium",
+          "priority_reason": "Conferir informação documental insuficiente ou ambígua.",
+          "evidence_groups": [],
+          "search_scope": {
+            "searched_segment_ids": [
+              "s0"
+            ],
+            "excluded_segment_ids": [],
+            "category_pass": true,
+            "fallback_pass": true,
+            "fallback_reason": "Busca complementar em segmentos sem a categoria prevista."
+          },
+          "recommendation_ids": []
+        },
+        {
+          "id": "finding:5e32f23292118ae365c630b69462242561d4ec3ea9b6a9bc3723f49c67d72b80",
+          "dimension_id": "access",
+          "question_id": "access.channel",
+          "rule_id": "access.channel",
+          "rule_version": "governance-rules-v4-dev1",
+          "kind": "information_gap",
+          "title": "Canal de solicitação de direitos",
+          "rationale": "Nenhum suporte localizado nos segmentos examinados; ausência não comprovada.",
+          "priority": "medium",
+          "priority_reason": "Conferir informação documental insuficiente ou ambígua.",
+          "evidence_groups": [],
+          "search_scope": {
+            "searched_segment_ids": [
+              "s0"
+            ],
+            "excluded_segment_ids": [],
+            "category_pass": true,
+            "fallback_pass": true,
+            "fallback_reason": "Busca complementar em segmentos sem a categoria prevista."
+          },
+          "recommendation_ids": []
+        },
+        {
+          "id": "finding:2253b9b6ca13ace9a992972d5e7c8e82a682210974718177e68d7d14b224d661",
+          "dimension_id": "access",
+          "question_id": "access.response_time",
+          "rule_id": "access.response_time",
+          "rule_version": "governance-rules-v4-dev1",
+          "kind": "information_gap",
+          "title": "Prazo de resposta e marco inicial",
+          "rationale": "Nenhum suporte localizado nos segmentos examinados; ausência não comprovada.",
+          "priority": "medium",
+          "priority_reason": "Conferir informação documental insuficiente ou ambígua.",
+          "evidence_groups": [],
+          "search_scope": {
+            "searched_segment_ids": [
+              "s0"
+            ],
+            "excluded_segment_ids": [],
+            "category_pass": true,
+            "fallback_pass": true,
+            "fallback_reason": "Busca complementar em segmentos sem a categoria prevista."
+          },
+          "recommendation_ids": []
+        },
+        {
+          "id": "finding:72a124d91aefc4599659afec64acbdb5a68e50102d4f79fc4fabaac8530cfb3e",
+          "dimension_id": "retention",
+          "question_id": "retention.duration",
+          "rule_id": "retention.duration",
+          "rule_version": "governance-rules-v4-dev1",
+          "kind": "information_gap",
+          "title": "Duração ou evento de retenção",
+          "rationale": "Nenhum suporte localizado nos segmentos examinados; ausência não comprovada.",
+          "priority": "medium",
+          "priority_reason": "Conferir informação documental insuficiente ou ambígua.",
+          "evidence_groups": [],
+          "search_scope": {
+            "searched_segment_ids": [
+              "s0"
+            ],
+            "excluded_segment_ids": [],
+            "category_pass": true,
+            "fallback_pass": true,
+            "fallback_reason": "Busca complementar em segmentos sem a categoria prevista."
+          },
+          "recommendation_ids": []
+        },
+        {
+          "id": "finding:7eaab0c8873d38184349b97ce83496f586681952067815345f37c692aa75e25f",
+          "dimension_id": "retention",
+          "question_id": "retention.disposal",
+          "rule_id": "retention.disposal",
+          "rule_version": "governance-rules-v4-dev1",
+          "kind": "information_gap",
+          "title": "Destinação ao final da retenção",
+          "rationale": "Nenhum suporte localizado nos segmentos examinados; ausência não comprovada.",
+          "priority": "medium",
+          "priority_reason": "Conferir informação documental insuficiente ou ambígua.",
+          "evidence_groups": [],
+          "search_scope": {
+            "searched_segment_ids": [
+              "s0"
+            ],
+            "excluded_segment_ids": [],
+            "category_pass": true,
+            "fallback_pass": true,
+            "fallback_reason": "Busca complementar em segmentos sem a categoria prevista."
+          },
+          "recommendation_ids": []
+        },
+        {
+          "id": "finding:136d9690ecf199a071e271a1866f3e6f4cac26a231ebf0c267cd9b2defff6dcc",
+          "dimension_id": "security",
+          "question_id": "security.technical_measures",
+          "rule_id": "security.technical_measures",
+          "rule_version": "governance-rules-v4-dev1",
+          "kind": "information_gap",
+          "title": "Medida técnica e contexto de proteção",
+          "rationale": "Nenhum suporte localizado nos segmentos examinados; ausência não comprovada.",
+          "priority": "medium",
+          "priority_reason": "Conferir informação documental insuficiente ou ambígua.",
+          "evidence_groups": [],
+          "search_scope": {
+            "searched_segment_ids": [
+              "s0"
+            ],
+            "excluded_segment_ids": [],
+            "category_pass": true,
+            "fallback_pass": true,
+            "fallback_reason": "Busca complementar em segmentos sem a categoria prevista."
+          },
+          "recommendation_ids": []
+        },
+        {
+          "id": "finding:cd97703bfaefe400469d4239f3ac25c1f4225531f45777270f1532cec2ea94d4",
+          "dimension_id": "security",
+          "question_id": "security.access_controls",
+          "rule_id": "security.access_controls",
+          "rule_version": "governance-rules-v4-dev1",
+          "kind": "information_gap",
+          "title": "Controle de acesso, ator e recurso",
+          "rationale": "Nenhum suporte localizado nos segmentos examinados; ausência não comprovada.",
+          "priority": "medium",
+          "priority_reason": "Conferir informação documental insuficiente ou ambígua.",
+          "evidence_groups": [],
+          "search_scope": {
+            "searched_segment_ids": [
+              "s0"
+            ],
+            "excluded_segment_ids": [],
+            "category_pass": true,
+            "fallback_pass": true,
+            "fallback_reason": "Busca complementar em segmentos sem a categoria prevista."
+          },
+          "recommendation_ids": []
+        },
+        {
+          "id": "finding:a692102cf89ee4bbda2b0241abc91703e326a726b5abe7f60f0d007122519231",
+          "dimension_id": "changes",
+          "question_id": "changes.notice_channel",
+          "rule_id": "changes.notice_channel",
+          "rule_version": "governance-rules-v4-dev1",
+          "kind": "information_gap",
+          "title": "Canal de aviso de mudanças",
+          "rationale": "Nenhum suporte localizado nos segmentos examinados; ausência não comprovada.",
+          "priority": "medium",
+          "priority_reason": "Conferir informação documental insuficiente ou ambígua.",
+          "evidence_groups": [],
+          "search_scope": {
+            "searched_segment_ids": [
+              "s0"
+            ],
+            "excluded_segment_ids": [],
+            "category_pass": true,
+            "fallback_pass": true,
+            "fallback_reason": "Busca complementar em segmentos sem a categoria prevista."
+          },
+          "recommendation_ids": []
+        },
+        {
+          "id": "finding:bc07361a0c80451d1db4bcd423013ee582997e1a990c8f2f9503bcad30b35924",
+          "dimension_id": "changes",
+          "question_id": "changes.notice_timing",
+          "rule_id": "changes.notice_timing",
+          "rule_version": "governance-rules-v4-dev1",
+          "kind": "information_gap",
+          "title": "Momento do aviso de mudanças",
+          "rationale": "Nenhum suporte localizado nos segmentos examinados; ausência não comprovada.",
+          "priority": "medium",
+          "priority_reason": "Conferir informação documental insuficiente ou ambígua.",
+          "evidence_groups": [],
+          "search_scope": {
+            "searched_segment_ids": [
+              "s0"
+            ],
+            "excluded_segment_ids": [],
+            "category_pass": true,
+            "fallback_pass": true,
+            "fallback_reason": "Busca complementar em segmentos sem a categoria prevista."
+          },
+          "recommendation_ids": []
+        }
+      ],
+      "recommendations": [],
+      "limitations": [
+        "Avaliação documental experimental; não mede conformidade, proteção efetiva ou maturidade.",
+        "Heurísticas lexicais contextuais, sem compreensão semântica geral; revisão humana necessária.",
+        "Satisfação de uma pergunta indica ao menos uma relação encontrada, não um inventário exaustivo.",
+        "Conflitos reconhecidos são candidatos; variações de sujeito, escopo e exceções podem escapar.",
+        "Sem texto extraído e offsets, relações entre segmentos não são reconstruídas.",
+        "Catálogo de recomendações ainda não aplicado; nenhuma referência ISO foi inferida."
+      ]
+    }
+  }
+}
