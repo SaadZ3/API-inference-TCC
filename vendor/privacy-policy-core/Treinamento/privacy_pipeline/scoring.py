@@ -6,7 +6,7 @@ from itertools import combinations
 from pathlib import Path
 import re
 
-from . import heuristics
+from . import heuristics, assessment_scope
 from .scoring_common import SCORE_SCALE, continuous_score, content_hash, validate_policy
 
 VALUES = {"supported": 1.0, "partial": 0.5, "not_detected": 0.0, "inconclusive": None}
@@ -17,6 +17,7 @@ def from_service_response(response: dict) -> dict:
     result = response["result"]
     return {"schema_version": 1, "policy_id": result["source"]["sha256"], "language": "pt",
             "complete": result["document_scope"] == "full_document",
+            **({"assessment_scope": result["evaluation"]["assessment_scope"]} if "assessment_scope" in result["evaluation"] else {}),
             "document_scope": result["document_scope"], "extraction": result["extraction"],
             "model": result["evaluation"].get("model"), "applicability": {}, "segments": result["segments"]}
 
@@ -91,6 +92,11 @@ def _finding(question: dict | None, rules: heuristics.RuleSet, kind: str, ration
 def evaluate_policy(policy: dict, rules: heuristics.RuleSet, *, fallback: bool | None = None) -> dict:
     validate_input(policy)
     exclude_uncertain = rules.data['method_version'] in heuristics.UNCERTAINTY_METHODS
+    selection = None
+    if 'assessment_scope' in policy:
+        if rules.data['profile_id'] != assessment_scope.CURRENT_PROFILE:
+            raise ValueError('Seleção de categorias exige o perfil atual.')
+        selection = assessment_scope.resolve_assessment_scope(policy['assessment_scope'])
     fallback = rules.data["fallback"] if fallback is None else fallback
     if type(fallback) is not bool:
         raise ValueError("fallback deve ser booleano.")
@@ -102,6 +108,8 @@ def evaluate_policy(policy: dict, rules: heuristics.RuleSet, *, fallback: bool |
     findings = []
     feature_cache = {}
     for question in rules.data["questions"]:
+        if selection and question['id'].split('.')[0] not in selection['category_ids']:
+            continue
         dimension = dims[question["id"].split('.')[0]]
         label = dimension["label"]
         selected = [w for w in contexts if fallback or label in w.labels]
@@ -223,14 +231,14 @@ def evaluate_policy(policy: dict, rules: heuristics.RuleSet, *, fallback: bool |
         score = continuous_score(percentage) if percentage is not None else None
         weight = dimension['weight'] / total_weight if total_weight and (not exclude_uncertain or dimension['id'] in active) else 0.0
         dimensions.append({"id": dimension["id"], "title": dimension["title"], "weight": dimension["weight"],
-                           "normalized_weight": weight, "status": "resolved" if score is not None else "unresolved",
+                           "normalized_weight": weight, "status": "not_selected" if selection and dimension["id"] not in selection["category_ids"] else "resolved" if score is not None else "unresolved",
                            "score": score, "contribution": (weight * score if exclude_uncertain else weight * 3 * points / len(items)) if not blockers and score is not None else None,
                            "earned_points": points, "applicable_questions": len(items), "unknown_applicability_questions": 0,
                            "resolved_questions": resolved, "inconclusive_questions": len(items) - resolved,
                            "excluded_questions": len(items) - resolved if exclude_uncertain else 0, "questions": items})
     if input_partial:
         findings.append(_finding(None, rules, "extraction_limitation", "Nota global bloqueada pelas condições de entrada: " + ", ".join(b for b in blockers if b != "inconclusive_questions"), [], None, "high"))
-    return {"schema_version": 2, "policy_id": policy["policy_id"], "language": "pt",
+    return {"schema_version": 3 if selection else 2, **({"assessment_scope": selection} if selection else {}), "policy_id": policy["policy_id"], "language": "pt",
             **({'uncertainty_policy': 'exclude_inconclusive_evidence_v1'} if exclude_uncertain else {}),
             "index": "documentary_information_quality", "method_version": rules.data["method_version"], "score_scale": SCORE_SCALE,
             "profile_id": rules.data["profile_id"], "profile_sha256": content_hash({"profile": rules.data["profile_id"], "dimensions": rules.data["dimensions"], "questions": rules.data["questions"]}),
@@ -279,4 +287,4 @@ def code_hashes() -> dict:
     import hashlib
     from . import scoring_common
     return {Path(path).name: hashlib.sha256(Path(path).read_bytes()).hexdigest()
-            for path in (__file__, heuristics.__file__, scoring_common.__file__)}
+            for path in (__file__, heuristics.__file__, scoring_common.__file__, assessment_scope.__file__)}

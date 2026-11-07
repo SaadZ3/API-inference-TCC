@@ -15,11 +15,12 @@
     "Treinamento/privacy_pipeline/heuristics.py": "7af0fe85cd52fa8d9d43bcd339c3a6083cc44da70207813582455f83f6819fe9",
     "Treinamento/privacy_pipeline/inference.py": "39285f8fc29c464470c4eb62497585e44271cdfc5626a2647d363ee35f4ce42a",
     "Treinamento/privacy_pipeline/metrics.py": "56cd79da89e26752b4889cff2d1ca2e75989b14ecf414e4935dcdaf9f80666b1",
-    "Treinamento/privacy_pipeline/recommendations.py": "60ea0cd42fe354c274a4bccdd501f98cedfdaac0ff58514f6e8b9b8dfafde0cb",
+    "Treinamento/privacy_pipeline/recommendations.py": "3a2b2586a86a4af364209d9cefa761ab34e5159d26dddb4cc4907b299681f51c",
     "Treinamento/privacy_pipeline/score_cli.py": "b791686c64fcf396ed2636eb19af2eae62f165f753fe2aab3ca60c603b9660b8",
-    "Treinamento/privacy_pipeline/scoring.py": "d72dfa7e30be07ac4e77d196323e47dbcb2f997c09e3995a511069d6925190cf",
+    "Treinamento/privacy_pipeline/scoring.py": "1da23b554068c8a648df3f18b5719f663edaa7b693e6b2a6a4113d0e0ba51f06",
     "Treinamento/privacy_pipeline/scoring_common.py": "f830cfdcfc2831a1fccbd5fc03d904c926ea955746ffadb09e0d467535851cde",
     "Treinamento/privacy_pipeline/training.py": "d196df1e5f13a27950e38aeb1a1e42c005489b22a65761b553772d0bb0229302",
-    "Treinamento/privacy_pipeline/__init__.py": "cb56cf2d80795d9d5aba2094bca3229d000177f7edcbc218756f68ef467f305e"
+    "Treinamento/privacy_pipeline/__init__.py": "cb56cf2d80795d9d5aba2094bca3229d000177f7edcbc218756f68ef467f305e",
+    "Treinamento/privacy_pipeline/assessment_scope.py": "61f8759b37a53e095e069d179ed5bed0f1e1613b6679d0944963efa3316c79f8"
   }
 }

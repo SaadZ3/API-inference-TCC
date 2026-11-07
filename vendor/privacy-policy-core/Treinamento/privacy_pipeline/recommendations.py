@@ -100,6 +100,8 @@ def apply_recommendations(evaluation, catalog):
 
     for dimension, topic in catalog.data['topics'].items():
         for question_id, references in topic['references'].items():
+            if question_id not in questions:
+                continue
             for kind, target in [('information_gap', 'policy_wording'), ('practice_statement', 'organizational_verification')]:
                 findings = [f for f in result['findings'] if f['dimension_id'] == dimension
                             and f['question_id'] == question_id and f['kind'] == kind]

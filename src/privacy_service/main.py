@@ -1,5 +1,7 @@
 """HTTP interno. Execute com um worker; o navegador usa a API Node."""
 import asyncio
+import json
+from privacy_pipeline.assessment_scope import resolve_assessment_scope
 from contextlib import asynccontextmanager
 import logging
 import time
@@ -53,8 +55,10 @@ class BodyLimit:
 async def read_upload(request: Request, config: Settings):
     """Lê um multipart limitado e retorna conteúdo, nome e escopo, ou a resposta de erro."""
     async with asyncio.timeout(config.upload_timeout_seconds):
-        async with request.form(max_files=1, max_fields=2, max_part_size=1024) as form:
+        async with request.form(max_files=1, max_fields=3, max_part_size=1024) as form:
             expected = ['document_scope', 'file', 'language']
+            if 'assessment_scope' in form:
+                expected.insert(0, 'assessment_scope')
             if sorted(key for key, _ in form.multi_items()) != expected:
                 return error("INVALID_INPUT", "Campos de envio inválidos.", 400)
             upload = form["file"]
@@ -62,11 +66,18 @@ async def read_upload(request: Request, config: Settings):
                     or form["language"] != "pt"
                     or form["document_scope"] not in ("full_document", "excerpt", "unknown")):
                 return error("INVALID_INPUT", "Arquivo, idioma ou escopo inválido.", 400)
+            try:
+                raw_selection = json.loads(form['assessment_scope']) if 'assessment_scope' in form else None
+                if 'assessment_scope' in form and not isinstance(raw_selection, dict):
+                    raise ValueError('Seleção deve ser um objeto.')
+                selection = resolve_assessment_scope(raw_selection)
+            except (ValueError, TypeError):
+                return error("INVALID_INPUT", "Seleção de categorias inválida.", 400)
             content = await upload.read(config.limits.max_bytes + 1)
             if len(content) > config.limits.max_bytes:
                 return error("FILE_TOO_LARGE", "Arquivo excede o limite permitido.", 413)
             filename, document_scope = upload.filename, form["document_scope"]
-    return content, filename, document_scope
+    return content, filename, document_scope, selection
 
 
 def create_app(settings=None, pipeline_factory=None):
@@ -138,6 +149,7 @@ def create_app(settings=None, pipeline_factory=None):
                        "additionalProperties": False, "properties": {
                 "file": {"type": "string", "format": "binary"},
                 "language": {"type": "string", "enum": ["pt"]},
+                "assessment_scope": {"type": "string", "description": "JSON com mode e category_ids; omitido significa todas as nove categorias."},
                 "document_scope": {"type": "string", "enum": ["full_document", "excerpt", "unknown"]},
             }}
         }}}
@@ -155,10 +167,10 @@ def create_app(settings=None, pipeline_factory=None):
             upload = await read_upload(request, config)
             if isinstance(upload, JSONResponse):
                 return upload
-            content, filename, document_scope = upload
+            content, filename, document_scope, selection = upload
             deadline = time.monotonic() + config.analysis_timeout_seconds
             task = asyncio.create_task(asyncio.to_thread(
-                app.state.pipeline.analyze, content, filename, document_scope, deadline))
+                app.state.pipeline.analyze, content, filename, document_scope, deadline, selection))
             app.state.task = task
             handed_off = True
             def finished(completed):

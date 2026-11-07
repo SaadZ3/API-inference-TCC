@@ -18,8 +18,8 @@ class FakePipeline:
     versions = {"model": "test", "preprocessing": "test", "scoring": "test"}
     manifest = {"versions": versions}
 
-    def analyze(self, content, filename, scope, deadline):
-        return {"content_length": len(content), "filename": filename, "scope": scope}
+    def analyze(self, content, filename, scope, deadline, assessment_scope=None):
+        return {"content_length": len(content), "filename": filename, "scope": scope, "assessment_scope": assessment_scope}
 
 
 def send(client, **kwargs):

@@ -30,7 +30,7 @@ def check_deadline(deadline):
         raise TimeoutError("Prazo de análise excedido.")
 
 
-def evaluate(prepared, segments, rules, model_metadata):
+def evaluate(prepared, segments, rules, model_metadata, assessment_scope=None):
     """O mesmo núcleo de scoring usado na CLI de treinamento."""
     policy = {
         "schema_version": 1, "policy_id": prepared["source"]["sha256"],
@@ -39,6 +39,8 @@ def evaluate(prepared, segments, rules, model_metadata):
         "complete": prepared["document_scope"] == "full_document",
         "applicability": {}, "model": model_metadata, "segments": segments,
     }
+    if assessment_scope is not None:
+        policy['assessment_scope'] = assessment_scope
     policy.update(document_scope=prepared['document_scope'], extraction=prepared['extraction'])
     return scoring.evaluate_policy(policy, rules)
 
@@ -104,7 +106,7 @@ class AnalysisPipeline:
         # Readiness exige também uma passagem real pelo modelo.
         self.classifier.predict(["Coletamos dados pessoais para prestar nossos serviços."], batch_size=1)
 
-    def analyze(self, content, filename, document_scope, deadline):
+    def analyze(self, content, filename, document_scope, deadline, assessment_scope=None):
         check_deadline(deadline)
         document = extraction.extract_document(
             content, filename, document_scope=document_scope, limits=self.settings.limits)
@@ -121,11 +123,11 @@ class AnalysisPipeline:
                     raise ValueError("Tokenização inconsistente entre preparação e inferência.")
                 segments.append({**segment, **prediction})
             check_deadline(deadline)
-        evaluation = evaluate(prepared, segments, self.rules, self.model_metadata)
+        evaluation = evaluate(prepared, segments, self.rules, self.model_metadata, assessment_scope)
         evaluation = recommendations.apply_recommendations(evaluation, self.recommendations)
         check_deadline(deadline)
         return {
-            "schema_version": 2,
+            "schema_version": evaluation["schema_version"],
             "versions": self.versions,
             "result": {
                 "document_scope": document_scope, "source": prepared["source"],
