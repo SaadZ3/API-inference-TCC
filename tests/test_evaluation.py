@@ -17,7 +17,7 @@ RULES = load_rules(ROOT / 'config/scoring.yaml')
 
 @pytest.mark.parametrize('name', ['complete', 'partial', 'conflict', 'truncated', 'empty', 'unicode'])
 def test_service_matches_cli_calculation(name):
-    saved = json.loads((ROOT / f'tests/fixtures/r9/{name}.json').read_text(encoding='utf-8'))['result']
+    saved = json.loads((ROOT / f'tests/fixtures/r10/{name}.json').read_text(encoding='utf-8'))['result']
     before = copy.deepcopy(saved)
     actual = evaluate(saved, saved['segments'], RULES, None)
     assert actual == saved['evaluation']
@@ -29,10 +29,11 @@ def test_service_matches_cli_calculation(name):
         assert next(d for d in actual['dimensions'] if d['id']=='collection')['normalized_weight'] == 0
         return
     # As notas novas são contínuas; os estados desses exemplos permanecem iguais.
-    historical = json.loads((ROOT / f'tests/fixtures/e4/{name}.json').read_text(encoding='utf-8'))['result']['evaluation']
+    historical = json.loads((ROOT / f'tests/fixtures/r9/{name}.json').read_text(encoding='utf-8'))['result']['evaluation']
     assert actual['score_scale'] == 'continuous_0_3'
-    expected = sum(d['contribution'] for d in historical['dimensions']) if historical['score'] is not None else None
+    expected = historical['score'] * 7 / 9 if historical['score'] is not None else None
     assert actual['score'] == pytest.approx(expected)
     assert actual['score_blockers'] == historical['score_blockers']
-    assert [(q['id'], q['status']) for d in actual['dimensions'] for q in d['questions']] == [
+    assert len(actual['dimensions']) == 9 and actual['profile_id'] == 'documentary-18-v1'
+    assert [(q['id'], q['status']) for d in actual['dimensions'][:7] for q in d['questions']] == [
         (q['id'], q['status']) for d in historical['dimensions'] for q in d['questions']]

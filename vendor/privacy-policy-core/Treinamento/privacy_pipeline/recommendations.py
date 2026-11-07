@@ -7,6 +7,7 @@ from pathlib import Path
 
 import yaml
 from .scoring_common import content_hash
+from .heuristics import PROFILES
 
 RANK = {'high': 0, 'medium': 1, 'low': 2}
 
@@ -22,7 +23,7 @@ class Catalog:
 def load_catalog(path):
     path = Path(path)
     data = yaml.safe_load(path.read_text(encoding='utf-8'))
-    if data.get('profile_id') != 'core-14-v1' or not data.get('version'):
+    if data.get('profile_id') not in PROFILES or not data.get('version'):
         raise ValueError('Catálogo incompatível com o perfil.')
     source_path = path.parent / data['sources_file']
     if source_path.resolve().parent != path.resolve().parent:
@@ -46,7 +47,7 @@ def load_catalog(path):
             if any(not topic[target].get(key) for key in ('what_to_do', 'how_to_do', 'completion_evidence')):
                 raise ValueError('Orientação incompleta.')
     expected_questions = {q for topic in data['topics'].values() for q in topic['references']}
-    if set(data.get('questions', {})) != expected_questions:
+    if set(data.get('questions', {})) != expected_questions or expected_questions != PROFILES[data['profile_id']][1]:
         raise ValueError('Catálogo deve cobrir cada pergunta do perfil.')
     for template in data['questions'].values():
         if any(not template.get(key) for key in ('what_to_do', 'how_to_do', 'completion_evidence')):

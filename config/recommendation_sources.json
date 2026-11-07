@@ -259,19 +259,19 @@
     {
       "id": "project-review",
       "source_type": "project_rubric",
-      "title": "Critérios documentais e agregação com exclusão de dúvidas — R9",
-      "edition": "documentary-quality-v4-draft1",
+      "title": "Rubrica documental do projeto — R10",
+      "edition": "documentary-quality-v5-draft1",
       "section": "Regra solicitada; identificação e histórico; limites acadêmicos",
       "pdf_page": null,
       "url": null,
       "verified_by": "Codex — conferência da rubrica local",
       "verified_at": "2026-11-05",
       "verification_scope": "project_document",
-      "source_file": "docs/R9_CALCULO_SEM_BLOQUEIO_POR_DUVIDAS.md",
-      "source_sha256": "55b3892a71285620f906946b56e74b4e500a5e780cf94328b73aca9a034bfad2",
-      "source_locator": "Regra solicitada; identificação e histórico; limites acadêmicos",
+      "source_file": "docs/R10_CRITERIOS_DOCUMENTAIS.md",
+      "source_sha256": "3ee8c14f782eefb2587c88da5f19b21ece4777bb10e9ac19544ce8ebb8bf9b5c",
+      "source_locator": "Perguntas e estados; limites de interpretação; cálculo e histórico",
       "control_role": "project",
-      "summary": "Revisar ambiguidades e limitações da entrada antes de concluir sobre o conteúdo da política."
+      "summary": "Rubrica do projeto com 18 perguntas e exclusão de evidências inconclusivas; não equivale a requisitos ISO ou certificação."
     }
   ]
 }

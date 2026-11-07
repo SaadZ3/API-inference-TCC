@@ -18,6 +18,12 @@ QUESTION_IDS = {"collection.data_types", "collection.purposes", "sharing.recipie
                 "choice.mechanism", "choice.channel", "access.channel", "access.response_time",
                 "retention.duration", "retention.disposal", "security.technical_measures",
                 "security.access_controls", "changes.notice_channel", "changes.notice_timing"}
+PROFILES = {
+    "core-14-v1": (DIMENSIONS, QUESTION_IDS),
+    "documentary-18-v1": (DIMENSIONS + ("dnt", "audiences"), QUESTION_IDS | {
+        "dnt.response", "dnt.effect", "audiences.scope", "audiences.practice"}),
+}
+UNCERTAINTY_METHODS = {"documentary-quality-v4-draft1", "documentary-quality-v5-draft1"}
 VIRTUAL_FEATURES = {"negated"}
 
 
@@ -60,8 +66,11 @@ class RuleSet:
                     "recipients", "dimensions", "questions", "max_evidence_occurrences"}
         if set(rules) != required:
             raise ValueError("Campos obrigatórios/inesperados na configuração de avaliação.")
-        if rules["language"] != "pt" or rules["profile_id"] != "core-14-v1":
-            raise ValueError("Somente pt e perfil core-14-v1 são suportados.")
+        if rules["language"] != "pt" or rules["profile_id"] not in PROFILES:
+            raise ValueError("Idioma ou perfil não suportado.")
+        dimensions, question_ids = PROFILES[rules["profile_id"]]
+        if (rules["profile_id"] == "documentary-18-v1") != (rules["method_version"] == "documentary-quality-v5-draft1"):
+            raise ValueError("Método incompatível com o perfil.")
         for key in ("version", "method_version", "profile_defined_at"):
             if not isinstance(rules[key], str) or not rules[key].strip():
                 raise ValueError(f"{key} deve ser texto não vazio.")
@@ -99,12 +108,12 @@ class RuleSet:
             raise ValueError("Faltam features estruturais de contexto.")
         if set(rules['features']) & VIRTUAL_FEATURES:
             raise ValueError("Features virtuais são reservadas ao motor.")
-        if not isinstance(dims, list) or [d.get("id") for d in dims if isinstance(d, dict)] != list(DIMENSIONS):
-            raise ValueError("Configure as sete dimensões centrais na ordem do perfil.")
+        if not isinstance(dims, list) or [d.get("id") for d in dims if isinstance(d, dict)] != list(dimensions):
+            raise ValueError("Configure as dimensões na ordem do perfil.")
         for dim in dims:
             if set(dim) != {"id", "title", "weight", "label"} or dim["label"] not in LABELS:
                 raise ValueError("Campos/categoria de dimensão inválidos.")
-            if dim['label'] != LABELS[DIMENSIONS.index(dim['id'])] or not isinstance(dim['title'], str) or not dim['title'].strip():
+            if dim['label'] != LABELS[dimensions.index(dim['id'])] or not isinstance(dim['title'], str) or not dim['title'].strip():
                 raise ValueError("Título ou categoria incompatível com o perfil central.")
             weight = dim["weight"]
             if type(weight) not in (int, float) or not math.isfinite(weight) or weight <= 0:
@@ -112,8 +121,8 @@ class RuleSet:
         if not math.isfinite(sum(d["weight"] for d in dims)):
             raise ValueError("Soma de pesos não finita.")
         questions = rules["questions"]
-        if not isinstance(questions, list) or len(questions) != 14:
-            raise ValueError("O perfil exige 14 perguntas.")
+        if not isinstance(questions, list) or len(questions) != len(question_ids):
+            raise ValueError("Quantidade de perguntas incompatível com o perfil.")
         names = set(rules["features"]) | VIRTUAL_FEATURES
         ids = []
         for question in questions:
@@ -129,7 +138,7 @@ class RuleSet:
                 raise ValueError("Pergunta sem elementos exigidos.")
             for value in question["elements"].values():
                 _validate_expression(value, names)
-        if set(ids) != QUESTION_IDS:
+        if set(ids) != question_ids:
             raise ValueError("IDs duplicados ou distribuição de perguntas inválida.")
         self.data = rules
 
@@ -267,6 +276,9 @@ def inspect(window: Window, question: dict, rules: RuleSet, cache: dict | None =
         for measure in rules.patterns['features']['measure'].finditer(text):
             if re.search(r'\bsem\s+(?:\w+\s+){0,2}$', text[:measure.start()], re.I):
                 mode = 'negated'
+    new_topic = question['id'].split('.')[0] in {'dnt', 'audiences'}
+    if new_topic and 'dnt_rejection' in found and question['id'].startswith('dnt.'):
+        mode = 'negated'
     facts = {name: name in found for name in rules.data["features"]}
     facts.update(negated=mode == "negated")
     if not expression(question["candidate"], facts):
@@ -282,11 +294,24 @@ def inspect(window: Window, question: dict, rules: RuleSet, cache: dict | None =
             and re.search(r'\bmesmo aviso\b', text, re.I)
             and re.search(r'\bantes\b', text, re.I) and re.search(r'\b(?:depois|após)\b', text, re.I)):
         uncertain = True
+    if new_topic:
+        uncertain = uncertain or 'topic_unresolved' in found
+        if question['id'].startswith('audiences.'):
+            # Grupos diferentes na mesma janela exigem uma interpretação que esta rubrica não faz.
+            groups = {m.group().casefold() for m in rules.patterns['features']['audience_group'].finditer(text)}
+            uncertain = uncertain or len(groups) > 1
     state = "inconclusive" if uncertain else "supported" if all(elements.values()) else "partial"
+    objects = hits("objects", text)
+    contexts = hits("contexts", text)
+    if question['id'].startswith('dnt.'):
+        objects = {'dnt'}
+        contexts = {m.group().casefold() for m in rules.patterns['features']['dnt_scope'].finditer(text)}
+    elif question['id'].startswith('audiences.'):
+        objects = {m.group().casefold() for m in rules.patterns['features']['audience_group'].finditer(text)}
     return {"window": window, "state": state, "polarity": "uncertain" if uncertain else mode,
             "found": sorted(name for name, ok in elements.items() if ok),
             "missing": sorted(name for name, ok in elements.items() if not ok),
-            "objects": hits("objects", text), "contexts": hits("contexts", text),
+            "objects": objects, "contexts": contexts,
             "recipients": hits("recipients", text), "features": found}
 
 
@@ -306,6 +331,16 @@ def conflicting(a: dict, b: dict, question: dict) -> bool:
                 'disclosure': r'\b(?:compartilh\w*|divulgamos|divulgad\w*)\b',
             }.items() if re.search(pattern, text, re.I)}
         if sharing_actions(wa.text) != sharing_actions(wb.text):
+            return False
+    if question['id'].startswith('audiences.'):
+        # Negar coleta não contradiz afirmar que o serviço atende o mesmo público.
+        def actions(text):
+            return {name for name, pattern in {
+                'eligibility': r'\b(?:destinad\w*|dirigid\w*|oferec\w*)\b',
+                'collect': r'\bcolet\w*\b', 'transfer': r'\b(?:transfer\w*|processad\w*)\b',
+                'request': r'\b(?:solicit\w*|exer\w*|acesse)\b',
+            }.items() if re.search(pattern, text, re.I)}
+        if not actions(wa.text) or actions(wa.text) != actions(wb.text):
             return False
     # Uma janela ampliada e sua própria frase não são duas declarações.
     if any(x["segment_id"] == y["segment_id"] and max(x["start"], y["start"]) < min(x["end"], y["end"])

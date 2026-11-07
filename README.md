@@ -1,5 +1,7 @@
 # Serviço Python de análise
 
+**Atual R10:** perfil `documentary-18-v1`, nove categorias e 18 perguntas, mantendo a R9 para excluir dúvidas. Histórico de sete categorias preservado. Exige a migration `20261106000100_documentary_18_profile` e atualização coordenada dos três serviços. Implementação local, sem publicação; 7/8 exemplos adicionais corresponderam à expectativa. Ver [entrega e limites](../docs/R10_IMPLEMENTACAO.md). As marcações R9/R8/R7 abaixo são históricas.
+
 **Atual R9:** método `documentary-quality-v4-draft1` e regras `governance-rules-v4-dev1`. Dúvidas locais ficam fora da pontuação e não bloqueiam o total. Ver [regra](../docs/R9_CALCULO_SEM_BLOQUEIO_POR_DUVIDAS.md) e [testes](../docs/R9_IMPLEMENTACAO.md). Backend e frontend devem ser atualizados juntos; esta tarefa não publicou serviços. O registro R7/R8 abaixo é histórico.
 
 **R7/R8:** regras locais `governance-rules-v3-dev2`, congeladas para avaliação. Publicação suspensa por falhas de reconhecimento documentadas na [R7](../docs/R7_REVALIDACAO_NOTAS.md). Persistência e entrega local conferidas na [R8](../docs/R8_CONSOLIDACAO_ENTREGA.md). Não interpretar as instruções de publicação abaixo como aceite desta versão.

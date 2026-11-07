@@ -90,7 +90,7 @@ def _finding(question: dict | None, rules: heuristics.RuleSet, kind: str, ration
 
 def evaluate_policy(policy: dict, rules: heuristics.RuleSet, *, fallback: bool | None = None) -> dict:
     validate_input(policy)
-    exclude_uncertain = rules.data['method_version'] == 'documentary-quality-v4-draft1'
+    exclude_uncertain = rules.data['method_version'] in heuristics.UNCERTAINTY_METHODS
     fallback = rules.data["fallback"] if fallback is None else fallback
     if type(fallback) is not bool:
         raise ValueError("fallback deve ser booleano.")
@@ -180,8 +180,9 @@ def evaluate_policy(policy: dict, rules: heuristics.RuleSet, *, fallback: bool |
             local.append(_finding(question, rules, "contradiction", "Declarações potencialmente incompatíveis sobre objeto/contexto comparáveis.", context_groups, scope, "high"))
         for candidate in candidates:
             if (dimension["id"] == "retention" and "indefinite" in candidate["features"]
-                    or dimension["id"] == "security" and candidate["polarity"] == "negated"):
+                    or dimension["id"] in {"security", "dnt"} and candidate["polarity"] == "negated"):
                 reason = ('Retenção explicitamente indefinida; revisar a prática declarada.' if dimension['id'] == 'retention'
+                          else 'Resposta negativa ao sinal DNT; pontos documentais não comprovam proteção. Revisar a prática declarada.' if dimension['id'] == 'dnt'
                           else 'Negação de medida ou restrição de segurança; revisar a prática declarada.')
                 local.append(_finding(question, rules, "practice_statement", reason,
                                       [_group(candidate, question, rules, label)], scope, "high"))
