@@ -1,0 +1,62 @@
+POLÍTICA DE PRIVACIDADE — PORTAL HORIZONTE FICTÍCIO
+
+Versão 1.0 — 11 de novembro de 2026
+
+Documento sintético para teste do sistema de avaliação documental. A organização, os canais e as práticas descritos são fictícios.
+
+1. RESPONSÁVEL E ABRANGÊNCIA
+O Portal Horizonte Fictício é responsável pelas decisões sobre o tratamento das informações descritas nesta política. O contato de privacidade é privacidade@horizonte.example.test. Este documento descreve o funcionamento fictício do site e de suas contas de usuário.
+
+2. DADOS E FINALIDADES
+Coletamos nome e e-mail para identificar o usuário e gerenciar sua conta no serviço. Essas informações são fornecidas no formulário de abertura da conta.
+
+Coletamos registros de acesso para prevenir tentativas de invasão ao serviço. Esses registros incluem o endereço de rede, a data e o horário da conexão.
+
+Utilizamos e-mail para enviar mensagens de marketing mediante consentimento. A inscrição nessas mensagens é opcional e separada da abertura da conta.
+
+3. COMPARTILHAMENTO E CONDIÇÕES
+Compartilhamos nome e e-mail com prestadores de serviços de hospedagem para fornecer a infraestrutura da conta. Esses prestadores atuam sob nossas instruções, com contrato que limita o uso das informações à execução desse serviço.
+
+Compartilhamos e-mail com prestadores de serviços de envio de mensagens para enviar marketing com seu consentimento. O envio fica limitado às pessoas inscritas e à finalidade autorizada.
+
+4. ESCOLHAS E CONTROLE
+Para cancelar mensagens de marketing e retirar o consentimento para esses envios, acesse Conta > Configurações > Privacidade > Marketing e selecione Desativar. A alteração interrompe novos envios promocionais e mantém a conta disponível para uso.
+
+Você também pode cancelar mensagens de marketing: envie sua escolha para privacidade@horizonte.example.test. A retirada vale para os próximos envios; mensagens necessárias ao funcionamento da conta permanecem separadas das comunicações promocionais.
+
+5. SOLICITAÇÕES DE DIREITOS
+Para solicitar acesso, correção ou exclusão dos seus dados, envie uma mensagem para privacidade@horizonte.example.test. Informe a conta envolvida e qual providência deseja; a equipe confirmará sua identidade por um código enviado ao endereço associado à conta, sem exigir documentos adicionais como procedimento padrão.
+
+Respondemos às solicitações de acesso, correção ou exclusão em até 5 dias após o recebimento da solicitação. Esse é o prazo operacional definido para este cenário fictício, contado em dias corridos; a resposta informa a providência realizada ou explica o motivo de eventual impedimento e como pedir revisão.
+
+6. RETENÇÃO E DESTINAÇÃO
+Mantemos nome e e-mail enquanto a conta estiver ativa. Após o encerramento da conta, eliminamos nome e e-mail dos sistemas ativos e das cópias de segurança vinculadas à conta, por um fluxo de encerramento que só é concluído depois da confirmação dessa eliminação.
+
+Armazenamos registros de acesso por 30 dias a partir do recebimento de cada registro de acesso. Após esse prazo, eliminamos os registros de acesso dos sistemas ativos e das cópias de segurança, com confirmação registrada pela equipe técnica.
+
+A lista de destinatários das mensagens promocionais acompanha as preferências da conta. O cancelamento interrompe a inclusão em novos envios; o endereço mantido na conta continua vinculado apenas às demais finalidades descritas nesta política.
+
+7. SEGURANÇA E PERMISSÕES
+Utilizamos TLS para proteger dados pessoais durante a transmissão entre o navegador e o site. Adotamos criptografia para proteger dados pessoais no armazenamento e nas cópias de segurança.
+
+O acesso aos dados pessoais é restrito a funcionários autorizados, com controle de acesso por função e autenticação de múltiplos fatores. As permissões são aprovadas pelo responsável pela área, revistas mensalmente e removidas quando o funcionário deixa a função; consultas administrativas ficam registradas para revisão.
+
+8. AVISOS DE ALTERAÇÕES
+Comunicaremos alterações desta política por e-mail aos titulares de contas antes da entrada em vigor da nova versão. O aviso apresentará o que mudou, a data de vigência e o endereço da versão atualizada.
+
+A versão publicada no site exibirá sua data e seu histórico de alterações. A data de atualização do documento não substitui o aviso enviado aos titulares.
+
+9. SINAL DE NÃO RASTREAMENTO
+Respeitamos o sinal DNT neste site e desativamos o rastreamento para publicidade quando recebemos o sinal DNT ativo. DNT significa Do Not Track, uma preferência de não rastreamento enviada pelo navegador.
+
+Essa escolha afeta a personalização publicitária durante a navegação. A autenticação da conta e os registros necessários à segurança continuam com as finalidades e os períodos descritos nesta política.
+
+10. PÚBLICO E CONTEXTO GEOGRÁFICO
+Nosso serviço é destinado a residentes no Brasil com 18 anos ou mais. Para residentes no Brasil, oferecemos atendimento em português pelo contato de privacidade indicado nesta política.
+
+O formulário exige a confirmação da maioridade; diante de indicação de conta de menor de idade, a equipe suspende seu uso, verifica a situação com o responsável e conduz o encerramento pelo fluxo descrito nesta política.
+
+Neste cenário fictício, a infraestrutura e os prestadores envolvidos nas operações descritas ficam no Brasil. O serviço não utiliza infraestrutura no exterior.
+
+11. TEXTO INTEGRAL
+Este é o texto integral da política sintética. Os endereços com domínio example.test servem apenas como exemplos e não correspondem a canais reais de atendimento.

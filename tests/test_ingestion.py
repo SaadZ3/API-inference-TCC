@@ -4,6 +4,7 @@ from io import BytesIO
 import json
 from pathlib import Path
 import random
+import re
 import subprocess
 import sys
 
@@ -58,14 +59,23 @@ def extract(content, name="politica.txt", **kwargs):
 
 def assert_preserved(result, segmenter):
     source = result["extraction"]["text"]
-    last = 0
+    intervals = []
     for segment in result["segments"]:
         left, right = segment["char_start"], segment["char_end"]
-        assert left >= last
-        assert not source[last:left].strip()
+        intervals.append((left, right))
         assert source[left:right] == segment["text"]
         assert segment["n_tokens"] == segmenter.count_tokens(segment["text"]) <= 384
         assert segment["truncated"] is False
+    # Todo caractere deve estar em um trecho analisado ou em um descarte registrado.
+    for notice in result["extraction"]["warnings"]:
+        if notice.startswith("NON_CONTENT_FILTER:"):
+            match = re.search(r"intervalo (\d+):(\d+)", notice)
+            assert match
+            intervals.append((int(match[1]), int(match[2])))
+    last = 0
+    for left, right in sorted(intervals):
+        assert left >= last
+        assert not source[last:left].strip()
         last = right
     assert not source[last:].strip()
     assert len({item["segment_id"] for item in result["segments"]}) == len(result["segments"])

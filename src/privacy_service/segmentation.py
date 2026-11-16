@@ -8,10 +8,66 @@ from hashlib import sha256
 import json
 from pathlib import Path
 import re
+import unicodedata
 
 from .extraction import ExtractedDocument, IngestionError
 
-PREPROCESSING_VERSION = "p3-v3"
+PREPROCESSING_VERSION = "p3-v4"
+
+MAX_HEADING_CHARACTERS = 160
+MAX_HEADING_WORDS = 12
+MONTHS = (
+    r"janeiro|fevereiro|marco|abril|maio|junho|julho|agosto|"
+    r"setembro|outubro|novembro|dezembro"
+)
+DATE = (
+    rf"(?:(?:0?[1-9]|[12]\d|3[01])\s+(?:de\s+)?)?(?:{MONTHS})"
+    r"\s*(?:/|-|de)?\s*(?:19|20)\d{2}"
+    r"|(?:0?[1-9]|[12]\d|3[01])\s*[/.-]\s*(?:0?[1-9]|1[0-2])\s*[/.-]\s*(?:19|20)\d{2}"
+)
+HEADING_PREFIX = re.compile(
+    r"^(?:(?:anexo|apendice|capitulo|secao)\s+(?:[ivxlcdm]+|\d+)\b[\s.):-]*"
+    r"|\d+(?:\.\d+)*[.)\s:-]+)"
+)
+HEADING_WORDS = frozenset(
+    "a o as os de da do das dos e em na no nas nos nesta neste dessa desta esta essa "
+    "sua seus nossa nossas nosso nossos "
+    "para sobre politica politicas aviso avisos privacidade protecao dados pessoais "
+    "alteracoes mudancas atualizacoes revisoes coleta uso tratamento compartilhamento "
+    "retencao armazenamento seguranca direitos titulares acesso correcao exclusao "
+    "controle escolhas publicos especificos internacional internacionais alunos "
+    "estudantes criancas adolescentes menores responsaveis clientes usuarios "
+    "consumidores colaboradores funcionarios candidatos visitantes cookies".split()
+)
+HEADING_TOPICS = re.compile(
+    r"^(?:(?:alteracoes|mudancas|atualizacoes|revisoes)\b"
+    r"|(?:politica|politicas|aviso|avisos) de (?:privacidade|protecao de dados)\b"
+    r"|(?:coleta|uso|tratamento|compartilhamento|retencao|armazenamento|seguranca) "
+    r"(?:e |de |dos |das )"
+    r"|direitos (?:dos |das |de )|publicos especificos\b)"
+)
+
+
+def non_content_reason(text: str) -> str | None:
+    """Só retira datas e títulos reconhecíveis; tamanho sozinho não decide."""
+    normalized = unicodedata.normalize("NFKD", text.casefold())
+    normalized = "".join(char for char in normalized if not unicodedata.combining(char))
+    normalized = re.sub(r"\s+", " ", normalized).strip(" \"'“”‘’.:;–—-")
+    if len(normalized) > MAX_HEADING_CHARACTERS:
+        return None
+    if re.fullmatch(
+        rf"(?:(?:ultima atualizacao|atualizado em|atualizada em|data|versao)\s*:?\s*)?(?:{DATE})",
+        normalized,
+    ):
+        return "data isolada"
+    heading = normalized
+    while match := HEADING_PREFIX.match(heading):
+        heading = heading[match.end():]
+    words = heading.split()
+    if (0 < len(words) <= MAX_HEADING_WORDS and HEADING_TOPICS.match(heading)
+            and all(word in HEADING_WORDS for word in words)):
+        return "título sem declaração"
+    return None
 
 
 class PolicySegmenter:
@@ -91,6 +147,7 @@ class PolicySegmenter:
         warnings = list(document.warnings)
         partial = document.status == "partial"
         segments = []
+        filtered = 0
         for page in document.pages:
             page_text = document.text[page.char_start:page.char_end]
             # Linhas em branco delimitam parágrafos; quebras simples de PDF são preservadas.
@@ -99,6 +156,12 @@ class PolicySegmenter:
                 end = page.char_start + paragraph.end()
                 while end > start and document.text[end - 1].isspace():
                     end -= 1
+                # Filtrar o parágrafo inteiro evita perder finais curtos de frases recortadas.
+                reason = non_content_reason(document.text[start:end])
+                if reason:
+                    filtered += 1
+                    warnings.append(f"NON_CONTENT_FILTER: intervalo {start}:{end} desconsiderado ({reason}).")
+                    continue
                 for left, right in self._chunks(document.text, start, end):
                     text = document.text[left:right]
                     n_tokens = self.count_tokens(text)
@@ -113,6 +176,8 @@ class PolicySegmenter:
                         "n_tokens": n_tokens, "truncated": False,
                     })
         if not segments:
+            if filtered:
+                raise IngestionError("UNREADABLE_FILE", "Nenhum trecho avaliável foi encontrado além de títulos ou datas isoladas.")
             raise IngestionError("UNREADABLE_FILE", "Nenhum trecho utilizável pelo tokenizer foi encontrado.")
         return {
             "schema_version": 1,

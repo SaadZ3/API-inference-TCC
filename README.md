@@ -56,6 +56,21 @@ Limites: 10 MiB, 50 páginas, 100 mil caracteres, 30 s para upload e 120 s para 
 
 ## Preparar sem classificar — CLI da P3
 
+A preparação `p3-v4` desconsidera parágrafos que contêm apenas datas ou títulos
+reconhecíveis de até 12 palavras e 160 caracteres. Exemplos: `Alterações nesta
+política`, `Outubro /2026` e `ANEXO I 1. POLÍTICA DE PRIVACIDADE DE ALUNOS`.
+O tamanho sozinho não elimina um trecho: `Não compartilhamos seus dados.` e
+`Guardamos dados por 30 dias.` continuam na análise. Títulos junto de conteúdo
+no mesmo parágrafo também são preservados.
+
+O filtro atua antes do classificador e do cálculo das notas, na API e na CLI.
+O texto extraído completo permanece em `extraction.text`; cada descarte registra
+motivo e posições em `extraction.warnings`, com prefixo `NON_CONTENT_FILTER`.
+Esse descarte não torna a extração parcial. Se restarem apenas títulos ou datas,
+o serviço retorna `UNREADABLE_FILE` com a explicação de que não há trecho avaliável.
+O filtro é conservador: títulos fora dos formatos reconhecidos continuam na análise.
+Resultados anteriores são preservados; use uma nova análise para aplicar o filtro.
+
 ```powershell
 New-Item -ItemType Directory -Force outputs | Out-Null
 .\.venv\Scripts\python.exe -m privacy_service.prepare --input examples/politica_sintetica.txt --output outputs/politica_preparada.json --model-dir "model" --document-scope full_document
