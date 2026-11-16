@@ -1,4 +1,4 @@
-version: governance-rules-v5-dev1
+version: governance-rules-v5-dev2
 method_version: documentary-quality-v5-draft1
 language: pt
 profile_id: documentary-18-v1
@@ -43,7 +43,9 @@ features:
   control_generic: \b(?:controlad\w*|restring\w*|restrit\w*|permiss\w*|autenticaç\w*|autorizaç\w*)\b
   actor: \b(?:funcionári\w*|colaborador\w*|administrador\w*|qualquer pessoa|usuários? autorizad\w*|ID do usuário|você verifique suas credenciais)\b
   resource: \b(?:dados|informações|registros|cadastros|banco de dados)\b
-  change: \b(?:alteraç\w*|mudanças?|atualizaç\w*|atualizar|modificarmos)\b[^.!?;\n]{0,50}\b(?:política|declaração de privacidade)\b
+  change: \b(?:alteraç\w*|mudanças?|atualiz(?:a(?:ç\w*|r\w*|mos|m|d[oa]s?|ndo)?|ou|ei|e(?:mos|m)?)|modificarmos)\b[^.!?;\n]{0,50}\b(?:política|declaração de privacidade)\b
+  change_reference: \b(?:a|as|essa|essas|esta|estas|tal|tais)\s+(?:alteração|alterações|mudanças?|atualização|atualizações)(?:\s+(?:significativ[oa]s?|relevantes?|importantes?|materiais))?\b(?=\s*(?:[.!?;,]|$)|\s+(?:antes|depois|após|quando|por|via|serão|será|seriam|seria|são|é|entr\w*)\b)
+  change_reference_subject: \b(?:a|as|essa|essas|esta|estas|tal|tais)\s+(?:alteração|alterações|mudanças?|atualização|atualizações)\b
   notice: \b(?:avis\w*|notific\w*|informaremos|comunicaremos|publicaremos|postaremos)\b
   notice_channel: \b(?:e-?mail|aplicativo|notificação|nesta página|neste site)\b
   notice_timing: \b(?:antes|depois|após|no momento)\b[^.!?;\n]{0,80}\b(?:vigor|vigência|vigorar|publicação)\b

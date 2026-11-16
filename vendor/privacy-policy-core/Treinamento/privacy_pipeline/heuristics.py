@@ -158,10 +158,23 @@ class Window:
     order: tuple[int, int]
     joined: bool = False
     previous_text: str = ""
+    change_notice_text: str = ""
 
 
 def _evidence(segment: dict, start: int, end: int) -> dict:
     return {"segment_id": segment["segment_id"], "start": start, "end": end, "quote": segment["text"][start:end]}
+
+
+def _change_notice_continuation(previous: str, following: str, rules: RuleSet) -> bool:
+    reference = rules.patterns["features"].get("change_reference")
+    if reference is None:
+        return False
+    previous, following = search_text(previous), search_text(following)
+    return bool('non_assertion' not in rules.hits('features', previous)
+                and polarity(previous, rules.patterns["features"]["change"]) not in {'negated', 'uncertain'}
+                and rules.patterns["features"]["change"].search(previous)
+                and reference.search(following)
+                and rules.patterns["features"]["notice"].search(following))
 
 
 def windows(policy: dict, rules: RuleSet) -> list[Window]:
@@ -206,15 +219,20 @@ def windows(policy: dict, rules: RuleSet) -> list[Window]:
                 left = right
             if text[left:paragraph.end()].strip():
                 spans.append((left, paragraph.end()))
-            expanded = [(a, b, False, text[spans[i-1][0]:spans[i-1][1]].strip() if i else '')
+            expanded = [(a, b, False, text[spans[i-1][0]:spans[i-1][1]].strip() if i else '', '')
                         for i, (a, b) in enumerate(spans)]
             if rules.data["max_sentences"] == 2:
                 for (a, b), (c, d) in zip(spans, spans[1:]):
                     following = text[c:d].strip()
+                    change_subject = rules.patterns["features"].get("change_reference_subject")
                     # Duas frases não bastam: exigir ligação anafórica explícita.
-                    if rules.patterns["features"]["continuation"].search(search_text(following)):
-                        expanded.append((a, d, True, ''))
-            for start, end, joined, previous_text in expanded:
+                    if _change_notice_continuation(text[a:b], following, rules):
+                        expanded.append((a, d, True, '', following))
+                    elif (rules.patterns["features"]["continuation"].search(search_text(following))
+                          and not (change_subject and change_subject.search(search_text(following)))):
+                        # Uma referência a mudanças exige o vínculo específico, inclusive com “essas”.
+                        expanded.append((a, d, True, '', ''))
+            for start, end, joined, previous_text, change_notice_text in expanded:
                 while start < end and text[start].isspace():
                     start += 1
                 refs = []
@@ -236,7 +254,8 @@ def windows(policy: dict, rules: RuleSet) -> list[Window]:
                     continue
                 key = tuple((e['segment_id'], e['start'], e['end']) for e in refs)
                 by_interval[key] = len(result)
-                result.append(Window(text[start:end], tuple(refs), frozenset(labels), (block_index, start), joined, previous_text))
+                result.append(Window(text[start:end], tuple(refs), frozenset(labels), (block_index, start), joined,
+                                     previous_text, change_notice_text))
     return result
 
 
@@ -258,6 +277,8 @@ def polarity(text: str, predicate: re.Pattern) -> str:
 
 
 def inspect(window: Window, question: dict, rules: RuleSet, cache: dict | None = None) -> dict | None:
+    if window.change_notice_text and not question['id'].startswith('changes.'):
+        return None
     # A busca aceita ligaturas tipográficas (ﬁ/fi) e quebras visuais de linha.
     # As citações e seus intervalos continuam apontando para o texto original.
     text = search_text(window.text)
@@ -268,10 +289,14 @@ def inspect(window: Window, question: dict, rules: RuleSet, cache: dict | None =
         if key not in cache:
             cache[key] = rules.hits(group, value)
         return cache[key]
-    found = hits("features", text)
+    notice_text = search_text(window.change_notice_text) if window.change_notice_text else text
+    found = hits("features", notice_text)
+    if window.change_notice_text:
+        # Só a mudança é herdada; canal, prazo e negação devem pertencer ao aviso.
+        found = found | {'change'}
     if 'non_assertion' in found:
         return None
-    mode = polarity(text, rules.patterns["features"][question["predicate"]])
+    mode = polarity(notice_text, rules.patterns["features"][question["predicate"]])
     if question['id'] == 'security.technical_measures':
         for measure in rules.patterns['features']['measure'].finditer(text):
             if re.search(r'\bsem\s+(?:\w+\s+){0,2}$', text[:measure.start()], re.I):
@@ -284,7 +309,7 @@ def inspect(window: Window, question: dict, rules: RuleSet, cache: dict | None =
     if not expression(question["candidate"], facts):
         return None
     elements = {name: expression(value, facts) for name, value in question["elements"].items()}
-    uncertain = "unresolved" in found or mode == "uncertain"
+    uncertain = "unresolved" in hits("features", text) or mode == "uncertain"
     # Exceções abertas e referências pendentes não são preenchidas por proximidade.
     if re.search(r"\bexceto\b", text, re.I) and not re.search(r"\b(?:por obrigação legal|ordem judicial)\b", text, re.I):
         uncertain = True

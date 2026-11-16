@@ -12,7 +12,8 @@ from privacy_service.main import create_app
 from privacy_service.settings import Settings
 
 ROOT = Path(__file__).resolve().parents[1]
-RULES = load_rules(ROOT / 'config/scoring.yaml')
+# As exportações R10 continuam sendo verificadas com as regras que as produziram.
+RULES = load_rules(ROOT / 'tests/fixtures/r10/scoring.yaml')
 
 
 @pytest.mark.parametrize('name', ['complete', 'partial', 'conflict', 'truncated', 'empty', 'unicode'])

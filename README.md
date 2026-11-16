@@ -1,5 +1,16 @@
 # Serviço Python de análise
 
+**Reconhecimento de mudanças — regras `governance-rules-v5-dev2`:** reconhece
+conjugações como `atualizaremos` e liga um aviso sobre `as alterações` à frase
+anterior que identifica mudanças da política. A ligação exige frases consecutivas
+no mesmo parágrafo e continuidade verificável entre trechos. Canal e momento são
+buscados na frase do aviso; e-mails sobre recibos ou alterações cadastrais não
+completam essa evidência. Exemplo: `Atualizaremos esta Política. Enviaremos aviso
+por e-mail sobre as alterações antes da entrada em vigor.` passa a comprovar as
+duas perguntas da categoria. Sem o momento do aviso, a nota permanece parcial.
+O ajuste mantém o perfil e a escala de notas; resultados salvos não são alterados.
+Reinicie o Python e faça uma nova análise para aplicar as regras atualizadas.
+
 **Atual R11:** categorias selecionáveis no envio, com seleção salva antes da inferência e respeitada no cálculo, painel, histórico e PDF. Respostas novas na versão 3; histórico versão 2 preservado. Mantém as perguntas e regras da R10, inclusive suas limitações. Exige a migration `20261106000200_assessment_scope`, geração do cliente Prisma e atualização coordenada dos três serviços. Ver [entrega, testes e exemplo](../docs/R11_IMPLEMENTACAO.md). Implementação local, sem publicação; notas de versões anteriores abaixo são históricas.
 
 **Atual R10:** perfil `documentary-18-v1`, nove categorias e 18 perguntas, mantendo a R9 para excluir dúvidas. Histórico de sete categorias preservado. Exige a migration `20261106000100_documentary_18_profile` e atualização coordenada dos três serviços. Implementação local, sem publicação; 7/8 exemplos adicionais corresponderam à expectativa. Ver [entrega e limites](../docs/R10_IMPLEMENTACAO.md). As marcações R9/R8/R7 abaixo são históricas.
