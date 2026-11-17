@@ -32,7 +32,7 @@ def test_prepared_notice_and_original_evidence(segmenter, text, score):
     result = evaluate(prepared, segments, RULES, None,
                       {'mode': 'selected_categories', 'category_ids': ['changes']})
     assert (prepared, segments) == before
-    assert result['rules_version'] == 'governance-rules-v5-dev2'
+    assert result['rules_version'] == 'governance-rules-v6-dev1'
     assert result['score'] == score
     assert result['score_blockers'] == []
     by_id = {s['segment_id']: s for s in segments}

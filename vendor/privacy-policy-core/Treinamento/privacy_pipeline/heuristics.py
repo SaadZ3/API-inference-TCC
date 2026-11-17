@@ -23,7 +23,7 @@ PROFILES = {
     "documentary-18-v1": (DIMENSIONS + ("dnt", "audiences"), QUESTION_IDS | {
         "dnt.response", "dnt.effect", "audiences.scope", "audiences.practice"}),
 }
-UNCERTAINTY_METHODS = {"documentary-quality-v4-draft1", "documentary-quality-v5-draft1"}
+UNCERTAINTY_METHODS = {"documentary-quality-v4-draft1", "documentary-quality-v5-draft1", "documentary-quality-v6-draft1"}
 VIRTUAL_FEATURES = {"negated"}
 
 
@@ -69,7 +69,7 @@ class RuleSet:
         if rules["language"] != "pt" or rules["profile_id"] not in PROFILES:
             raise ValueError("Idioma ou perfil não suportado.")
         dimensions, question_ids = PROFILES[rules["profile_id"]]
-        if (rules["profile_id"] == "documentary-18-v1") != (rules["method_version"] == "documentary-quality-v5-draft1"):
+        if (rules["profile_id"] == "documentary-18-v1") != (rules["method_version"] in {"documentary-quality-v5-draft1", "documentary-quality-v6-draft1"}):
             raise ValueError("Método incompatível com o perfil.")
         for key in ("version", "method_version", "profile_defined_at"):
             if not isinstance(rules[key], str) or not rules[key].strip():

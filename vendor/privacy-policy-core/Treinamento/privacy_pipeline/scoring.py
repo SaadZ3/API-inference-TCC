@@ -206,7 +206,10 @@ def evaluate_policy(policy: dict, rules: heuristics.RuleSet, *, fallback: bool |
                           "duplicate_occurrences_omitted": omitted,
                           "search_scope": scope, "finding_ids": [f["id"] for f in local]})
     blockers = []
-    if not policy["complete"] or policy.get("document_scope") in {"excerpt", "unknown"}:
+    incomplete = not policy["complete"] or policy.get("document_scope") in {"excerpt", "unknown"}
+    selected_average = (rules.data['method_version'] == 'documentary-quality-v6-draft1'
+                        and selection and selection['mode'] == 'selected_categories')
+    if incomplete and not selected_average:
         blockers.append("document_scope_incomplete")
     if policy.get("extraction", {}).get("status") == "partial":
         blockers.append("extraction_partial")
@@ -214,7 +217,8 @@ def evaluate_policy(policy: dict, rules: heuristics.RuleSet, *, fallback: bool |
         blockers.append("truncated_segments")
     if not usable:
         blockers.append("no_usable_segments")
-    input_partial = bool(blockers)
+    blocked_input = bool(blockers)
+    input_partial = incomplete or blocked_input
     if not exclude_uncertain and any(q["status"] == "inconclusive" for q in questions):
         blockers.append("inconclusive_questions")
     if exclude_uncertain and usable and all(q['value'] is None for q in questions):
@@ -236,7 +240,7 @@ def evaluate_policy(policy: dict, rules: heuristics.RuleSet, *, fallback: bool |
                            "earned_points": points, "applicable_questions": len(items), "unknown_applicability_questions": 0,
                            "resolved_questions": resolved, "inconclusive_questions": len(items) - resolved,
                            "excluded_questions": len(items) - resolved if exclude_uncertain else 0, "questions": items})
-    if input_partial:
+    if blocked_input:
         findings.append(_finding(None, rules, "extraction_limitation", "Nota global bloqueada pelas condições de entrada: " + ", ".join(b for b in blockers if b != "inconclusive_questions"), [], None, "high"))
     return {"schema_version": 3 if selection else 2, **({"assessment_scope": selection} if selection else {}), "policy_id": policy["policy_id"], "language": "pt",
             **({'uncertainty_policy': 'exclude_inconclusive_evidence_v1'} if exclude_uncertain else {}),
@@ -249,7 +253,7 @@ def evaluate_policy(policy: dict, rules: heuristics.RuleSet, *, fallback: bool |
             "score_blockers": blockers, "rules_version": rules.data["version"], "rules_sha256": content_hash(rules.data),
             "predictions_sha256": content_hash(policy), "fallback_enabled": fallback,
             "dimensions": dimensions, "findings": findings, "recommendations": [],
-            "limitations": ["Avaliação documental experimental; não mede conformidade, proteção efetiva ou maturidade.",
+            "limitations": (["Média restrita às categorias escolhidas no conteúdo enviado; não representa a política inteira."] if incomplete and selected_average else []) + ["Avaliação documental experimental; não mede conformidade, proteção efetiva ou maturidade.",
                             "Heurísticas lexicais contextuais, sem compreensão semântica geral; revisão humana necessária.",
                             "Satisfação de uma pergunta indica ao menos uma relação encontrada, não um inventário exaustivo.",
                             "Conflitos reconhecidos são candidatos; variações de sujeito, escopo e exceções podem escapar.",

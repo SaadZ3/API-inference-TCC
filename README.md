@@ -1,5 +1,13 @@
 # Serviço Python de análise
 
+**Média de categorias em documento incompleto:** o método `documentary-quality-v6-draft1`
+e as regras `governance-rules-v6-dev1` permitem calcular a média quando o envio usa
+`selected_categories`, mantendo a entrada marcada como parcial. A média considera
+somente as categorias escolhidas e não representa a política inteira. Extração
+parcial, trechos cortados e ausência de perguntas avaliáveis continuam bloqueando
+a média. Resultados antigos preservam sua regra. Atualize frontend, backend e
+Python juntos; reinicie o Python e faça uma nova análise. Não exige nova migration.
+
 **Reconhecimento de mudanças — regras `governance-rules-v5-dev2`:** reconhece
 conjugações como `atualizaremos` e liga um aviso sobre `as alterações` à frase
 anterior que identifica mudanças da política. A ligação exige frases consecutivas
