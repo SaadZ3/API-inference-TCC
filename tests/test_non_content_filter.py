@@ -64,7 +64,7 @@ def test_filter_keeps_original_positions_and_audit_without_marking_partial(segme
             "Para alunos menores, exigimos autorização dos responsáveis.")
     result = prepare(segmenter, text)
     assert result == prepare(segmenter, text)
-    assert result["preprocessing"]["version"] == PREPROCESSING_VERSION == "p3-v5"
+    assert result["preprocessing"]["version"] == PREPROCESSING_VERSION == "p3-v6"
     assert result["extraction"]["text"] == text
     assert result["extraction"]["status"] == "ok"
     assert [s["text"] for s in result["segments"]] == [

@@ -12,7 +12,7 @@ import unicodedata
 
 from .extraction import ExtractedDocument, IngestionError
 
-PREPROCESSING_VERSION = "p3-v5"
+PREPROCESSING_VERSION = "p3-v6"
 
 MAX_HEADING_CHARACTERS = 160
 MAX_HEADING_WORDS = 12

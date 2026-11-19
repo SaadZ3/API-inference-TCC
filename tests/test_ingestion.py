@@ -433,3 +433,30 @@ def test_reads_token_limit_from_package(tmp_path, model_dir):
     assert result["preprocessing"]["max_length"] == 20
     assert len(result["segments"]) == 2
     assert all(s["n_tokens"] <= 20 for s in result["segments"])
+
+
+def test_side_menu_does_not_interleave_with_body_text(segmenter):
+    """PDF salvo de site: menu à esquerda na mesma altura das linhas do corpo."""
+    from pypdf import PdfReader
+    writer = PdfWriter()
+    page = writer.add_page(PdfReader(BytesIO(pdf_bytes(['Base.']))).pages[0])
+    stream = DecodedStreamObject()
+    rows = [(780, 'Seguranca', 'Bem-vindos. Esta politica se aplica aos servicos, que incluem'),
+            (765, 'Prazo de guarda', 'aplicativos e sites relacionados, fornecidos pela Empresa.'),
+            (750, 'Adolescentes', 'Temos o compromisso de proteger a sua privacidade.')]
+    commands = b''
+    for y, menu, body in rows:
+        commands += f'BT /F1 10 Tf 40 {y} Td ({menu}) Tj ET BT /F1 10 Tf 200 {y} Td ({body}) Tj ET '.encode()
+    # Texto de largura total abaixo encerra a zona de colunas.
+    commands += b'BT /F1 10 Tf 40 700 Td (Rodape com texto que ocupa toda a largura da pagina, de ponta a ponta.) Tj ET'
+    stream.set_data(commands)
+    page[NameObject('/Contents')] = writer._add_object(stream)
+    output = BytesIO()
+    writer.write(output)
+    document = extract(output.getvalue(), 'menu.pdf')
+    text = document.text
+    assert not document.warnings
+    assert 'que incluem\naplicativos e sites relacionados' in text
+    assert text.index('Adolescentes') < text.index('Bem-vindos')
+    assert text.index('Temos o compromisso') < text.index('Rodape')
+    assert_preserved(segmenter.prepare(document), segmenter)

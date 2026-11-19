@@ -69,23 +69,23 @@ features:
     internacionais?|transferência de dados entre fronteiras|fora do seu país)\b|\b(?:seus dados(?: pessoais)?|dados pessoais|dados dos usuários)\b[^.!?;]{0,100}\b(?:transferid\w*|processad\w*|armazenad\w*)\b[^.!?;]{0,100}\b(?:exterior|outros
     países|fora do seu país|Estados Unidos)\b|\b(?:processamos|armazenamos|usamos|transferimos)\b[^.!?;]{0,60}\b(?:seus dados|dados pessoais|dados)\b[^.!?;]{0,80}\b(?:fora
     do seu país|fora dos Estados Unidos|no exterior)\b'
-  audience_scope: '(?:\b(?:destinad\w*|dirigid\w*|se aplica|abrange|abrangidos|voltados|atende|oferec\w*|coletamos|coletad\w*|processad\w*|transferid\w*|tratad\w*|tratar|podem
+  audience_scope: '(?:\b(?:destinad\w*|dirigid\w*|direcionad\w*|se aplica|abrange|abrangidos|voltados|atende|oferec\w*|coletamos|coletad\w*|processad\w*|transferid\w*|tratad\w*|tratar|podem
     ter acesso)\b[^.!?;]{0,120}\b(?:(?:crianças?\s+)?menores?\s+de\s+(?:\d+\s+anos|idade)|crianças|adolescentes|residentes\s+(?:no|na|nos|em|do|da|dos|de)\s+(?:Brasil|Portugal|Estados
     Unidos|União Europeia|Espaço Econômico Europeu|Califórnia|Europa|Reino Unido|Países Designados)|(?:usuários|visitantes|pessoas físicas)\s+(?:e\s+visitantes\s+)?(?:localizad[oa]s?\s+)?(?:no|na|nos|em|do|da|dos|de)\s+(?:Brasil|Portugal|Estados
     Unidos|União Europeia|Espaço Econômico Europeu|Califórnia|Europa|Reino Unido|Países Designados))\b|\b(?:(?:crianças?\s+)?menores?\s+de\s+(?:\d+\s+anos|idade)|crianças|adolescentes|residentes\s+(?:no|na|nos|em|do|da|dos|de)\s+(?:Brasil|Portugal|Estados
     Unidos|União Europeia|Espaço Econômico Europeu|Califórnia|Europa|Reino Unido|Países Designados)|(?:usuários|visitantes|pessoas físicas)\s+(?:e\s+visitantes\s+)?(?:localizad[oa]s?\s+)?(?:no|na|nos|em|do|da|dos|de)\s+(?:Brasil|Portugal|Estados
-    Unidos|União Europeia|Espaço Econômico Europeu|Califórnia|Europa|Reino Unido|Países Designados))\b[^.!?;]{0,120}\b(?:destinad\w*|dirigid\w*|se aplica|abrange|abrangidos|voltados|atende|oferec\w*|coletamos|coletad\w*|processad\w*|transferid\w*|tratad\w*|tratar|podem
+    Unidos|União Europeia|Espaço Econômico Europeu|Califórnia|Europa|Reino Unido|Países Designados))\b[^.!?;]{0,120}\b(?:destinad\w*|dirigid\w*|direcionad\w*|se aplica|abrange|abrangidos|voltados|atende|oferec\w*|coletamos|coletad\w*|processad\w*|transferid\w*|tratad\w*|tratar|podem
     ter acesso)\b)|\b(?:seus dados(?: pessoais)?|dados pessoais|dados dos usuários)\b[^.!?;]{0,100}\b(?:transferid\w*|processad\w*|armazenad\w*)\b[^.!?;]{0,100}\b(?:exterior|outros
     países|fora do seu país|Estados Unidos)\b|\b(?:processamos|armazenamos|usamos|transferimos)\b[^.!?;]{0,60}\b(?:seus dados|dados pessoais|dados)\b[^.!?;]{0,80}\b(?:fora
     do seu país|fora dos Estados Unidos|no exterior)\b'
-  audience_action: \b(?:destinad\w*|dirigid\w*|coletamos|coletad\w*|processad\w*|transferid\w*|transferimos|tratar|tratad\w*|solicitar|exercer|autorizaç\w*\s+(?:dos|de
+  audience_action: \b(?:destinad\w*|dirigid\w*|direcionad\w*|coletamos|coletad\w*|processad\w*|transferid\w*|transferimos|tratar|tratad\w*|solicitar|exercer|autorizaç\w*\s+(?:dos|de
     seus)\s+(?:pais|responsáveis)|consentimento\s+dos\s+(?:pais|responsáveis)|acesse)\b
-  audience_practice: '(?:\b(?:destinad\w*|dirigid\w*|coletamos|coletad\w*|processad\w*|transferid\w*|transferimos|tratar|tratad\w*|solicitar|exercer|autorizaç\w*\s+(?:dos|de
+  audience_practice: '(?:\b(?:destinad\w*|dirigid\w*|direcionad\w*|coletamos|coletad\w*|processad\w*|transferid\w*|transferimos|tratar|tratad\w*|solicitar|exercer|autorizaç\w*\s+(?:dos|de
     seus)\s+(?:pais|responsáveis)|consentimento\s+dos\s+(?:pais|responsáveis)|acesse)\b[^.!?;]{0,120}\b(?:(?:crianças?\s+)?menores?\s+de\s+(?:\d+\s+anos|idade)|crianças|adolescentes|residentes\s+(?:no|na|nos|em|do|da|dos|de)\s+(?:Brasil|Portugal|Estados
     Unidos|União Europeia|Espaço Econômico Europeu|Califórnia|Europa|Reino Unido|Países Designados)|(?:usuários|visitantes|pessoas físicas)\s+(?:e\s+visitantes\s+)?(?:localizad[oa]s?\s+)?(?:no|na|nos|em|do|da|dos|de)\s+(?:Brasil|Portugal|Estados
     Unidos|União Europeia|Espaço Econômico Europeu|Califórnia|Europa|Reino Unido|Países Designados))\b|\b(?:(?:crianças?\s+)?menores?\s+de\s+(?:\d+\s+anos|idade)|crianças|adolescentes|residentes\s+(?:no|na|nos|em|do|da|dos|de)\s+(?:Brasil|Portugal|Estados
     Unidos|União Europeia|Espaço Econômico Europeu|Califórnia|Europa|Reino Unido|Países Designados)|(?:usuários|visitantes|pessoas físicas)\s+(?:e\s+visitantes\s+)?(?:localizad[oa]s?\s+)?(?:no|na|nos|em|do|da|dos|de)\s+(?:Brasil|Portugal|Estados
-    Unidos|União Europeia|Espaço Econômico Europeu|Califórnia|Europa|Reino Unido|Países Designados))\b[^.!?;]{0,120}\b(?:destinad\w*|dirigid\w*|coletamos|coletad\w*|processad\w*|transferid\w*|transferimos|tratar|tratad\w*|solicitar|exercer|autorizaç\w*\s+(?:dos|de
+    Unidos|União Europeia|Espaço Econômico Europeu|Califórnia|Europa|Reino Unido|Países Designados))\b[^.!?;]{0,120}\b(?:destinad\w*|dirigid\w*|direcionad\w*|coletamos|coletad\w*|processad\w*|transferid\w*|transferimos|tratar|tratad\w*|solicitar|exercer|autorizaç\w*\s+(?:dos|de
     seus)\s+(?:pais|responsáveis)|consentimento\s+dos\s+(?:pais|responsáveis)|acesse)\b)|\b(?:seus dados(?: pessoais)?|dados pessoais|dados dos usuários)\b[^.!?;]{0,100}\b(?:transferid\w*|processad\w*|armazenad\w*)\b[^.!?;]{0,100}\b(?:exterior|outros
     países|fora do seu país|Estados Unidos)\b|\b(?:processamos|armazenamos|usamos|transferimos)\b[^.!?;]{0,60}\b(?:seus dados|dados pessoais|dados)\b[^.!?;]{0,80}\b(?:fora
     do seu país|fora dos Estados Unidos|no exterior)\b'
