@@ -12,7 +12,7 @@ import unicodedata
 
 from .extraction import ExtractedDocument, IngestionError
 
-PREPROCESSING_VERSION = "p3-v4"
+PREPROCESSING_VERSION = "p3-v5"
 
 MAX_HEADING_CHARACTERS = 160
 MAX_HEADING_WORDS = 12
@@ -68,6 +68,41 @@ def non_content_reason(text: str) -> str | None:
             and all(word in HEADING_WORDS for word in words)):
         return "título sem declaração"
     return None
+
+
+SENTENCE_END = re.compile(r"[.!?…][\"'”’)\]]*$")
+CONTINUATION_START = re.compile(r"[a-zà-öø-ÿ]")
+# Título não termina em vírgula nem em palavra de ligação: a linha seguinte é continuação.
+OPEN_END = re.compile(
+    r"(?:[,;:]|\b(?:a|o|as|os|um|uma|uns|umas|de|da|do|das|dos|e|ou|em|na|no|nas|nos|que|para|com|"
+    r"por|pelo|pela|pelos|pelas|ao|aos|à|às|se|como|sobre|entre|seu|sua|seus|suas|nosso|nossa|"
+    r"nossos|nossas|este|esta|estes|estas|esse|essa|esses|essas|não|é|são))[\"'”’)]*$",
+    re.IGNORECASE,
+)
+
+
+def paragraph_ranges(text: str, start: int, end: int) -> list[tuple[int, int]]:
+    """Linhas em branco delimitam parágrafos, exceto quando a frase claramente continua.
+
+    PDFs com espaço duplo ou listas viram um parágrafo por linha; juntar evita que o
+    modelo classifique pedaços como "orientar e esclarecer sobre as práticas".
+    Ex.: "elaborou este documento para" + "orientar os titulares." -> um parágrafo.
+    """
+    ranges: list[tuple[int, int]] = []
+    for paragraph in re.finditer(r"\S[\s\S]*?(?=\n[ \t]*\n|\Z)", text[start:end]):
+        left, right = start + paragraph.start(), start + paragraph.end()
+        while right > left and text[right - 1].isspace():
+            right -= 1
+        previous = ranges[-1] if ranges else None
+        # Títulos e datas isolados continuam separados para o filtro de não conteúdo.
+        if (previous and not SENTENCE_END.search(text, *previous)
+                and (CONTINUATION_START.match(text, left) or OPEN_END.search(text, *previous))
+                and not non_content_reason(text[previous[0]:previous[1]])
+                and not non_content_reason(text[left:right])):
+            ranges[-1] = (ranges[-1][0], right)
+        else:
+            ranges.append((left, right))
+    return ranges
 
 
 class PolicySegmenter:
@@ -149,13 +184,7 @@ class PolicySegmenter:
         segments = []
         filtered = 0
         for page in document.pages:
-            page_text = document.text[page.char_start:page.char_end]
-            # Linhas em branco delimitam parágrafos; quebras simples de PDF são preservadas.
-            for paragraph in re.finditer(r"\S[\s\S]*?(?=\n[ \t]*\n|\Z)", page_text):
-                start = page.char_start + paragraph.start()
-                end = page.char_start + paragraph.end()
-                while end > start and document.text[end - 1].isspace():
-                    end -= 1
+            for start, end in paragraph_ranges(document.text, page.char_start, page.char_end):
                 # Filtrar o parágrafo inteiro evita perder finais curtos de frases recortadas.
                 reason = non_content_reason(document.text[start:end])
                 if reason:

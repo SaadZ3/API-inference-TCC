@@ -19,7 +19,7 @@ features:
   condition: \b(?:se você autorizar|com (?:o )?(?:seu )?consentimento|mediante consentimento|por obrigação legal|cumprir (?:uma )?obrigação legal|ordem judicial)\b
   choice: \b(?:cancelar|revogar|retirar|desativar|recusar|descadastr\w*)\b
   marketing: \b(?:marketing|mensagens|consentimento|cookies|publicidade|rastreamento)\b
-  channel: '[\w.+-]+@[\w.-]+\.[a-z]{2,}|https?://[^\s]+|\b(?:conta|perfil|configurações)\s*>[^.!?\n]+|\blink de (?:descadastro|cancelamento)[^.!?;\n]{0,60}\b(?:cada
+  channel: '[\w.+-]+@[\w.-]+\.[a-z]{2,}|https?://[^\s]+|(?<![@\w.-])(?:www\.)?(?:[a-z0-9-]+\.)+(?:com|net|org|gov|edu|io|app|br)\b(?:/[^\s]*)?|\b(?:conta|perfil|configurações)\s*>[^.!?\n]+|\blink de (?:descadastro|cancelamento)[^.!?;\n]{0,60}\b(?:cada
     mensagem|cada e-mail|rodapé)\b|\bresponda à mensagem com as palavras?\s+["“](?:PARAR|FINALIZAR|SAIR|STOP)\b|\bformulário\s+(?:de\s+)?escritório de privacidade
     e (?:diretor de proteção de dados|encarregado pelo tratamento de dados pessoais)\b'
   procedure: \b(?:clique|clicando|abra|acesse|acessando|escreva|envie|solicite|use|selecione|responda)\b
